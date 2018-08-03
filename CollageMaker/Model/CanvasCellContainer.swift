@@ -8,13 +8,13 @@ class CanvasCellContainer: UIView {
     var numberOfCells: Int = 0
     
     init(cell: CanvasCell) {
-        self.cell = cell
+        self.cells = [cell]
         
         super.init(frame: CGRect.zero)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("Nt implemented")
+        fatalError("Not implemented")
     }
     
     enum Axis {
@@ -25,6 +25,8 @@ class CanvasCellContainer: UIView {
     func splitContainer(by axis: Axis) {
         let newCell = CanvasCell(state: .selected)
         
+        cells.append(newCell)
+        
         stackView.addArrangedSubview(newCell)
         stackView.distribution = .fillEqually
         
@@ -34,10 +36,10 @@ class CanvasCellContainer: UIView {
         }
     }
     private lazy var stackView: UIStackView = {
-        let imageViewsStackView = UIStackView(arrangedSubviews: [cell])
+        let imageViewsStackView = UIStackView(arrangedSubviews: cells)
         
         return imageViewsStackView
     }()
     
-    private let cell: CanvasCell
+    private var cells: [CanvasCell] = []
 }

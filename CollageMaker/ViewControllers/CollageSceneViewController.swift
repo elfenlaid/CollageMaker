@@ -9,9 +9,7 @@ class CollageSceneViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let startCell = CanvasCell(state: .deselected)
-        
+     
         view.backgroundColor = .white
         
         view.addSubview(resetButton)
@@ -19,12 +17,7 @@ class CollageSceneViewController: UIViewController {
         view.addSubview(canvasViewContainer)
         view.addSubview(bannerView)
         view.addSubview(toolsBar)
-        
-        selectedCell = startCell
-        selectedCell?.delegate = self
-        
-        canvasViewContainer.addSubview(startCell)
-        
+
         makeConstraints()
     }
     
@@ -66,9 +59,13 @@ class CollageSceneViewController: UIViewController {
         }
     }
     
+    private func showCanvas(_ canvas: CollageCanvas) {
+        
+    }
+    
     @objc private func buttonTapped(_ button: UIButton) {
         switch button {
-        case resetButton: selectedCell?.split(by: .horizontal, inParentBounds: false)
+        case resetButton: break
         case shareButton: shareViewController = ShareViewController(with: UIImage(named: "some")!)
         default: break
         }
@@ -95,12 +92,5 @@ class CollageSceneViewController: UIViewController {
     private let bannerView = UIView()
     private let toolsBar = ToolsBar()
     private let canvasViewContainer = UIView()
-    private var selectedCell: CanvasCell?
     private lazy var shareViewController = ShareViewController(with: UIImage(named: "some")!)
-}
-
-extension CollageSceneViewController: CanvasCellDelegate {
-    func canvasCell(_ cell: CanvasCell, switchedTo state: CanvasCell.State) {
-        print(state)
-    }
 }

@@ -12,18 +12,18 @@ protocol CanvasCellDelegate: AnyObject {
 class CanvasCell: UIView {
     
     weak var delegate: CanvasCellDelegate?
+    let id: UUID
     
     enum State {
         case selected
         case deselected
     }
     
-    init(state: State, parent: CanvasCell? = nil) {
-        self.parentCell = parent
+    init(state: State) {
         self.state = state
-        super.init(frame: CGRect.zero)
+        id = UUID.init()
         
-        addSubview(stackView)
+        super.init(frame: CGRect.zero)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,38 +35,32 @@ class CanvasCell: UIView {
         makeConstraints()
     }
     
-   
+    func position() -> AbsolutePosition {
+        return absolutePosition
+    }
+    
     func remove() {
-        if !isParent {
-            removeFromSuperview()
-        }
+        removeFromSuperview()
     }
     
     func toogleSelection() {
         state = state == .selected ? .deselected : .selected
     }
     
-   
-    
     private func makeConstraints() {
         self.snp.makeConstraints { make in
             make.margins.equalToSuperview()
         }
-        
-        stackView.snp.makeConstraints { make in
-            make.margins.equalToSuperview()
-        }
     }
     
-   
     private var state: State {
         didSet {
             self.delegate?.canvasCell(self, switchedTo: state)
         }
     }
-    private var parentCell: CanvasCell?
-    private var isParent: Bool = false
-    private let initialImageView = UIImageView()
+    
+    private var absolutePosition: AbsolutePosition
+    private let imageView = UIImageView()
 }
 
 extension UIView {
