@@ -1,0 +1,742 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1929D0E5095DCC541D5B2D97 /* Pods_CollageMaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E5F6231635FF3BBC1D62583 /* Pods_CollageMaker.framework */; };
+		28271A93D8342F6A0C3F4C84 /* libPods-CollageMakerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B77FF1D8BDD83B47B970E7 /* libPods-CollageMakerTests.a */; };
+		444350C9F9029A611D1C00A4 /* libPods-CollageMakerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C919B544C6ABA0903801BC0 /* libPods-CollageMakerUITests.a */; };
+		843A57FA21144760002FE28D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A57F921144760002FE28D /* AppDelegate.swift */; };
+		843A580121144761002FE28D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 843A580021144761002FE28D /* Assets.xcassets */; };
+		843A580421144761002FE28D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843A580221144761002FE28D /* LaunchScreen.storyboard */; };
+		843A580F21144761002FE28D /* CollageMakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A580E21144761002FE28D /* CollageMakerTests.swift */; };
+		843A581A21144761002FE28D /* CollageMakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A581921144761002FE28D /* CollageMakerUITests.swift */; };
+		843A5829211447DC002FE28D /* CollageSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A5828211447DC002FE28D /* CollageSceneViewController.swift */; };
+		844EBCE721145273009DBC74 /* ToolsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EBCE621145273009DBC74 /* ToolsBar.swift */; };
+		844EBCE921145E17009DBC74 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EBCE821145E17009DBC74 /* ShareViewController.swift */; };
+		844EBCEB21145F16009DBC74 /* CanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EBCEA21145F16009DBC74 /* CanvasCell.swift */; };
+		84B160342114892600FF4713 /* CollageCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B160332114892600FF4713 /* CollageCanvas.swift */; };
+		84B1603621148C6300FF4713 /* CanvasCellContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1603521148C6300FF4713 /* CanvasCellContainer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		843A580B21144761002FE28D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 843A57EE21144760002FE28D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 843A57F521144760002FE28D;
+			remoteInfo = CollageMaker;
+		};
+		843A581621144761002FE28D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 843A57EE21144760002FE28D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 843A57F521144760002FE28D;
+			remoteInfo = CollageMaker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0560397CE2EE951F30D1EE6A /* Pods-CollageMakerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMakerUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMakerUITests/Pods-CollageMakerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		27B77FF1D8BDD83B47B970E7 /* libPods-CollageMakerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CollageMakerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		363080534D0CDC336C68709A /* Pods-CollageMakerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMakerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMakerTests/Pods-CollageMakerTests.release.xcconfig"; sourceTree = "<group>"; };
+		3D5ED321D13AAA86EF463EDA /* Pods-CollageMakerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMakerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMakerUITests/Pods-CollageMakerUITests.release.xcconfig"; sourceTree = "<group>"; };
+		6C919B544C6ABA0903801BC0 /* libPods-CollageMakerUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CollageMakerUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E5F6231635FF3BBC1D62583 /* Pods_CollageMaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollageMaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		843A57F621144760002FE28D /* CollageMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollageMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		843A57F921144760002FE28D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		843A580021144761002FE28D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		843A580321144761002FE28D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		843A580521144761002FE28D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		843A580A21144761002FE28D /* CollageMakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollageMakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		843A580E21144761002FE28D /* CollageMakerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageMakerTests.swift; sourceTree = "<group>"; };
+		843A581021144761002FE28D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		843A581521144761002FE28D /* CollageMakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollageMakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		843A581921144761002FE28D /* CollageMakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageMakerUITests.swift; sourceTree = "<group>"; };
+		843A581B21144761002FE28D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		843A5828211447DC002FE28D /* CollageSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageSceneViewController.swift; sourceTree = "<group>"; };
+		844EBCE621145273009DBC74 /* ToolsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsBar.swift; sourceTree = "<group>"; };
+		844EBCE821145E17009DBC74 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		844EBCEA21145F16009DBC74 /* CanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCell.swift; sourceTree = "<group>"; };
+		84B160332114892600FF4713 /* CollageCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageCanvas.swift; sourceTree = "<group>"; };
+		84B1603521148C6300FF4713 /* CanvasCellContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCellContainer.swift; sourceTree = "<group>"; };
+		939134D3EA6086601A613E2E /* Pods-CollageMaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMaker/Pods-CollageMaker.debug.xcconfig"; sourceTree = "<group>"; };
+		9C221B83DC51077FE8EDC16F /* Pods-CollageMaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMaker.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMaker/Pods-CollageMaker.release.xcconfig"; sourceTree = "<group>"; };
+		E5C2B5278BB477A5EE048C5F /* Pods-CollageMakerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMakerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMakerTests/Pods-CollageMakerTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		843A57F321144760002FE28D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1929D0E5095DCC541D5B2D97 /* Pods_CollageMaker.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		843A580721144761002FE28D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28271A93D8342F6A0C3F4C84 /* libPods-CollageMakerTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		843A581221144761002FE28D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				444350C9F9029A611D1C00A4 /* libPods-CollageMakerUITests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2E7F056D7C2B16B2C9D69F35 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				939134D3EA6086601A613E2E /* Pods-CollageMaker.debug.xcconfig */,
+				9C221B83DC51077FE8EDC16F /* Pods-CollageMaker.release.xcconfig */,
+				E5C2B5278BB477A5EE048C5F /* Pods-CollageMakerTests.debug.xcconfig */,
+				363080534D0CDC336C68709A /* Pods-CollageMakerTests.release.xcconfig */,
+				0560397CE2EE951F30D1EE6A /* Pods-CollageMakerUITests.debug.xcconfig */,
+				3D5ED321D13AAA86EF463EDA /* Pods-CollageMakerUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		843A57ED21144760002FE28D = {
+			isa = PBXGroup;
+			children = (
+				843A57F821144760002FE28D /* CollageMaker */,
+				843A580D21144761002FE28D /* CollageMakerTests */,
+				843A581821144761002FE28D /* CollageMakerUITests */,
+				843A57F721144760002FE28D /* Products */,
+				2E7F056D7C2B16B2C9D69F35 /* Pods */,
+				C9146EDE3DD69860E78ABB00 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		843A57F721144760002FE28D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				843A57F621144760002FE28D /* CollageMaker.app */,
+				843A580A21144761002FE28D /* CollageMakerTests.xctest */,
+				843A581521144761002FE28D /* CollageMakerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		843A57F821144760002FE28D /* CollageMaker */ = {
+			isa = PBXGroup;
+			children = (
+				844EBCEA21145F16009DBC74 /* CanvasCell.swift */,
+				84B1603521148C6300FF4713 /* CanvasCellContainer.swift */,
+				84B160332114892600FF4713 /* CollageCanvas.swift */,
+				843A57F921144760002FE28D /* AppDelegate.swift */,
+				844EBCE621145273009DBC74 /* ToolsBar.swift */,
+				843A582A211447F8002FE28D /* ViewControllers */,
+				843A58272114477E002FE28D /* SupportingFiles */,
+			);
+			path = CollageMaker;
+			sourceTree = "<group>";
+		};
+		843A580D21144761002FE28D /* CollageMakerTests */ = {
+			isa = PBXGroup;
+			children = (
+				843A580E21144761002FE28D /* CollageMakerTests.swift */,
+				843A581021144761002FE28D /* Info.plist */,
+			);
+			path = CollageMakerTests;
+			sourceTree = "<group>";
+		};
+		843A581821144761002FE28D /* CollageMakerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				843A581921144761002FE28D /* CollageMakerUITests.swift */,
+				843A581B21144761002FE28D /* Info.plist */,
+			);
+			path = CollageMakerUITests;
+			sourceTree = "<group>";
+		};
+		843A58272114477E002FE28D /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				843A580021144761002FE28D /* Assets.xcassets */,
+				843A580221144761002FE28D /* LaunchScreen.storyboard */,
+				843A580521144761002FE28D /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		843A582A211447F8002FE28D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				843A5828211447DC002FE28D /* CollageSceneViewController.swift */,
+				844EBCE821145E17009DBC74 /* ShareViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C9146EDE3DD69860E78ABB00 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				27B77FF1D8BDD83B47B970E7 /* libPods-CollageMakerTests.a */,
+				6C919B544C6ABA0903801BC0 /* libPods-CollageMakerUITests.a */,
+				6E5F6231635FF3BBC1D62583 /* Pods_CollageMaker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		843A57F521144760002FE28D /* CollageMaker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 843A581E21144761002FE28D /* Build configuration list for PBXNativeTarget "CollageMaker" */;
+			buildPhases = (
+				A68283706116FA98A80A9A4F /* [CP] Check Pods Manifest.lock */,
+				843A57F221144760002FE28D /* Sources */,
+				843A57F321144760002FE28D /* Frameworks */,
+				843A57F421144760002FE28D /* Resources */,
+				6602DC41F30F47EAAE44231C /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CollageMaker;
+			productName = CollageMaker;
+			productReference = 843A57F621144760002FE28D /* CollageMaker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		843A580921144761002FE28D /* CollageMakerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 843A582121144761002FE28D /* Build configuration list for PBXNativeTarget "CollageMakerTests" */;
+			buildPhases = (
+				3297356791BE245DFAD9F097 /* [CP] Check Pods Manifest.lock */,
+				843A580621144761002FE28D /* Sources */,
+				843A580721144761002FE28D /* Frameworks */,
+				843A580821144761002FE28D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				843A580C21144761002FE28D /* PBXTargetDependency */,
+			);
+			name = CollageMakerTests;
+			productName = CollageMakerTests;
+			productReference = 843A580A21144761002FE28D /* CollageMakerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		843A581421144761002FE28D /* CollageMakerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 843A582421144761002FE28D /* Build configuration list for PBXNativeTarget "CollageMakerUITests" */;
+			buildPhases = (
+				894662B59BC79C19B1B7C157 /* [CP] Check Pods Manifest.lock */,
+				843A581121144761002FE28D /* Sources */,
+				843A581221144761002FE28D /* Frameworks */,
+				843A581321144761002FE28D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				843A581721144761002FE28D /* PBXTargetDependency */,
+			);
+			name = CollageMakerUITests;
+			productName = CollageMakerUITests;
+			productReference = 843A581521144761002FE28D /* CollageMakerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		843A57EE21144760002FE28D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = Admin;
+				TargetAttributes = {
+					843A57F521144760002FE28D = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					843A580921144761002FE28D = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 843A57F521144760002FE28D;
+					};
+					843A581421144761002FE28D = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 843A57F521144760002FE28D;
+					};
+				};
+			};
+			buildConfigurationList = 843A57F121144760002FE28D /* Build configuration list for PBXProject "CollageMaker" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 843A57ED21144760002FE28D;
+			productRefGroup = 843A57F721144760002FE28D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				843A57F521144760002FE28D /* CollageMaker */,
+				843A580921144761002FE28D /* CollageMakerTests */,
+				843A581421144761002FE28D /* CollageMakerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		843A57F421144760002FE28D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843A580421144761002FE28D /* LaunchScreen.storyboard in Resources */,
+				843A580121144761002FE28D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		843A580821144761002FE28D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		843A581321144761002FE28D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3297356791BE245DFAD9F097 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CollageMakerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6602DC41F30F47EAAE44231C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CollageMaker/Pods-CollageMaker-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/R.swift.Library-framework/Rswift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit-framework/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CollageMaker/Pods-CollageMaker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		894662B59BC79C19B1B7C157 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CollageMakerUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A68283706116FA98A80A9A4F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CollageMaker-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		843A57F221144760002FE28D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843A5829211447DC002FE28D /* CollageSceneViewController.swift in Sources */,
+				844EBCE721145273009DBC74 /* ToolsBar.swift in Sources */,
+				844EBCEB21145F16009DBC74 /* CanvasCell.swift in Sources */,
+				84B1603621148C6300FF4713 /* CanvasCellContainer.swift in Sources */,
+				844EBCE921145E17009DBC74 /* ShareViewController.swift in Sources */,
+				843A57FA21144760002FE28D /* AppDelegate.swift in Sources */,
+				84B160342114892600FF4713 /* CollageCanvas.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		843A580621144761002FE28D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843A580F21144761002FE28D /* CollageMakerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		843A581121144761002FE28D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843A581A21144761002FE28D /* CollageMakerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		843A580C21144761002FE28D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 843A57F521144760002FE28D /* CollageMaker */;
+			targetProxy = 843A580B21144761002FE28D /* PBXContainerItemProxy */;
+		};
+		843A581721144761002FE28D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 843A57F521144760002FE28D /* CollageMaker */;
+			targetProxy = 843A581621144761002FE28D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		843A580221144761002FE28D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				843A580321144761002FE28D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		843A581C21144761002FE28D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		843A581D21144761002FE28D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		843A581F21144761002FE28D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 939134D3EA6086601A613E2E /* Pods-CollageMaker.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P99EM85EA2;
+				INFOPLIST_FILE = "$(SRCROOT)/CollageMaker/SupportingFiles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimasno1.CollageMaker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		843A582021144761002FE28D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C221B83DC51077FE8EDC16F /* Pods-CollageMaker.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P99EM85EA2;
+				INFOPLIST_FILE = "$(SRCROOT)/CollageMaker/SupportingFiles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimasno1.CollageMaker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		843A582221144761002FE28D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5C2B5278BB477A5EE048C5F /* Pods-CollageMakerTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P99EM85EA2;
+				INFOPLIST_FILE = CollageMakerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimasno1.CollageMakerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CollageMaker.app/CollageMaker";
+			};
+			name = Debug;
+		};
+		843A582321144761002FE28D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 363080534D0CDC336C68709A /* Pods-CollageMakerTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P99EM85EA2;
+				INFOPLIST_FILE = CollageMakerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimasno1.CollageMakerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CollageMaker.app/CollageMaker";
+			};
+			name = Release;
+		};
+		843A582521144761002FE28D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0560397CE2EE951F30D1EE6A /* Pods-CollageMakerUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P99EM85EA2;
+				INFOPLIST_FILE = CollageMakerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimasno1.CollageMakerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CollageMaker;
+			};
+			name = Debug;
+		};
+		843A582621144761002FE28D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D5ED321D13AAA86EF463EDA /* Pods-CollageMakerUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P99EM85EA2;
+				INFOPLIST_FILE = CollageMakerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimasno1.CollageMakerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CollageMaker;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		843A57F121144760002FE28D /* Build configuration list for PBXProject "CollageMaker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				843A581C21144761002FE28D /* Debug */,
+				843A581D21144761002FE28D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		843A581E21144761002FE28D /* Build configuration list for PBXNativeTarget "CollageMaker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				843A581F21144761002FE28D /* Debug */,
+				843A582021144761002FE28D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		843A582121144761002FE28D /* Build configuration list for PBXNativeTarget "CollageMakerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				843A582221144761002FE28D /* Debug */,
+				843A582321144761002FE28D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		843A582421144761002FE28D /* Build configuration list for PBXNativeTarget "CollageMakerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				843A582521144761002FE28D /* Debug */,
+				843A582621144761002FE28D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 843A57EE21144760002FE28D /* Project object */;
+}
