@@ -19,10 +19,9 @@
 		844EBCE721145273009DBC74 /* ToolsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EBCE621145273009DBC74 /* ToolsBar.swift */; };
 		844EBCE921145E17009DBC74 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EBCE821145E17009DBC74 /* ShareViewController.swift */; };
 		844EBCEB21145F16009DBC74 /* CanvasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EBCEA21145F16009DBC74 /* CanvasCell.swift */; };
+		84A91A5921188E5700108C3B /* CellAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A91A5821188E5700108C3B /* CellAttributes.swift */; };
 		84B160342114892600FF4713 /* CollageCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B160332114892600FF4713 /* CollageCanvas.swift */; };
-		84B1603621148C6300FF4713 /* CanvasCellContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1603521148C6300FF4713 /* CanvasCellContainer.swift */; };
 		84B1603B2114A59100FF4713 /* CollageCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1603A2114A59100FF4713 /* CollageCanvasViewController.swift */; };
-		84B1603D2114AB9C00FF4713 /* AbsolutePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B1603C2114AB9C00FF4713 /* AbsolutePosition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,10 +63,9 @@
 		844EBCE621145273009DBC74 /* ToolsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsBar.swift; sourceTree = "<group>"; };
 		844EBCE821145E17009DBC74 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		844EBCEA21145F16009DBC74 /* CanvasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCell.swift; sourceTree = "<group>"; };
+		84A91A5821188E5700108C3B /* CellAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellAttributes.swift; sourceTree = "<group>"; };
 		84B160332114892600FF4713 /* CollageCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageCanvas.swift; sourceTree = "<group>"; };
-		84B1603521148C6300FF4713 /* CanvasCellContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCellContainer.swift; sourceTree = "<group>"; };
 		84B1603A2114A59100FF4713 /* CollageCanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageCanvasViewController.swift; sourceTree = "<group>"; };
-		84B1603C2114AB9C00FF4713 /* AbsolutePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbsolutePosition.swift; sourceTree = "<group>"; };
 		939134D3EA6086601A613E2E /* Pods-CollageMaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMaker/Pods-CollageMaker.debug.xcconfig"; sourceTree = "<group>"; };
 		9C221B83DC51077FE8EDC16F /* Pods-CollageMaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMaker.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMaker/Pods-CollageMaker.release.xcconfig"; sourceTree = "<group>"; };
 		E5C2B5278BB477A5EE048C5F /* Pods-CollageMakerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMakerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMakerTests/Pods-CollageMakerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,10 +187,9 @@
 		84B160392114A4AD00FF4713 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				844EBCEA21145F16009DBC74 /* CanvasCell.swift */,
-				84B1603C2114AB9C00FF4713 /* AbsolutePosition.swift */,
-				84B1603521148C6300FF4713 /* CanvasCellContainer.swift */,
 				84B160332114892600FF4713 /* CollageCanvas.swift */,
+				844EBCEA21145F16009DBC74 /* CanvasCell.swift */,
+				84A91A5821188E5700108C3B /* CellAttributes.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -422,10 +419,9 @@
 				844EBCE721145273009DBC74 /* ToolsBar.swift in Sources */,
 				84B1603B2114A59100FF4713 /* CollageCanvasViewController.swift in Sources */,
 				844EBCEB21145F16009DBC74 /* CanvasCell.swift in Sources */,
-				84B1603621148C6300FF4713 /* CanvasCellContainer.swift in Sources */,
 				844EBCE921145E17009DBC74 /* ShareViewController.swift in Sources */,
-				84B1603D2114AB9C00FF4713 /* AbsolutePosition.swift in Sources */,
 				843A57FA21144760002FE28D /* AppDelegate.swift in Sources */,
+				84A91A5921188E5700108C3B /* CellAttributes.swift in Sources */,
 				84B160342114892600FF4713 /* CollageCanvas.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

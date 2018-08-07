@@ -17,6 +17,10 @@ class CollageSceneViewController: UIViewController {
         view.addSubview(canvasViewContainer)
         view.addSubview(bannerView)
         view.addSubview(toolsBar)
+        
+        toolsBar.delegate = self
+        
+        addChild(collageCanvasViewController, to: canvasViewContainer)
 
         makeConstraints()
     }
@@ -58,11 +62,7 @@ class CollageSceneViewController: UIViewController {
             make.top.equalTo(canvasViewContainer.snp.bottom).offset(offset)
         }
     }
-    
-    private func showCanvas(_ canvas: CollageCanvas) {
-        
-    }
-    
+ 
     @objc private func buttonTapped(_ button: UIButton) {
         switch button {
         case resetButton: break
@@ -92,5 +92,34 @@ class CollageSceneViewController: UIViewController {
     private let bannerView = UIView()
     private let toolsBar = ToolsBar()
     private let canvasViewContainer = UIView()
+    private lazy var collageCanvasViewController = CollageCanvasViewController()
     private lazy var shareViewController = ShareViewController(with: UIImage(named: "some")!)
+}
+
+extension UIViewController {
+    
+    func addChild(_ controller: UIViewController, to container: UIView) {
+        self.addChildViewController(controller)
+        controller.view.frame = container.bounds
+        container.addSubview(controller.view)
+        controller.didMove(toParentViewController: self)
+    }
+    
+    func removeFromParent() {
+        willMove(toParentViewController: nil)
+        view.removeFromSuperview()
+        removeFromParentViewController()
+        didMove(toParentViewController: nil)
+    }
+}
+
+extension CollageSceneViewController: UITabBarDelegate {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        switch item.tag {
+        case 0: break
+        case 1: print("YO")
+        default: break
+        }
+        
+    }
 }

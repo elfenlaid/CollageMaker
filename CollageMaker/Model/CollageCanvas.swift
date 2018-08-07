@@ -4,28 +4,35 @@
 
 import UIKit
 
+
 struct CollageCanvas {
     
-    init(cells: [CanvasCell]) {
-        self.canvasCells = cells
-    }
+    static var shared = CollageCanvas()
     
-    mutating func dropCell(with id: UUID) {
-        let cell = canvasCells.compactMap { $0.id == id ? $0 : nil }
-        defer { recentlyDeleted = cell }
+    private init() {}
+    
+    mutating func updateValue(cellAttributes: (UUID, CellAttributes)) {
+        let (key, value) = cellAttributes
         
-        canvasCells = canvasCells.filter { $0.id != id }
+        self.cellAttributes.updateValue(value, forKey: key)
     }
     
-    mutating func addCell(_ cell: CanvasCell) {
-        canvasCells.append(cell)
+    func cellsAttributes() -> [UUID: CellAttributes] {
+        return cellAttributes
     }
     
-    mutating func restoreRecentlyDeletedCell() {
-        defer { recentlyDeleted = [] }
-        canvasCells.append(contentsOf: recentlyDeleted)
+    func cellAttributes(for UUID: UUID) -> CellAttributes? {
+        return cellAttributes[UUID]
     }
     
-    private var recentlyDeleted: [CanvasCell] = []
-    private var canvasCells: [CanvasCell] = []
+    mutating func removeCell(with UUID: UUID) {
+        guard let attributes = cellAttributes.removeValue(forKey: UUID) else {
+            return
+        }
+        
+        recentlyDeleted = (UUID, attributes)
+    }
+ 
+    private var recentlyDeleted: (UUID, CellAttributes)?
+    private var cellAttributes: [UUID: CellAttributes] = [:]
 }
