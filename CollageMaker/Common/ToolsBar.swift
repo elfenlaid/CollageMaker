@@ -17,7 +17,4 @@ class ToolsBar: UITabBar {
     required init?(coder aDecoder: NSCoder) {
         fatalError("Not implemented")
     }
-    
-    
-    
 }
