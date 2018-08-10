@@ -7,6 +7,17 @@ import SnapKit
 
 class CollageSceneViewController: UIViewController {
     
+    init() {
+        super.init(nibName: nil, bundle: nil)
+     
+        collageViewContainer.backgroundColor = .yellow
+        collageViewContainer.contentMode = .scaleAspectFit
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
      
@@ -14,16 +25,15 @@ class CollageSceneViewController: UIViewController {
         
         view.addSubview(resetButton)
         view.addSubview(shareButton)
-        view.addSubview(canvasViewContainer)
+        view.addSubview(collageViewContainer)
         view.addSubview(bannerView)
         view.addSubview(toolsBar)
         
         toolsBar.delegate = self
-        
-        addChild(collageCanvasViewController, to: canvasViewContainer)
 
         makeConstraints()
     }
+  
     
     private func makeConstraints() {
         let offset: CGFloat = 20
@@ -41,32 +51,32 @@ class CollageSceneViewController: UIViewController {
             make.size.equalTo(resetButton)
         }
         
-        canvasViewContainer.snp.makeConstraints { make in
+        collageViewContainer.snp.makeConstraints { make in
             make.top.equalTo(resetButton.snp.bottom).offset(offset)
             make.left.equalTo(resetButton)
             make.right.equalTo(shareButton)
-            make.height.equalTo(canvasViewContainer.snp.width)
+            make.height.equalTo(collageViewContainer.snp.width)
         }
         
         toolsBar.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.height.equalTo(canvasViewContainer).dividedBy(5)
+            make.height.equalTo(collageViewContainer).dividedBy(5)
         }
         
         bannerView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalTo(toolsBar.snp.top)
-            make.top.equalTo(canvasViewContainer.snp.bottom).offset(offset)
+            make.top.equalTo(collageViewContainer.snp.bottom).offset(offset)
         }
     }
  
     @objc private func buttonTapped(_ button: UIButton) {
         switch button {
         case resetButton: break
-        case shareButton: shareViewController = ShareViewController(with: UIImage(named: "some")!)
+        case shareButton: break
         default: break
         }
     }
@@ -91,9 +101,7 @@ class CollageSceneViewController: UIViewController {
     
     private let bannerView = UIView()
     private let toolsBar = ToolsBar()
-    private let canvasViewContainer = UIView()
-    private lazy var collageCanvasViewController = CollageCanvasViewController()
-    private lazy var shareViewController = ShareViewController(with: UIImage(named: "some")!)
+    private let collageViewContainer = UIImageView()
 }
 
 extension UIViewController {
@@ -117,7 +125,9 @@ extension CollageSceneViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
         case 0: break
-        case 1: print("YO")
+        case 1: break
+//            collageCanvasViewController.splitCell(by: .horizontal)
+            
         default: break
         }
         
