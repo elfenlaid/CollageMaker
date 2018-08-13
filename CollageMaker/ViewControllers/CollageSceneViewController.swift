@@ -7,11 +7,11 @@ import SnapKit
 
 class CollageSceneViewController: UIViewController {
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-     
-        collageViewContainer.backgroundColor = .yellow
+    init(collage: Collage = Collage(cells: [])) {
+        collageViewController = CollageViewController(collage: collage)
         collageViewContainer.contentMode = .scaleAspectFit
+        
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -32,6 +32,8 @@ class CollageSceneViewController: UIViewController {
         toolsBar.delegate = self
 
         makeConstraints()
+        
+        addChild(collageViewController, to: collageViewContainer)
     }
   
     
@@ -102,6 +104,7 @@ class CollageSceneViewController: UIViewController {
     private let bannerView = UIView()
     private let toolsBar = ToolsBar()
     private let collageViewContainer = UIImageView()
+    private var collageViewController: CollageViewController
 }
 
 extension UIViewController {
@@ -126,10 +129,8 @@ extension CollageSceneViewController: UITabBarDelegate {
         switch item.tag {
         case 0: break
         case 1: break
-//            collageCanvasViewController.splitCell(by: .horizontal)
-            
         default: break
         }
-        
     }
+    
 }

@@ -16,9 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        Fabric.with([Crashlytics.self()])
         
+        let collageCell = CollageCell(grips: [], color: .red, image: nil, relativePosition: CGRect(x: 0, y: 0, width: 1, height: 1))
+        
+        var collage = Collage(cells: [collageCell])
+        
+        collage.split(cell: collageCell, by: .vertical)
+        collage.split(cell: collage.allCells().first!, by: .horizontal)
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        window?.rootViewController = CollageSceneViewController()
+        window?.rootViewController = CollageSceneViewController(collage: collage)
         window?.makeKeyAndVisible()
         
         return true

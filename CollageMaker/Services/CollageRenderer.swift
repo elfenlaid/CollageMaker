@@ -7,11 +7,11 @@ import UIKit
 class CollageRenderer {
     
     func renderImage(from collage: Collage, with size: CGSize) -> UIImage? {
-        let format = UIGraphicsImageRendererFormat.init(for: .init(userInterfaceIdiom: .pad))
+        let format = UIGraphicsImageRendererFormat(for: .init(userInterfaceIdiom: .pad))
         let renderer = UIGraphicsImageRenderer(size: size, format: format)
         
         return renderer.image { context in
-            collage.allCells().forEach { render(cell: $0, in: context)}
+            collage.allCells().forEach { render(cell: $0, in: context) }
         }
     }
     

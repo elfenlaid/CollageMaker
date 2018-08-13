@@ -6,7 +6,7 @@ import UIKit
 
 class CollageView: UIView {
     
-    init(collage: Collage, width: CGFloat) {
+    init(collage: Collage, width: CGFloat = 0) {
         self.collage = collage
         self.cellViews = collage.allCells().map(CollageCellView.init)
 
@@ -29,6 +29,7 @@ class CollageView: UIView {
         cellView.frame = cellView.collageCell.relativePosition.absolutePosition(in: bounds)
     }
     
-    private let collage: Collage
+    private var collage: Collage
     private var cellViews: [CollageCellView]
+    private var selectedCell: CollageCellView?
 }
