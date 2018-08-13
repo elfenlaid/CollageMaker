@@ -13,7 +13,17 @@ struct CollageCell {
     let color: UIColor
     let imageURL: String?
     let relativePosition: RelativePosition
+    let associatedGrip: [Grip]
    
+}
+
+extension CollageCell {
+    enum Grip {
+        case left
+        case right
+        case top
+        case bottom
+    }
 }
 
 extension RelativePosition {
@@ -24,4 +34,5 @@ extension RelativePosition {
                       height: height * rect.height)
     }
 }
+
 

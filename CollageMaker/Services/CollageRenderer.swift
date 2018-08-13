@@ -25,5 +25,6 @@ class CollageRenderer {
             context.fill(rect)
         }
     }
+    
 
 }

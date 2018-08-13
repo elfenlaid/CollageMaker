@@ -126,8 +126,6 @@ extension CollageSceneViewController: UITabBarDelegate {
         switch item.tag {
         case 0: break
         case 1: break
-//            collageCanvasViewController.splitCell(by: .horizontal)
-            
         default: break
         }
         

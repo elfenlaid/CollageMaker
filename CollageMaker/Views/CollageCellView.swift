@@ -8,7 +8,7 @@ class CollageCellView: UIView {
     
     init(collageCell: CollageCell) {
         self.collageCell = collageCell
-        super.init(frame: collageCell.relativePosition)
+        super.init(frame: .zero)
         
         addSubview(imageView)
         
