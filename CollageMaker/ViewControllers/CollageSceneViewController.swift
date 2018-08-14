@@ -7,11 +7,11 @@ import SnapKit
 
 class CollageSceneViewController: UIViewController {
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-     
-        collageViewContainer.backgroundColor = .yellow
+    init(collage: Collage = Collage(cells: [])) {
+        collageViewController = CollageViewController(collage: collage)
         collageViewContainer.contentMode = .scaleAspectFit
+        
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -32,6 +32,21 @@ class CollageSceneViewController: UIViewController {
         toolsBar.delegate = self
 
         makeConstraints()
+        
+        addChild(collageViewController, to: collageViewContainer)
+  
+        let cellOne = CollageCell(color: .red, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 0.5, height: 1), gripPositions: [])
+        let cellTwo = CollageCell(color: .yellow, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 1), gripPositions: [])
+        let someCell = CollageCell(color: .blue, image: UIImage(named: "wiggles@2x.jpeg")!, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 0.5), gripPositions: [])
+        let someAnotherCell = CollageCell(color: .cyan, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0.5, width: 0.5, height: 0.5), gripPositions: [])
+        
+        let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
+        let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
+        
+        let templateBar = TemplateBarCollectionViewController(collageTemplates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
+        templateBar.delegate = self
+        
+        addChild(templateBar, to: bannerView)
     }
   
     
@@ -101,7 +116,14 @@ class CollageSceneViewController: UIViewController {
     
     private let bannerView = UIView()
     private let toolsBar = ToolsBar()
-    private let collageViewContainer = UIImageView()
+    private let collageViewContainer = UIView()
+    private var collageViewController: CollageViewController
+}
+
+extension CollageSceneViewController: TemplateBarCollectionViewControllerDelegate {
+    func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, selected collage: Collage) {
+        collageViewController.changeCollage(to: collage)
+    }
 }
 
 extension UIViewController {
@@ -128,6 +150,6 @@ extension CollageSceneViewController: UITabBarDelegate {
         case 1: break
         default: break
         }
-        
     }
+    
 }

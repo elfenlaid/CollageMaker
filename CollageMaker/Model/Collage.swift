@@ -15,10 +15,6 @@ struct Collage {
         self.cells = cells
     }
     
-    func allCells() -> [CollageCell] {
-        return cells
-    }
-    
     mutating func add(cell: CollageCell) {
         cells.append(cell)
     }
@@ -32,30 +28,21 @@ struct Collage {
             return
         }
         
-        let (left, right) = cell.relativePosition.split(axis: axis)
-        let splitedCells = [
-            CollageCell(image: cell.image, color: cell.color, imageURL: cell.imageURL, relativePosition: left),
-            CollageCell(image: nil, color: .white, imageURL: nil, relativePosition: right)
-        ]
+        let (first, second) = cell.relativePosition.split(axis: axis)
+        
+        var firstCell =  CollageCell(color: cell.color, image: cell.image, relativePosition: first, gripPositions: [])
+        var secondCell = CollageCell(color: .gray, image: nil, relativePosition: second, gripPositions: [])
+        
+        firstCell.calculateGripPositions()
+        secondCell.calculateGripPositions()
         
         remove(cell: cell)
-        splitedCells.forEach { add(cell: $0) }
+        
+        add(cell: firstCell)
+        add(cell: secondCell)
     }
     
+    
     private var recentlyDeleted: CollageCell?
-    private var cells: [CollageCell] = []
-}
-
-
-extension RelativePosition {
-    func split(axis: Axis) -> (RelativePosition, RelativePosition) {
-        switch axis {
-        case .horizontal:
-            return (RelativePosition(origin: origin, size: CGSize(width: size.width / 2, height: size.height)),
-                    RelativePosition(origin: CGPoint(x: size.width / 2, y: origin.y), size: CGSize(width: size.width / 2, height: size.height)))
-        case .vertical:
-            return (RelativePosition(origin: origin, size: CGSize(width: size.width, height: size.height / 2)),
-                    RelativePosition(origin: CGPoint(x: origin.x, y: size.height / 2), size: CGSize(width: size.width, height: size.height / 2)))
-        }
-    }
+    private(set) var cells: [CollageCell] = []
 }
