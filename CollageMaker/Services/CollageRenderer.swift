@@ -21,7 +21,7 @@ class CollageRenderer {
         if let image = cell.image?.cgImage {
             context.cgContext.draw(image, in: rect)
         } else {
-            UIColor.white.setFill()
+            UIColor.gray.setFill()
             context.fill(rect)
         }
     }

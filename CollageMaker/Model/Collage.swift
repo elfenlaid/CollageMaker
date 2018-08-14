@@ -31,17 +31,24 @@ struct Collage {
         guard let cell = cells.first(where: { $0.id == cell.id }) else {
             return
         }
-     
+        
         let (first, second) = cell.relativePosition.split(axis: axis)
-   
-        let splitedCells = [
-            CollageCell(grips: cell.grips, color: cell.color, image: cell.image, relativePosition: first),
-            CollageCell(grips: [], color: .gray, image: nil, relativePosition: second)
-        ]
+        
+        var firstCell =  CollageCell(color: cell.color, image: cell.image, relativePosition: first, gripPositions: [])
+        var secondCell = CollageCell(color: .gray, image: nil, relativePosition: second, gripPositions: [])
+        
+        firstCell.calculateGripPositions()
+        secondCell.calculateGripPositions()
         
         remove(cell: cell)
-        splitedCells.forEach { add(cell: $0) }
+        
+        add(cell: firstCell)
+        add(cell: secondCell)
+        
+        print(firstCell.gripPositions)
+        print(secondCell.gripPositions)
     }
+    
     
     private var recentlyDeleted: CollageCell?
     private var cells: [CollageCell] = []

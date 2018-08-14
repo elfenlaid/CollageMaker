@@ -16,12 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        Fabric.with([Crashlytics.self()])
         
-        let collageCell = CollageCell(grips: [], color: .red, image: nil, relativePosition: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let collageCell = CollageCell(color: .blue, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 1, height: 1), gripPositions: [])
         
         var collage = Collage(cells: [collageCell])
         
         collage.split(cell: collageCell, by: .vertical)
         collage.split(cell: collage.allCells().first!, by: .horizontal)
+        collage.split(cell: collage.allCells().first!, by: .horizontal)
+        collage.split(cell: collage.allCells().first!, by: .vertical)
+        
+        let renderer = CollageRenderer.init()
+        
+        let image = renderer.renderImage(from: collage, with: CGSize(width: 75, height: 75))
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
