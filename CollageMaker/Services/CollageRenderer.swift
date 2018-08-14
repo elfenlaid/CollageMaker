@@ -9,7 +9,7 @@ class CollageRenderer {
     static func renderImage(from collage: Collage, with size: CGSize) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { context in
-            collage.allCells().forEach { render(cell: $0, in: context) }
+            collage.cells.forEach { render(cell: $0, in: context) }
         }
     }
     

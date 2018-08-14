@@ -15,10 +15,6 @@ struct Collage {
         self.cells = cells
     }
     
-    func allCells() -> [CollageCell] {
-        return cells
-    }
-    
     mutating func add(cell: CollageCell) {
         cells.append(cell)
     }
@@ -44,12 +40,9 @@ struct Collage {
         
         add(cell: firstCell)
         add(cell: secondCell)
-        
-        print(firstCell.gripPositions)
-        print(secondCell.gripPositions)
     }
     
     
     private var recentlyDeleted: CollageCell?
-    private var cells: [CollageCell] = []
+    private(set) var cells: [CollageCell] = []
 }

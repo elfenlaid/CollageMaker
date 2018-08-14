@@ -33,7 +33,7 @@ class CollageViewController: UIViewController {
     func changeCollage(to: Collage) {
         self.collage = to
     }
-    
+
     private var collage: Collage {
         didSet {
             collageView.removeFromSuperview()

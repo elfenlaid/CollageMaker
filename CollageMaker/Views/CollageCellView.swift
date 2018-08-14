@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CollageCellView: UIView {
     
@@ -17,14 +18,15 @@ class CollageCellView: UIView {
         self.collageCell = collageCell
         super.init(frame: .zero)
         
-        addSubview(imageView)
-        addGestureRecognizer(tapGestureRecognizer)
-        
         imageView.frame = bounds
+        
         backgroundColor = collageCell.color
         
         layer.borderColor = UIColor.white.cgColor
         layer.borderWidth = 3
+    
+        addSubview(imageView)
+        makeConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,12 +36,13 @@ class CollageCellView: UIView {
     func set(image: UIImage) {
         imageView.image = image
     }
-    
-    @objc private func tapped(recognizer: UITapGestureRecognizer) {
-        state = .selected
+  
+    private func makeConstraints() {
+        imageView.snp.makeConstraints { make in
+            make.margins.equalToSuperview()
+        }
     }
     
     private let imageView = UIImageView()
     private (set) var collageCell: CollageCell
-    private let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped(recognizer:)))
 }

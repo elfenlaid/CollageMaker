@@ -21,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var collage = Collage(cells: [collageCell])
         
         collage.split(cell: collageCell, by: .vertical)
-        collage.split(cell: collage.allCells().first!, by: .horizontal)
-        collage.split(cell: collage.allCells().first!, by: .horizontal)
-        collage.split(cell: collage.allCells().first!, by: .vertical)
+        collage.split(cell: collage.cells.first!, by: .horizontal)
+        collage.split(cell: collage.cells.first!, by: .horizontal)
+        collage.split(cell: collage.cells.first!, by: .vertical)
         
         
         self.window = UIWindow(frame: UIScreen.main.bounds)

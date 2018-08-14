@@ -34,9 +34,7 @@ class CollageSceneViewController: UIViewController {
         makeConstraints()
         
         addChild(collageViewController, to: collageViewContainer)
-        
-        
-        
+  
         let cellOne = CollageCell(color: .red, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 0.5, height: 1), gripPositions: [])
         let cellTwo = CollageCell(color: .yellow, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 1), gripPositions: [])
         let someCell = CollageCell(color: .blue, image: UIImage(named: "wiggles@2x.jpeg")!, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 0.5), gripPositions: [])
@@ -118,7 +116,7 @@ class CollageSceneViewController: UIViewController {
     
     private let bannerView = UIView()
     private let toolsBar = ToolsBar()
-    private let collageViewContainer = UIImageView()
+    private let collageViewContainer = UIView()
     private var collageViewController: CollageViewController
 }
 
