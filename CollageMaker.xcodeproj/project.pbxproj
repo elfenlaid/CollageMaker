@@ -196,9 +196,9 @@
 		843A582A211447F8002FE28D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				848713232122E948003519F7 /* TemplateBarCollectionViewController */,
 				843A5828211447DC002FE28D /* CollageSceneViewController.swift */,
 				849B681F2121979C0091AD27 /* CollageViewController.swift */,
+				848713232122E948003519F7 /* TemplateBarCollectionViewController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

@@ -46,6 +46,7 @@ class CollageSceneViewController: UIViewController {
         let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
         
         let templateBar = TemplateBarCollectionViewController(collageTemplates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
+        templateBar.delegate = self
         
         addChild(templateBar, to: bannerView)
     }
@@ -119,6 +120,12 @@ class CollageSceneViewController: UIViewController {
     private let toolsBar = ToolsBar()
     private let collageViewContainer = UIImageView()
     private var collageViewController: CollageViewController
+}
+
+extension CollageSceneViewController: TemplateBarCollectionViewControllerDelegate {
+    func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, selected collage: Collage) {
+        collageViewController.changeCollage(to: collage)
+    }
 }
 
 extension UIViewController {

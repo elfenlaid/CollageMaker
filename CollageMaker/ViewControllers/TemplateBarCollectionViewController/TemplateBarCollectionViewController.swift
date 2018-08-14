@@ -4,7 +4,13 @@
 
 import UIKit
 
+protocol TemplateBarCollectionViewControllerDelegate: AnyObject {
+    func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, selected collage: Collage)
+}
+
 class TemplateBarCollectionViewController: UICollectionViewController {
+    
+    weak var delegate: TemplateBarCollectionViewControllerDelegate?
     
     init(collageTemplates: [Collage]) {
         self.templates = collageTemplates
@@ -26,6 +32,7 @@ class TemplateBarCollectionViewController: UICollectionViewController {
             return
         }
         
+        layout.minimumInteritemSpacing = 50
         layout.scrollDirection = .horizontal
     }
     
@@ -45,16 +52,30 @@ class TemplateBarCollectionViewController: UICollectionViewController {
         return templateBarCell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let collage = templates[indexPath.row]
+        
+        delegate?.templateBarCollectionViewController(self, selected: collage)
+    }
+    
     private var templates: [Collage]
 }
 
 extension TemplateBarCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 5, height: collectionView.frame.height / 3)
+        let minValue = min(collectionView.frame.width, collectionView.frame.height) / 2
+        
+        return CGSize(width: minValue / 2, height: minValue / 2)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
+        let minValue = min(collectionView.frame.width, collectionView.frame.height)
+        
+        return UIEdgeInsets(top: minValue / 4, left: 40, bottom: minValue / 4, right: 40)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 50
     }
 }

@@ -50,11 +50,7 @@ class TemplateBarCollectionViewCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 self?.imageView.image = image
             }
-            
         }
-        
-        
-        
     }
     
     private func makeConstraints() {

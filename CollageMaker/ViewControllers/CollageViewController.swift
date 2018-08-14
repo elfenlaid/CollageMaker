@@ -9,6 +9,7 @@ class CollageViewController: UIViewController {
     init(collage: Collage) {
         let collageView = CollageView(collage: collage)
         
+        self.collage = collage
         self.collageView = collageView
         super.init(nibName: nil, bundle: nil)
     }
@@ -29,5 +30,20 @@ class CollageViewController: UIViewController {
         collageView.frame = view.bounds
     }
     
-    private let collageView: CollageView
+    func changeCollage(to: Collage) {
+        self.collage = to
+    }
+    
+    private var collage: Collage {
+        didSet {
+            collageView.removeFromSuperview()
+            collageView = CollageView(collage: collage)
+            
+            view.addSubview(collageView)
+            view.setNeedsLayout()
+            view.layoutIfNeeded()
+        }
+    }
+    
+    private var collageView: CollageView
 }
