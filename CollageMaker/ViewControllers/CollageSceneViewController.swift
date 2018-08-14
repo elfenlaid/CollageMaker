@@ -34,6 +34,20 @@ class CollageSceneViewController: UIViewController {
         makeConstraints()
         
         addChild(collageViewController, to: collageViewContainer)
+        
+        
+        
+        let cellOne = CollageCell(color: .red, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 0.5, height: 1), gripPositions: [])
+        let cellTwo = CollageCell(color: .yellow, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 1), gripPositions: [])
+        let someCell = CollageCell(color: .blue, image: UIImage(named: "wiggles@2x.jpeg")!, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 0.5), gripPositions: [])
+        let someAnotherCell = CollageCell(color: .cyan, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0.5, width: 0.5, height: 0.5), gripPositions: [])
+        
+        let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
+        let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
+        
+        let templateBar = TemplateBarCollectionViewController(collageTemplates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
+        
+        addChild(templateBar, to: bannerView)
     }
   
     

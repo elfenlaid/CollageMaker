@@ -25,9 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         collage.split(cell: collage.allCells().first!, by: .horizontal)
         collage.split(cell: collage.allCells().first!, by: .vertical)
         
-        let renderer = CollageRenderer.init()
-        
-        let image = renderer.renderImage(from: collage, with: CGSize(width: 75, height: 75))
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
