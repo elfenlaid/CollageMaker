@@ -9,11 +9,17 @@ enum Axis {
     case vertical
 }
 
+protocol CollageDelegate: AnyObject {
+    func collage(_ collage: Collage, didChangeSelected cell: CollageCell)
+}
+
 class Collage {
+    
+    weak var delegate: CollageDelegate?
     
     init(cells: [CollageCell]) {
         if cells.count < 1 {
-            let initialCell = CollageCell(color: .white, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 1, height: 1))
+            let initialCell = CollageCell(color: .lightGray, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 1, height: 1))
             
             self.cells = [initialCell]
             self.selectedCell = initialCell
@@ -23,8 +29,8 @@ class Collage {
         }
     }
     
-    func update(cell: CollageCell) {
-        
+    func setSelected(cell: CollageCell) {
+        selectedCell = cell
     }
     
     func add(cell: CollageCell) {
@@ -53,23 +59,28 @@ class Collage {
         let firstCell =  CollageCell(color: cell.color, image: cell.image, relativePosition: firstPosition)
         let secondCell = CollageCell(color: .gray, image: nil, relativePosition: secondPosition)
         
-        remove(cell: cell)
-        
         add(cell: firstCell)
         add(cell: secondCell)
+        
+        remove(cell: cell)
     }
     
     func cell(at point: CGPoint, in rect: CGRect) -> CollageCell? {
         let relativePoint = CGPoint(x: point.x / rect.width,
                                     y: point.y / rect.height)
         
-        selectedCell = cells.first(where: { $0.relativePosition.contains(relativePoint) })
-        
-        return selectedCell
+        return cells.first(where: { $0.relativePosition.contains(relativePoint) })
+    }
+    
+    private(set) var selectedCell: CollageCell? {
+        didSet {
+            if let cell = selectedCell {
+                delegate?.collage(self, didChangeSelected: cell)
+            }
+        }
     }
     
     private var recentlyDeleted: CollageCell?
-    private(set) var selectedCell: CollageCell?
     private(set) var cells: [CollageCell] = []
 }
 
