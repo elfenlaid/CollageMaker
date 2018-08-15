@@ -48,7 +48,9 @@ class TemplateBarCollectionViewCell: UICollectionViewCell {
             let image = CollageRenderer.renderImage(from: collage, with: CGSize(width: 75, height: 75))
             
             DispatchQueue.main.async {
-                self?.imageView.image = image
+                if let currentCollage = self?.collage, currentCollage == collage {
+                    self?.imageView.image = image
+                }
             }
         }
     }

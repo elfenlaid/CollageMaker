@@ -35,10 +35,10 @@ class CollageSceneViewController: UIViewController {
         
         addChild(collageViewController, to: collageViewContainer)
   
-        let cellOne = CollageCell(color: .red, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 0.5, height: 1), gripPositions: [])
-        let cellTwo = CollageCell(color: .yellow, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 1), gripPositions: [])
-        let someCell = CollageCell(color: .blue, image: UIImage(named: "wiggles@2x.jpeg")!, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 0.5), gripPositions: [])
-        let someAnotherCell = CollageCell(color: .cyan, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0.5, width: 0.5, height: 0.5), gripPositions: [])
+        let cellOne = CollageCell(color: .red, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 0.5, height: 1))
+        let cellTwo = CollageCell(color: .yellow, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 1))
+        let someCell = CollageCell(color: .blue, image: UIImage(named: "wiggles@2x.jpeg")!, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 0.5))
+        let someAnotherCell = CollageCell(color: .cyan, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0.5, width: 0.5, height: 0.5))
         
         let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
         let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
@@ -87,18 +87,19 @@ class CollageSceneViewController: UIViewController {
             make.top.equalTo(collageViewContainer.snp.bottom).offset(offset)
         }
     }
- 
-    @objc private func buttonTapped(_ button: UIButton) {
-        switch button {
-        case resetButton: break
-        case shareButton: break
-        default: break
-        }
+    
+    @objc private func resetCollage() {
+        
     }
     
+    @objc private func shareCollage() {
+        
+    }
+ 
     private let resetButton: UIButton = {
         let button = UIButton(type: .system)
         
+        button.addTarget(self, action: #selector(resetCollage), for: .touchUpInside)
         button.setTitle("Reset", for: .normal)
         button.setTitleColor(.black, for: .normal)
         
@@ -108,6 +109,7 @@ class CollageSceneViewController: UIViewController {
     private let shareButton: UIButton = {
         let button = UIButton(type: .system)
         
+        button.addTarget(self, action: #selector(shareCollage), for: .touchUpInside)
         button.setTitle("Share", for: .normal)
         button.setTitleColor(.black, for: .normal)
         
@@ -121,7 +123,7 @@ class CollageSceneViewController: UIViewController {
 }
 
 extension CollageSceneViewController: TemplateBarCollectionViewControllerDelegate {
-    func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, selected collage: Collage) {
+    func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, didSelect collage: Collage) {
         collageViewController.changeCollage(to: collage)
     }
 }
