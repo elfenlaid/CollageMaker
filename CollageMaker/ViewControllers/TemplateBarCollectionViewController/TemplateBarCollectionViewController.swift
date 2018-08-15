@@ -5,7 +5,7 @@
 import UIKit
 
 protocol TemplateBarCollectionViewControllerDelegate: AnyObject {
-    func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, selected collage: Collage)
+    func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, didSelect collage: Collage)
 }
 
 class TemplateBarCollectionViewController: UICollectionViewController {
@@ -55,7 +55,7 @@ class TemplateBarCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let collage = templates[indexPath.row]
         
-        delegate?.templateBarCollectionViewController(self, selected: collage)
+        delegate?.templateBarCollectionViewController(self, didSelect: collage)
     }
     
     private var templates: [Collage]

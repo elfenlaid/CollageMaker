@@ -20,7 +20,6 @@ class CollageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.addSubview(collageView)
     }
     
@@ -45,5 +44,16 @@ class CollageViewController: UIViewController {
         }
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        
+        let point = touch.location(in: view)
+        
+        let selectedCell = collage.cell(at: point, in: view.frame)
+        selectedCell?.changeState(to: .selected)
+    }
+
     private var collageView: CollageView
 }

@@ -6,14 +6,27 @@ import UIKit
 
 typealias RelativePosition = CGRect
 
-struct CollageCell {
-
+class CollageCell {
+    
     let color: UIColor
     let id: UUID = UUID.init()
     let image: UIImage?
     var relativePosition: RelativePosition
     
-    mutating func calculateGripPositions(){
+    enum State {
+        case selected
+        case normal
+    }
+    
+    init(color: UIColor, image: UIImage? = nil, relativePosition: RelativePosition) {
+        self.color = color
+        self.image = image
+        self.relativePosition = relativePosition
+        
+        calculateGripPositions()
+    }
+
+    private func calculateGripPositions(){
         guard relativePosition.isFullsized == false else { return }
         
         if !relativePosition.hasMaximumWidth {
@@ -27,7 +40,13 @@ struct CollageCell {
         }
     }
     
-    private(set) var gripPositions: Set<GripPosition> = []
+    private var gripPositions: Set<GripPosition> = []
+}
+
+extension CollageCell: Equatable {
+    static func ==(lhs: CollageCell, rhs: CollageCell) -> Bool {
+        return lhs.color == rhs.color && lhs.gripPositions == rhs.gripPositions && lhs.id == rhs.id && lhs.image == rhs.image
+    }
 }
 
 enum GripPosition {
@@ -37,7 +56,9 @@ enum GripPosition {
     case right
 }
 
+
 extension RelativePosition {
+    
     func absolutePosition(in rect: CGRect) -> CGRect {
         return CGRect(x: origin.x * rect.width,
                       y: origin.y * rect.height,

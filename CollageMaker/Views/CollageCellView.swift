@@ -7,18 +7,9 @@ import SnapKit
 
 class CollageCellView: UIView {
     
-    var state: State = .normal
-    
-    enum State {
-        case selected
-        case normal
-    }
-    
     init(collageCell: CollageCell) {
         self.collageCell = collageCell
         super.init(frame: .zero)
-        
-        imageView.frame = bounds
         
         backgroundColor = collageCell.color
         
