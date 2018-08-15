@@ -8,7 +8,9 @@ import SnapKit
 class CollageSceneViewController: UIViewController {
     
     init(collage: Collage = Collage(cells: [])) {
-        collageViewController = CollageViewController(collage: collage)
+        collageViewController = CollageViewController()
+        collageViewController.set(collage: collage)
+        
         collageViewContainer.contentMode = .scaleAspectFit
         
         super.init(nibName: nil, bundle: nil)
@@ -85,7 +87,7 @@ class CollageSceneViewController: UIViewController {
     }
     
     @objc private func resetCollage() {
-        collageViewController.changeCollage(to: Collage(cells: []))
+        collageViewController.set(collage: Collage(cells: []))
     }
     
     @objc private func shareCollage() {
@@ -120,7 +122,7 @@ class CollageSceneViewController: UIViewController {
 
 extension CollageSceneViewController: TemplateBarCollectionViewControllerDelegate {
     func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, didSelect collage: Collage) {
-        collageViewController.changeCollage(to: collage)
+        collageViewController.set(collage: collage)
     }
 }
 

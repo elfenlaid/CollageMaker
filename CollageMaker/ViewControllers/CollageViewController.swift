@@ -12,22 +12,6 @@ class CollageViewController: UIViewController {
     
     weak var delegate: CollageViewControllerDelegate?
     
-    init(collage: Collage) {
-        let collageView = CollageView(collage: collage)
-        
-        self.collage = collage
-        self.collageView = collageView
-        
-        super.init(nibName: nil, bundle: nil)
-        
-        collage.delegate = self
-        collageView.delegate = self
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Not implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,12 +24,16 @@ class CollageViewController: UIViewController {
         collageView.frame = view.bounds
     }
     
-    func changeCollage(to: Collage) {
-        self.collage = to
+    func set(collage: Collage) {
+        self.collage = collage
     }
     
-    private var collage: Collage {
+    private var collage: Collage? {
         didSet {
+            guard let collage = collage else {
+                return
+            }
+            
             collage.delegate = self
             
             collageView.removeFromSuperview()
@@ -58,18 +46,18 @@ class CollageViewController: UIViewController {
         }
     }
     
-    private var collageView: CollageView
+    private lazy var collageView = CollageView(collage: Collage(cells: []))
 }
 
 
 extension CollageViewController: CollageViewDelegate {
     
     func collageView(_ collageView: CollageView, tapped point: CGPoint) {
-        guard let cellForPoint = collage.cell(at: point, in: collageView.frame) else {
+        guard let cellForPoint = collage?.cell(at: point, in: collageView.frame) else {
             return
         }
         
-        collage.setSelected(cell: cellForPoint)
+        collage?.setSelected(cell: cellForPoint)
     }
 }
 
@@ -80,7 +68,6 @@ extension CollageViewController: CollageDelegate {
         }
         
         collageView.setSelected(cellView: selectedCellView)
-        collageView.highlightSelected()
     }
 
 }
