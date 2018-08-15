@@ -22,30 +22,26 @@ class CollageSceneViewController: UIViewController {
         super.viewDidLoad()
      
         view.backgroundColor = .white
-        
         view.addSubview(resetButton)
         view.addSubview(shareButton)
         view.addSubview(collageViewContainer)
         view.addSubview(bannerView)
         view.addSubview(toolsBar)
-        
-        toolsBar.delegate = self
 
         makeConstraints()
-        
-        addChild(collageViewController, to: collageViewContainer)
   
         let cellOne = CollageCell(color: .red, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 0.5, height: 1))
         let cellTwo = CollageCell(color: .yellow, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 1))
         let someCell = CollageCell(color: .blue, image: UIImage(named: "wiggles@2x.jpeg")!, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 0.5))
         let someAnotherCell = CollageCell(color: .cyan, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0.5, width: 0.5, height: 0.5))
-        
         let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
         let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
-        
         let templateBar = TemplateBarCollectionViewController(collageTemplates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
-        templateBar.delegate = self
         
+        templateBar.delegate = self
+        toolsBar.delegate = self
+        
+        addChild(collageViewController, to: collageViewContainer)
         addChild(templateBar, to: bannerView)
     }
   
@@ -89,7 +85,7 @@ class CollageSceneViewController: UIViewController {
     }
     
     @objc private func resetCollage() {
-        
+        collageViewController.changeCollage(to: Collage(cells: []))
     }
     
     @objc private func shareCollage() {

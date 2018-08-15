@@ -4,14 +4,24 @@
 
 import UIKit
 
+protocol CollageViewControllerDelegate: AnyObject {
+    func collageViewController(_ controller: CollageViewController, didSelect cell: CollageCell)
+}
+
 class CollageViewController: UIViewController {
+    
+    weak var delegate: CollageViewControllerDelegate?
     
     init(collage: Collage) {
         let collageView = CollageView(collage: collage)
         
         self.collage = collage
         self.collageView = collageView
+        
         super.init(nibName: nil, bundle: nil)
+        
+        collage.delegate = self
+        collageView.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -20,6 +30,7 @@ class CollageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.addSubview(collageView)
     }
     
@@ -32,11 +43,14 @@ class CollageViewController: UIViewController {
     func changeCollage(to: Collage) {
         self.collage = to
     }
-
+    
     private var collage: Collage {
         didSet {
+            collage.delegate = self
+            
             collageView.removeFromSuperview()
             collageView = CollageView(collage: collage)
+            collageView.delegate = self
             
             view.addSubview(collageView)
             view.setNeedsLayout()
@@ -44,16 +58,29 @@ class CollageViewController: UIViewController {
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
+    private var collageView: CollageView
+}
+
+
+extension CollageViewController: CollageViewDelegate {
+    
+    func collageView(_ collageView: CollageView, tapped point: CGPoint) {
+        guard let cellForPoint = collage.cell(at: point, in: collageView.frame) else {
             return
         }
         
-        let point = touch.location(in: view)
+        collage.setSelected(cell: cellForPoint)
+    }
+}
+
+extension CollageViewController: CollageDelegate {
+    func collage(_ collage: Collage, didChangeSelected cell: CollageCell) {
+        guard let selectedCellView = collageView.cellViews.first(where: { $0.collageCell.id ==  cell.id }) else {
+            return
+        }
         
-        let selectedCell = collage.cell(at: point, in: view.frame)
-        selectedCell?.changeState(to: .selected)
+        collageView.setSelected(cellView: selectedCellView)
+        collageView.highlightSelected()
     }
 
-    private var collageView: CollageView
 }

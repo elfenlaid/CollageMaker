@@ -12,12 +12,7 @@ class CollageCell {
     let id: UUID = UUID.init()
     let image: UIImage?
     var relativePosition: RelativePosition
-    
-    enum State {
-        case selected
-        case normal
-    }
-    
+
     init(color: UIColor, image: UIImage? = nil, relativePosition: RelativePosition) {
         self.color = color
         self.image = image
