@@ -12,8 +12,8 @@ class TemplateBarCollectionViewController: UICollectionViewController {
     
     weak var delegate: TemplateBarCollectionViewControllerDelegate?
     
-    init(collageTemplates: [Collage]) {
-        self.templates = collageTemplates
+    init(templates: [Collage]) {
+        self.templates = templates
         
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }

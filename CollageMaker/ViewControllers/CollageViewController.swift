@@ -53,11 +53,11 @@ class CollageViewController: UIViewController {
 extension CollageViewController: CollageViewDelegate {
     
     func collageView(_ collageView: CollageView, tapped point: CGPoint) {
-        guard let cellForPoint = collage?.cell(at: point, in: collageView.frame) else {
+        guard let selectedCell = collage?.cell(at: point, in: collageView.frame) else {
             return
         }
         
-        collage?.setSelected(cell: cellForPoint)
+        collage?.setSelected(cell: selectedCell)
     }
 }
 

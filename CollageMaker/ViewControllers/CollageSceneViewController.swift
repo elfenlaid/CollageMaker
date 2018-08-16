@@ -38,7 +38,7 @@ class CollageSceneViewController: UIViewController {
         let someAnotherCell = CollageCell(color: .cyan, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0.5, width: 0.5, height: 0.5))
         let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
         let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
-        let templateBar = TemplateBarCollectionViewController(collageTemplates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
+        let templateBar = TemplateBarCollectionViewController(templates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
         
         templateBar.delegate = self
         toolsBar.delegate = self
