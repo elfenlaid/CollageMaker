@@ -36,9 +36,10 @@ class CollageView: UIView {
     
     func setSelected(cellView: CollageCellView) {
         selectedCellView = cellView
+        highlightSelected()
     }
     
-    func highlightSelected() {
+    private func highlightSelected() {
         guard let selectedCellView = selectedCellView else {
             return
         }
