@@ -55,10 +55,11 @@ class TemplateBarCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let collage = templates[indexPath.row]
         
+        collage.reset()
         delegate?.templateBarCollectionViewController(self, didSelect: collage)
     }
     
-    private var templates: [Collage]
+    private let templates: [Collage]
 }
 
 extension TemplateBarCollectionViewController: UICollectionViewDelegateFlowLayout {

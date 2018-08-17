@@ -11,6 +11,7 @@ enum Axis {
 
 protocol CollageDelegate: AnyObject {
     func collage(_ collage: Collage, didChangeSelected cell: CollageCell)
+    func collageChanged(to collage: Collage)
 }
 
 class Collage {
@@ -27,6 +28,8 @@ class Collage {
             self.cells = cells
             self.selectedCell = cells.first
         }
+        
+        self.initialStateCells = cells
     }
     
     func setSelected(cell: CollageCell) {
@@ -49,8 +52,8 @@ class Collage {
         cells = cells.filter { $0.id != cell.id }
     }
     
-    func split(cell: CollageCell, by axis: Axis) {
-        guard let cell = cells.first(where: { $0.id == cell.id }) else {
+    func split(by axis: Axis) {
+        guard let cell = selectedCell else {
             return
         }
         
@@ -63,6 +66,10 @@ class Collage {
         add(cell: secondCell)
         
         remove(cell: cell)
+        
+        selectedCell = secondCell
+        
+        delegate?.collageChanged(to: self)
     }
     
     func cell(at point: CGPoint, in rect: CGRect) -> CollageCell? {
@@ -70,6 +77,11 @@ class Collage {
                                     y: point.y / rect.height)
         
         return cells.first(where: { $0.relativePosition.contains(relativePoint) })
+    }
+    
+    func reset() {
+        cells = initialStateCells
+        delegate?.collageChanged(to: self)
     }
     
     private(set) var selectedCell: CollageCell? {
@@ -80,6 +92,7 @@ class Collage {
         }
     }
     
+    private let initialStateCells: [CollageCell]
     private var recentlyDeleted: CollageCell?
     private(set) var cells: [CollageCell] = []
 }

@@ -19,10 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let collage = Collage(cells: [])
         
-        collage.split(cell: collageCell, by: .vertical)
-        collage.split(cell: collage.cells.first!, by: .horizontal)
-        collage.split(cell: collage.cells.first!, by: .horizontal)
-        collage.split(cell: collage.cells.first!, by: .vertical)
+        collage.split(by: .vertical)
+        collage.split(by: .horizontal)
+        collage.split(by: .horizontal)
+        collage.split(by: .vertical)
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
