@@ -20,7 +20,7 @@ class Collage {
     
     init(cells: [CollageCell]) {
         if cells.count < 1 {
-            let initialCell = CollageCell(color: .lightGray, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 1, height: 1))
+            let initialCell = CollageCell(color: .random, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 1, height: 1))
             
             self.cells = [initialCell]
             self.selectedCell = initialCell
@@ -60,7 +60,7 @@ class Collage {
         let (firstPosition, secondPosition) = cell.relativePosition.split(axis: axis)
         
         let firstCell =  CollageCell(color: cell.color, image: cell.image, relativePosition: firstPosition)
-        let secondCell = CollageCell(color: .gray, image: nil, relativePosition: secondPosition)
+        let secondCell = CollageCell(color: .random, image: nil, relativePosition: secondPosition)
         
         add(cell: firstCell)
         add(cell: secondCell)

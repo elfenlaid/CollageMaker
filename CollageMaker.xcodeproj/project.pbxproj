@@ -10,6 +10,7 @@
 		1929D0E5095DCC541D5B2D97 /* Pods_CollageMaker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E5F6231635FF3BBC1D62583 /* Pods_CollageMaker.framework */; };
 		28271A93D8342F6A0C3F4C84 /* libPods-CollageMakerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B77FF1D8BDD83B47B970E7 /* libPods-CollageMakerTests.a */; };
 		444350C9F9029A611D1C00A4 /* libPods-CollageMakerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C919B544C6ABA0903801BC0 /* libPods-CollageMakerUITests.a */; };
+		841469672126EEE400C2838A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841469662126EEE400C2838A /* UIColor.swift */; };
 		8417D1B8211DC1C500334661 /* CollageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8417D1B7211DC1C500334661 /* CollageRenderer.swift */; };
 		8417D1BA211DCABC00334661 /* CollageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8417D1B9211DCABC00334661 /* CollageCellView.swift */; };
 		843A57FA21144760002FE28D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A57F921144760002FE28D /* AppDelegate.swift */; };
@@ -53,6 +54,7 @@
 		3D5ED321D13AAA86EF463EDA /* Pods-CollageMakerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMakerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMakerUITests/Pods-CollageMakerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6C919B544C6ABA0903801BC0 /* libPods-CollageMakerUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CollageMakerUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E5F6231635FF3BBC1D62583 /* Pods_CollageMaker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollageMaker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		841469662126EEE400C2838A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		8417D1B7211DC1C500334661 /* CollageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageRenderer.swift; sourceTree = "<group>"; };
 		8417D1B9211DCABC00334661 /* CollageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageCellView.swift; sourceTree = "<group>"; };
 		843A57F621144760002FE28D /* CollageMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollageMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +124,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		841469682126F08900C2838A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				841469662126EEE400C2838A /* UIColor.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		8417D1B6211DC03C00334661 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +171,7 @@
 				84E2720B211DE8D7001CDCB9 /* Views */,
 				84B160392114A4AD00FF4713 /* Model */,
 				8475DD93211DE5B100044225 /* Services */,
+				841469682126F08900C2838A /* Extensions */,
 				8417D1B6211DC03C00334661 /* Common */,
 				843A58272114477E002FE28D /* SupportingFiles */,
 			);
@@ -472,6 +483,7 @@
 				843A57FA21144760002FE28D /* AppDelegate.swift in Sources */,
 				84A91A5921188E5700108C3B /* CollageCell.swift in Sources */,
 				8417D1B8211DC1C500334661 /* CollageRenderer.swift in Sources */,
+				841469672126EEE400C2838A /* UIColor.swift in Sources */,
 				84E2720A211DE8B0001CDCB9 /* CollageView.swift in Sources */,
 				84D389E62125CF5200FCDC67 /* GripView.swift in Sources */,
 				84B160342114892600FF4713 /* Collage.swift in Sources */,
