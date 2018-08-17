@@ -52,7 +52,7 @@ class Collage {
         cells = cells.filter { $0.id != cell.id }
     }
     
-    func split(by axis: Axis) {
+    func splitSelectedCell(by axis: Axis) {
         guard let cell = selectedCell else {
             return
         }
@@ -67,7 +67,7 @@ class Collage {
         
         remove(cell: cell)
         
-        selectedCell = secondCell
+        setSelected(cell: secondCell)
         
         delegate?.collageChanged(to: self)
     }

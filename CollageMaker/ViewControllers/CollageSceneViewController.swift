@@ -115,7 +115,7 @@ class CollageSceneViewController: UIViewController {
     }()
     
     func split(by axis: Axis) {
-        collageViewController.collage?.split(by: axis)
+        collageViewController.collage?.splitSelectedCell(by: axis)
     }
     
     private let bannerView = UIView()
@@ -150,8 +150,8 @@ extension UIViewController {
 extension CollageSceneViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
-        case 0: collageViewController.collage?.split(by: .horizontal)
-        case 1: collageViewController.collage?.split(by: .vertical)
+        case 0: collageViewController.collage?.splitSelectedCell(by: .horizontal)
+        case 1: collageViewController.collage?.splitSelectedCell(by: .vertical)
         default: break
         }
     }
