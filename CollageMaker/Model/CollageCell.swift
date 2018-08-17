@@ -35,7 +35,7 @@ class CollageCell {
         }
     }
     
-    private var gripPositions: Set<GripPosition> = []
+    private(set) var gripPositions: Set<GripPosition> = []
 }
 
 extension CollageCell: Equatable {
