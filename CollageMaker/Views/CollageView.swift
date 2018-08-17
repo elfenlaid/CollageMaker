@@ -20,6 +20,10 @@ class CollageView: UIView {
         
         cellViews.forEach { addSubview($0) }
         
+        if cellViews.count == 1, let cell = cellViews.first {
+            setSelected(cellView: cell)
+        }
+        
         tapGestureRecognizer.addTarget(self, action: #selector(cellSelected(with:)))
         addGestureRecognizer(tapGestureRecognizer)
     }
@@ -35,16 +39,29 @@ class CollageView: UIView {
     }
     
     func setSelected(cellView: CollageCellView) {
+        selectedCellView?.layer.borderColor = UIColor.white.cgColor
         selectedCellView = cellView
-        highlightSelected()
+        selectedCellView?.layer.borderColor = UIColor.gray.cgColor
+        
+        showGrips()
     }
     
-    private func highlightSelected() {
+    private func showGrips() {
+        gripViews.forEach { $0.removeFromSuperview() }
+        gripViews = []
+        
+        selectedCellGripPositions?.forEach(layoutGripView(for: ))
+    }
+    
+    private func layoutGripView(for position: GripPosition) {
         guard let selectedCellView = selectedCellView else {
             return
         }
         
-        selectedCellView.alpha = 0
+        let gripView = GripView(with: position, in: selectedCellView)
+        
+        addSubview(gripView)
+        gripViews.append(gripView)
     }
     
     @objc private func cellSelected(with recognizer: UITapGestureRecognizer) {
@@ -53,7 +70,12 @@ class CollageView: UIView {
         delegate?.collageView(self, tapped: point)
     }
     
+    private var selectedCellGripPositions: Set<GripPosition>? {
+        return selectedCellView?.collageCell.gripPositions
+    }
+    
     private var collage: Collage
+    private(set) var gripViews: [GripView] = []
     private(set) var cellViews: [CollageCellView]
     private var selectedCellView: CollageCellView?
     private var tapGestureRecognizer = UITapGestureRecognizer()

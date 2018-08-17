@@ -12,7 +12,7 @@ class CollageCell {
     let id: UUID = UUID.init()
     let image: UIImage?
     var relativePosition: RelativePosition
-
+    
     init(color: UIColor, image: UIImage? = nil, relativePosition: RelativePosition) {
         self.color = color
         self.image = image
@@ -20,7 +20,7 @@ class CollageCell {
         
         calculateGripPositions()
     }
-
+    
     private func calculateGripPositions(){
         guard relativePosition.isFullsized == false else { return }
         
@@ -35,7 +35,7 @@ class CollageCell {
         }
     }
     
-    private var gripPositions: Set<GripPosition> = []
+    private(set) var gripPositions: Set<GripPosition> = []
 }
 
 extension CollageCell: Equatable {
@@ -77,10 +77,11 @@ extension RelativePosition {
     }
     
     var hasMaximumHeight: Bool {
-        return self.height == 1
+        return abs(height - 1.0) < .ulpOfOne
     }
     
     var hasMaximumWidth: Bool {
-        return self.width == 1
+        return abs(width - 1.0) < .ulpOfOne
     }
+    
 }

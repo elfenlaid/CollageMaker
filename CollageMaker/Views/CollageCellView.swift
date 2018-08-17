@@ -14,7 +14,7 @@ class CollageCellView: UIView {
         backgroundColor = collageCell.color
         
         layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 3
+        layer.borderWidth = 1
     
         addSubview(imageView)
         makeConstraints()
@@ -23,11 +23,11 @@ class CollageCellView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("Not implemented")
     }
-    
+
     func set(image: UIImage) {
         imageView.image = image
     }
-  
+    
     private func makeConstraints() {
         imageView.snp.makeConstraints { make in
             make.margins.equalToSuperview()
