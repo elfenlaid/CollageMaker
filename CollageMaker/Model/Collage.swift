@@ -11,6 +11,7 @@ enum Axis {
 
 protocol CollageDelegate: AnyObject {
     func collage(_ collage: Collage, didChangeSelected cell: CollageCell)
+    func collageChanged(to collage: Collage)
 }
 
 class Collage {
@@ -19,7 +20,7 @@ class Collage {
     
     init(cells: [CollageCell]) {
         if cells.count < 1 {
-            let initialCell = CollageCell(color: .lightGray, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 1, height: 1))
+            let initialCell = CollageCell(color: .random, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 1, height: 1))
             
             self.cells = [initialCell]
             self.selectedCell = initialCell
@@ -27,6 +28,8 @@ class Collage {
             self.cells = cells
             self.selectedCell = cells.first
         }
+        
+        self.initialStateCells = cells
     }
     
     func setSelected(cell: CollageCell) {
@@ -49,20 +52,24 @@ class Collage {
         cells = cells.filter { $0.id != cell.id }
     }
     
-    func split(cell: CollageCell, by axis: Axis) {
-        guard let cell = cells.first(where: { $0.id == cell.id }) else {
+    func splitSelectedCell(by axis: Axis) {
+        guard let cell = selectedCell else {
             return
         }
         
         let (firstPosition, secondPosition) = cell.relativePosition.split(axis: axis)
         
         let firstCell =  CollageCell(color: cell.color, image: cell.image, relativePosition: firstPosition)
-        let secondCell = CollageCell(color: .gray, image: nil, relativePosition: secondPosition)
+        let secondCell = CollageCell(color: .random, image: nil, relativePosition: secondPosition)
         
         add(cell: firstCell)
         add(cell: secondCell)
         
         remove(cell: cell)
+        
+        setSelected(cell: secondCell)
+        
+        delegate?.collageChanged(to: self)
     }
     
     func cell(at point: CGPoint, in rect: CGRect) -> CollageCell? {
@@ -70,6 +77,11 @@ class Collage {
                                     y: point.y / rect.height)
         
         return cells.first(where: { $0.relativePosition.contains(relativePoint) })
+    }
+    
+    func reset() {
+        cells = initialStateCells
+        delegate?.collageChanged(to: self)
     }
     
     private(set) var selectedCell: CollageCell? {
@@ -80,6 +92,7 @@ class Collage {
         }
     }
     
+    private let initialStateCells: [CollageCell]
     private var recentlyDeleted: CollageCell?
     private(set) var cells: [CollageCell] = []
 }

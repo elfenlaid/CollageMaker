@@ -28,7 +28,7 @@ class CollageViewController: UIViewController {
         self.collage = collage
     }
     
-    private var collage: Collage? {
+    var collage: Collage? {
         didSet {
             guard let collage = collage else {
                 return
@@ -62,6 +62,11 @@ extension CollageViewController: CollageViewDelegate {
 }
 
 extension CollageViewController: CollageDelegate {
+    
+    func collageChanged(to collage: Collage) {
+        set(collage: collage)
+    }
+    
     func collage(_ collage: Collage, didChangeSelected cell: CollageCell) {
         guard let selectedCellView = collageView.cellViews.first(where: { $0.collageCell.id ==  cell.id }) else {
             return
