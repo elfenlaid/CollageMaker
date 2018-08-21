@@ -6,7 +6,7 @@ import UIKit
 
 typealias RelativePosition = CGRect
 
-class CollageCell {
+class CollageCell: NSObject {
     
     let color: UIColor
     let id: UUID = UUID.init()
@@ -18,7 +18,19 @@ class CollageCell {
         self.image = image
         self.relativePosition = relativePosition
         
+        super.init()
+        
         calculateGripPositions()
+    }
+    
+    func belongsToParallelLine(on axis: Axis, with point: CGPoint) -> Bool {
+        if axis == .horizontal {
+            return abs(point.y - relativePosition.minY) < .ulpOfOne || abs(point.y - relativePosition.maxY) < .ulpOfOne
+        } else if axis == .vertical {
+            return abs(point.x - relativePosition.minX) < .ulpOfOne || abs(point.x - relativePosition.maxX) < .ulpOfOne
+        } else {
+            return false
+        }
     }
     
     private func calculateGripPositions(){
@@ -35,13 +47,19 @@ class CollageCell {
         }
     }
     
-    private(set) var gripPositions: Set<GripPosition> = []
-}
-
-extension CollageCell: Equatable {
-    static func ==(lhs: CollageCell, rhs: CollageCell) -> Bool {
-        return lhs.color == rhs.color && lhs.gripPositions == rhs.gripPositions && lhs.id == rhs.id && lhs.image == rhs.image
+    func gripPositionRelativeTo(cell: CollageCell, _ gripPosition: GripPosition) -> GripPosition? {
+        guard cell != self else {
+            return gripPosition
+        }
+    
+        if gripPosition.axis == .horizontal {
+            return self.relativePosition.midY < gripPosition.centerPoint(in: cell).y ? .bottom : .top
+        } else {
+            return self.relativePosition.midX < gripPosition.centerPoint(in: cell).x ? .right : .left
+        }
     }
+    
+    private(set) var gripPositions: Set<GripPosition> = []
 }
 
 enum GripPosition {
@@ -49,11 +67,27 @@ enum GripPosition {
     case bottom
     case left
     case right
+    
+    func centerPoint(in cell: CollageCell) -> CGPoint {
+        switch self {
+        case .left: return CGPoint(x: cell.relativePosition.minX, y: cell.relativePosition.midY)
+        case .right: return CGPoint(x: cell.relativePosition.maxX, y: cell.relativePosition.midY)
+        case .top: return CGPoint(x: cell.relativePosition.midX, y: cell.relativePosition.minY)
+        case .bottom: return CGPoint(x: cell.relativePosition.midX, y: cell.relativePosition.maxY)
+        }
+    }
+    
+    var axis: Axis {
+        switch self {
+        case .left, .right: return .vertical
+        case .top, .bottom: return .horizontal
+        }
+    }
 }
 
 
 extension RelativePosition {
-    
+
     func absolutePosition(in rect: CGRect) -> CGRect {
         return CGRect(x: origin.x * rect.width,
                       y: origin.y * rect.height,

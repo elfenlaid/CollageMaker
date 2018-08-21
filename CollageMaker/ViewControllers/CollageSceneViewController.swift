@@ -34,7 +34,7 @@ class CollageSceneViewController: UIViewController {
   
         let cellOne = CollageCell(color: .red, image: nil, relativePosition: RelativePosition(x: 0, y: 0, width: 0.5, height: 1))
         let cellTwo = CollageCell(color: .yellow, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 1))
-        let someCell = CollageCell(color: .green, image: UIImage(named: "wiggles@2x.jpeg")!, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 0.5))
+        let someCell = CollageCell(color: .green, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0, width: 0.5, height: 0.5))
         let someAnotherCell = CollageCell(color: .cyan, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0.5, width: 0.5, height: 0.5))
         let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
         let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
@@ -150,8 +150,10 @@ extension UIViewController {
 extension CollageSceneViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
-        case 0: collageViewController.collage?.splitSelectedCell(by: .horizontal)
-        case 1: collageViewController.collage?.splitSelectedCell(by: .vertical)
+        case 0: collageViewController.collage?.changeSize(grip: .top, value: 1)
+        case 1: collageViewController.collage?.changeSize(grip: .bottom, value: 1)
+        case 2: collageViewController.collage?.changeSize(grip: .left, value: 1)
+        case 3: collageViewController.collage?.changeSize(grip: .right, value: 1)
         default: break
         }
     }
