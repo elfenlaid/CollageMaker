@@ -32,10 +32,14 @@ class CollageCell: NSObject {
             return false
         }
     }
-    
-    private func calculateGripPositions(){
-        guard relativePosition.isFullsized == false else { return }
+   
+    func calculateGripPositions(){
+        gripPositions.removeAll()
         
+        guard relativePosition.isFullsized == false else {
+            return
+        }
+       
         if !relativePosition.hasMaximumWidth {
             if relativePosition.minX > 0 { gripPositions.insert(.left) }
             if relativePosition.maxX < 1 { gripPositions.insert(.right) }
@@ -51,13 +55,18 @@ class CollageCell: NSObject {
         guard cell != self else {
             return gripPosition
         }
-    
+        
         if gripPosition.axis == .horizontal {
             return self.relativePosition.midY < gripPosition.centerPoint(in: cell).y ? .bottom : .top
         } else {
             return self.relativePosition.midX < gripPosition.centerPoint(in: cell).x ? .right : .left
         }
     }
+    
+    func gripEqual(to grip: GripPosition, of cell: CollageCell) -> GripPosition? {
+        return gripPositions.first(where: { $0.centerPoint(in: self) == grip.centerPoint(in: cell)} )
+    }
+    
     
     private(set) var gripPositions: Set<GripPosition> = []
 }
@@ -87,7 +96,7 @@ enum GripPosition {
 
 
 extension RelativePosition {
-
+    
     func absolutePosition(in rect: CGRect) -> CGRect {
         return CGRect(x: origin.x * rect.width,
                       y: origin.y * rect.height,
