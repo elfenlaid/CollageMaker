@@ -16,6 +16,7 @@ protocol CollageDelegate: AnyObject {
 
 class Collage {
     
+    typealias State = [CollageCell: RelativePosition]
     weak var delegate: CollageDelegate?
     
     init(cells: [CollageCell]) {
@@ -29,11 +30,7 @@ class Collage {
             self.selectedCell = cells.first
         }
         
-        self.initialStateCells = cells
-    }
-    
-    func setSelected(cell: CollageCell) {
-        selectedCell = cell
+        cells.forEach { initialState[$0] = $0.relativePosition }
     }
     
     func add(cell: CollageCell) {
@@ -48,8 +45,19 @@ class Collage {
         }
         
         recentlyDeleted = cell
-        
         cells = cells.filter { $0.id != cell.id }
+    }
+    
+    func update(cell: CollageCell) {
+        remove(cell: cell)
+        add(cell: cell)
+        
+        delegate?.collageChanged(to: self)
+    }
+    
+    
+    func setSelected(cell: CollageCell) {
+        selectedCell = cell
     }
     
     func splitSelectedCell(by axis: Axis) {
@@ -62,14 +70,14 @@ class Collage {
         let firstCell =  CollageCell(color: cell.color, image: cell.image, relativePosition: firstPosition)
         let secondCell = CollageCell(color: .random, image: nil, relativePosition: secondPosition)
         
-        add(cell: firstCell)
-        add(cell: secondCell)
-        
-        remove(cell: cell)
-        
-        setSelected(cell: secondCell)
-        
-        delegate?.collageChanged(to: self)
+        if isAllowed(position: firstPosition) && isAllowed(position: secondPosition) {
+            add(cell: firstCell)
+            add(cell: secondCell)
+            remove(cell: cell)
+            setSelected(cell: secondCell)
+            
+            delegate?.collageChanged(to: self)
+        }
     }
     
     func cell(at point: CGPoint, in rect: CGRect) -> CollageCell? {
@@ -80,8 +88,72 @@ class Collage {
     }
     
     func reset() {
-        cells = initialStateCells
+        setPositions(from: initialState)
         delegate?.collageChanged(to: self)
+    }
+    
+    func changeSize(grip: GripPosition, value: CGFloat) {
+        let changingCells = affectedCells(with: grip)
+        var intermediateState = State()
+        
+        changingCells.forEach {
+            guard let cell = selectedCell, let newPosition = $0.gripPositionRelativeTo(cell: cell, grip) else {
+                return
+            }
+            
+            let newCellSize = newSize(of: $0, value: value / 100, with: newPosition)
+            intermediateState[$0] = newCellSize
+        }
+        
+        let result = intermediateState.keys.map { isAllowed(position: intermediateState[$0] ?? RelativePosition.zero) }
+        let shouldUpdate = result.reduce (true, { $0 && $1 })
+        
+        if shouldUpdate { setPositions(from: intermediateState) }
+    }
+    
+    private func setPositions(from: State) {
+        from.keys.forEach {
+            if let newSize = from[$0] {
+                $0.relativePosition = newSize
+            }
+        }
+        
+        from.forEach { update(cell: $0.key) }
+    }
+    
+    private func affectedCells(with gripPosition: GripPosition) -> [CollageCell] {
+        guard let cell = selectedCell else {
+            return []
+        }
+        
+        return cells.filter { $0.belongsToParallelLine(on: gripPosition.axis, with: gripPosition.centerPoint(in: cell)) }
+    }
+    
+    private func newSize(of cell: CollageCell, value: CGFloat, with gripPosition: GripPosition) -> RelativePosition {
+        guard cell.gripPositions.contains(gripPosition) else {
+            return cell.relativePosition
+        }
+        
+        var newValue = cell.relativePosition
+        
+        switch gripPosition {
+        case .left:
+            newValue.origin.x += value
+            newValue.size.width -= value
+        case .right:
+            newValue.size.width += value
+        case .top:
+            newValue.origin.y += value
+            newValue.size.height -= value
+        case .bottom:
+            newValue.size.height += value
+        }
+        
+        return newValue
+    }
+    
+    private func isAllowed(position: RelativePosition) -> Bool {
+        return min(position.width, position.height) > 0.2 ? true : false
     }
     
     private(set) var selectedCell: CollageCell? {
@@ -92,7 +164,7 @@ class Collage {
         }
     }
     
-    private let initialStateCells: [CollageCell]
+    private var initialState = State()
     private var recentlyDeleted: CollageCell?
     private(set) var cells: [CollageCell] = []
 }

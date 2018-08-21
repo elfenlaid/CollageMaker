@@ -20,7 +20,7 @@ class CollageView: UIView {
         
         cellViews.forEach { addSubview($0) }
         
-        if let cell = cellViews.last {
+        if let cell = cellViews.first(where: {$0.collageCell.id  == collage.selectedCell?.id}) {
             setSelected(cellView: cell)
         }
         

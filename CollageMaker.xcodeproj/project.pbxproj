@@ -21,7 +21,6 @@
 		843A5829211447DC002FE28D /* CollageSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A5828211447DC002FE28D /* CollageSceneViewController.swift */; };
 		844EBCE721145273009DBC74 /* ToolsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EBCE621145273009DBC74 /* ToolsBar.swift */; };
 		848713222122E938003519F7 /* TemplateBarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848713212122E938003519F7 /* TemplateBarCollectionViewCell.swift */; };
-		848713252122F48E003519F7 /* wiggles@2x.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 848713242122F48E003519F7 /* wiggles@2x.jpeg */; };
 		849B68202121979C0091AD27 /* CollageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B681F2121979C0091AD27 /* CollageViewController.swift */; };
 		849B68222121CA960091AD27 /* TemplateBarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B68212121CA960091AD27 /* TemplateBarCollectionViewController.swift */; };
 		84A91A5921188E5700108C3B /* CollageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A91A5821188E5700108C3B /* CollageCell.swift */; };
@@ -71,7 +70,6 @@
 		843A5828211447DC002FE28D /* CollageSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageSceneViewController.swift; sourceTree = "<group>"; };
 		844EBCE621145273009DBC74 /* ToolsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsBar.swift; sourceTree = "<group>"; };
 		848713212122E938003519F7 /* TemplateBarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateBarCollectionViewCell.swift; sourceTree = "<group>"; };
-		848713242122F48E003519F7 /* wiggles@2x.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wiggles@2x.jpeg"; sourceTree = "<group>"; };
 		849B681F2121979C0091AD27 /* CollageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageViewController.swift; sourceTree = "<group>"; };
 		849B68212121CA960091AD27 /* TemplateBarCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateBarCollectionViewController.swift; sourceTree = "<group>"; };
 		84A91A5821188E5700108C3B /* CollageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageCell.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 		843A57F821144760002FE28D /* CollageMaker */ = {
 			isa = PBXGroup;
 			children = (
-				848713242122F48E003519F7 /* wiggles@2x.jpeg */,
 				843A57F921144760002FE28D /* AppDelegate.swift */,
 				843A582A211447F8002FE28D /* ViewControllers */,
 				84E2720B211DE8D7001CDCB9 /* Views */,
@@ -370,7 +367,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				848713252122F48E003519F7 /* wiggles@2x.jpeg in Resources */,
 				843A580421144761002FE28D /* LaunchScreen.storyboard in Resources */,
 				843A580121144761002FE28D /* Assets.xcassets in Resources */,
 			);
