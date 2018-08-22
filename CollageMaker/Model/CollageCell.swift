@@ -32,14 +32,14 @@ class CollageCell: NSObject {
             return false
         }
     }
-   
+    
     func calculateGripPositions(){
         gripPositions.removeAll()
         
         guard relativePosition.isFullsized == false else {
             return
         }
-       
+        
         if !relativePosition.hasMaximumWidth {
             if relativePosition.minX > 0 { gripPositions.insert(.left) }
             if relativePosition.maxX < 1 { gripPositions.insert(.right) }
@@ -61,10 +61,6 @@ class CollageCell: NSObject {
         } else {
             return self.relativePosition.midX < gripPosition.centerPoint(in: cell).x ? .right : .left
         }
-    }
-    
-    func gripEqual(to grip: GripPosition, of cell: CollageCell) -> GripPosition? {
-        return gripPositions.first(where: { $0.centerPoint(in: self) == grip.centerPoint(in: cell)} )
     }
     
     

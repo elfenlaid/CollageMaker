@@ -114,9 +114,7 @@ class Collage {
         let result = intermediateState.keys.map { isAllowed(position: intermediateState[$0] ?? RelativePosition.zero) }
         let shouldUpdate = result.reduce (true, { $0 && $1 })
         
-        if shouldUpdate {
-            setPositions(from: intermediateState)
-        }
+        if shouldUpdate { setPositions(from: intermediateState) }
     }
     
     private(set) var selectedCell: CollageCell? {
@@ -146,11 +144,7 @@ extension Collage {
     }
     
     private func setPositions(from: State) {
-        from.keys.forEach {
-            if let newSize = from[$0] {
-                $0.relativePosition = newSize
-            }
-        }
+        from.keys.forEach { if let newSize = from[$0] { $0.relativePosition = newSize } }
         
         from.forEach {
             update(cell: $0.key)
