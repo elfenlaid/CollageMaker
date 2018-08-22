@@ -27,7 +27,11 @@ class Collage {
             self.selectedCell = initialCell
         } else {
             self.cells = cells
-            self.selectedCell = cells.first
+            if let cell = cells.first {
+                self.selectedCell = cell
+            } else {
+                selectedCell = CollageCell(color: .black, image: nil, relativePosition: .zero)
+            }
         }
         
         cells.forEach { initialState[$0] = $0.relativePosition }
@@ -51,8 +55,6 @@ class Collage {
     func update(cell: CollageCell) {
         remove(cell: cell)
         add(cell: cell)
-        
-        delegate?.collageChanged(to: self)
     }
     
     
@@ -61,19 +63,15 @@ class Collage {
     }
     
     func splitSelectedCell(by axis: Axis) {
-        guard let cell = selectedCell else {
-            return
-        }
+        let (firstPosition, secondPosition) = selectedCell.relativePosition.split(axis: axis)
         
-        let (firstPosition, secondPosition) = cell.relativePosition.split(axis: axis)
-        
-        let firstCell =  CollageCell(color: cell.color, image: cell.image, relativePosition: firstPosition)
+        let firstCell =  CollageCell(color: selectedCell.color, image: selectedCell.image, relativePosition: firstPosition)
         let secondCell = CollageCell(color: .random, image: nil, relativePosition: secondPosition)
         
         if isAllowed(position: firstPosition) && isAllowed(position: secondPosition) {
             add(cell: firstCell)
             add(cell: secondCell)
-            remove(cell: cell)
+            remove(cell: selectedCell)
             setSelected(cell: secondCell)
             
             delegate?.collageChanged(to: self)
@@ -81,29 +79,42 @@ class Collage {
     }
     
     func mergeSelectedCell() {
-        guard let cell = selectedCell else {
-            return
-        }
+        remove(cell: selectedCell)
         
-        remove(cell: cell)
-        changeSize(grip: cell.gripPositions.first!, value: -cell.relativePosition.height * 100)
+        for position in selectedCell.gripPositions {
+            if changeSelectedCellSize(grip: position, value: position.sideChangeValue(for: selectedCell.relativePosition), merging: true) {
+                break
+            }
+        }
         
         if let last = cells.last {
             setSelected(cell: last)
         }
+        
+        print("something wrong")
     }
     
     func reset() {
+        cells.removeAll()
         setPositions(from: initialState)
         delegate?.collageChanged(to: self)
     }
     
-    func changeSize(grip: GripPosition, value: CGFloat) {
-        let changingCells = affectedCells(with: grip)
+    func changeSelectedCellSize(grip: GripPosition, value: CGFloat, merging: Bool = false) -> Bool {
+        guard check(grip, in: selectedCell) else {
+            return false
+        }
+        
+        let changingCells = merging ? cellsForMerging(with: grip) : affectedCells(with: grip)
+        
+        guard changingCells.count > 0 else {
+            return false
+        }
+        
         var intermediateState = State()
         
         changingCells.forEach {
-            guard let cell = selectedCell, let newPosition = $0.gripPositionRelativeTo(cell: cell, grip) else {
+            guard let newPosition = $0.gripPositionRelativeTo(cell: selectedCell, grip) else {
                 return
             }
             
@@ -114,14 +125,21 @@ class Collage {
         let result = intermediateState.keys.map { isAllowed(position: intermediateState[$0] ?? RelativePosition.zero) }
         let shouldUpdate = result.reduce (true, { $0 && $1 })
         
-        if shouldUpdate { setPositions(from: intermediateState) }
+        if shouldUpdate {
+            setPositions(from: intermediateState)
+            delegate?.collageChanged(to: self)
+            return true
+        } else {
+            return false
+        }
+        
+        
     }
     
-    private(set) var selectedCell: CollageCell? {
+    private(set) var selectedCell: CollageCell {
         didSet {
-            if let cell = selectedCell {
-                delegate?.collage(self, didChangeSelected: cell)
-            }
+            delegate?.collage(self, didChangeSelected: selectedCell)
+            
         }
     }
     
@@ -147,17 +165,13 @@ extension Collage {
         from.keys.forEach { if let newSize = from[$0] { $0.relativePosition = newSize } }
         
         from.forEach {
-            update(cell: $0.key)
             $0.key.calculateGripPositions()
+            update(cell: $0.key)
         }
     }
     
     private func affectedCells(with gripPosition: GripPosition) -> [CollageCell] {
-        guard let cell = selectedCell else {
-            return []
-        }
-        
-        return cells.filter { $0.belongsToParallelLine(on: gripPosition.axis, with: gripPosition.centerPoint(in: cell)) }
+        return cells.filter { $0.belongsToParallelLine(on: gripPosition.axis, with: gripPosition.centerPoint(in: selectedCell)) }
     }
     
     private func newSize(of cell: CollageCell, value: CGFloat, with gripPosition: GripPosition) -> RelativePosition {
@@ -183,8 +197,51 @@ extension Collage {
         return newValue
     }
     
+    private func check(_ gripPosition: GripPosition, in cell: CollageCell) -> Bool {
+        return cell.gripPositions.contains(gripPosition)
+    }
+    
     private func isAllowed(position: RelativePosition) -> Bool {
         return min(position.width, position.height) > 0.2 ? true : false
     }
     
+    private func cellsForMerging(with gripPosition: GripPosition) -> [CollageCell] {
+        var mergingCells = [CollageCell]()
+        
+        cells.forEach {
+            if $0 != selectedCell {
+                let intersection = $0.relativePosition.intersection(selectedCell.relativePosition)
+                
+                guard
+                    intersection.isLine,
+                    selectedCell.relativePosition.lineFor(gripPosition: gripPosition).contains(intersection),
+                    let grip = $0.gripPositionRelativeTo(cell: selectedCell, gripPosition) else {
+                        return
+                }
+                
+                let line = $0.relativePosition.lineFor(gripPosition: grip)
+                
+                if max(line.width, line.height) <=  max(intersection.height, intersection.width) {
+                    mergingCells.append($0)
+                }
+            }
+        }
+        
+        return mergingCells
+    }
+}
+
+extension GripPosition {
+    func sideChangeValue(for position: RelativePosition) -> CGFloat {
+        switch self {
+        case .left:
+            return position.width * 100
+        case .right:
+            return -position.width * 100
+        case .top:
+            return position.height * 100
+        case .bottom:
+            return -position.height * 100
+        }
+    }
 }

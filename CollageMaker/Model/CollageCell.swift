@@ -63,7 +63,6 @@ class CollageCell: NSObject {
         }
     }
     
-    
     private(set) var gripPositions: Set<GripPosition> = []
 }
 
@@ -123,4 +122,43 @@ extension RelativePosition {
         return abs(width - 1.0) < .ulpOfOne
     }
     
+}
+
+extension CGRect {
+    var isLine: Bool {
+        return (width.isZero && height > 0) || (height.isZero && width > 0)
+    }
+    
+    var lineAxis: Axis? {
+        guard isLine else {
+            return nil
+        }
+        
+        return width.isZero ? .vertical : .horizontal
+    }
+    
+    func lineFor(gripPosition: GripPosition) -> CGRect {
+        switch gripPosition {
+        case .left: return zeroWidthFullHeightLeftPosition
+        case .right: return zeroWidthFullHeightRightPosition
+        case .top: return zeroHeightFullWidthTopPosition
+        case .bottom: return zeroHeightFullWidthBottomPosition
+        }
+    }
+    
+    var zeroHeightFullWidthTopPosition: CGRect {
+        return CGRect(x: minX, y: minY, width: width, height: 0)
+    }
+    
+    var zeroHeightFullWidthBottomPosition: CGRect {
+        return CGRect(x: minX, y: maxY, width: width, height: 0)
+    }
+    
+    var zeroWidthFullHeightLeftPosition: CGRect {
+        return CGRect(x: minX, y: minY, width: 0, height: height)
+    }
+    
+    var zeroWidthFullHeightRightPosition: CGRect {
+        return CGRect(x: maxX, y: minY, width: 0, height: height)
+    }
 }

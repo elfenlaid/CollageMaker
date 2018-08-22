@@ -151,9 +151,9 @@ extension CollageSceneViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
         case 0: collageViewController.collage?.mergeSelectedCell()
-        case 1: collageViewController.collage?.changeSize(grip: .top, value: 1)
-        case 2: collageViewController.collage?.changeSize(grip: .left, value: 1)
-        case 3: collageViewController.collage?.changeSize(grip: .right, value: 1)
+        case 1: collageViewController.collage?.changeSelectedCellSize(grip: .right, value: -1)
+        case 2: collageViewController.collage?.splitSelectedCell(by: .horizontal)
+        case 3: collageViewController.collage?.splitSelectedCell(by: .vertical)
         default: break
         }
     }
