@@ -89,6 +89,20 @@ enum GripPosition {
     }
 }
 
+extension GripPosition {
+    func sideChangeValue(for position: RelativePosition) -> CGFloat {
+        switch self {
+        case .left:
+            return position.width * 100
+        case .right:
+            return -position.width * 100
+        case .top:
+            return position.height * 100
+        case .bottom:
+            return -position.height * 100
+        }
+    }
+}
 
 extension RelativePosition {
     
@@ -137,7 +151,7 @@ extension CGRect {
         return width.isZero ? .vertical : .horizontal
     }
     
-    func lineFor(gripPosition: GripPosition) -> CGRect {
+    func line(for gripPosition: GripPosition) -> CGRect {
         switch gripPosition {
         case .left: return zeroWidthFullHeightLeftPosition
         case .right: return zeroWidthFullHeightRightPosition
@@ -145,19 +159,19 @@ extension CGRect {
         case .bottom: return zeroHeightFullWidthBottomPosition
         }
     }
-    
+
     var zeroHeightFullWidthTopPosition: CGRect {
         return CGRect(x: minX, y: minY, width: width, height: 0)
     }
-    
+
     var zeroHeightFullWidthBottomPosition: CGRect {
         return CGRect(x: minX, y: maxY, width: width, height: 0)
     }
-    
+
     var zeroWidthFullHeightLeftPosition: CGRect {
         return CGRect(x: minX, y: minY, width: 0, height: height)
     }
-    
+
     var zeroWidthFullHeightRightPosition: CGRect {
         return CGRect(x: maxX, y: minY, width: 0, height: height)
     }

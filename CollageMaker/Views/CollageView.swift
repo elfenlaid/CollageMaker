@@ -36,6 +36,7 @@ class CollageView: UIView {
         super.layoutSubviews()
         
         cellViews.forEach { $0.frame = $0.collageCell.relativePosition.absolutePosition(in: bounds) }
+        showGrips()
     }
     
     func setSelected(cellView: CollageCellView) {
