@@ -105,8 +105,8 @@ class Collage {
         }
     }
     
-    func cell(at point: CGPoint) -> CollageCell? {
-        return cells.first(where: { $0.relativePosition.contains(point) })
+    func cell(at relativePoint: CGPoint) -> CollageCell? {
+        return cells.first(where: { $0.relativePosition.contains(relativePoint) })
     }
     
     private func add(cell: CollageCell) {
