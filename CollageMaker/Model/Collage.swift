@@ -102,6 +102,10 @@ class Collage {
         
         var intermediateState = State()
         
+        guard let newCollage = copy() as? Collage else {
+            return false
+        }
+        
         changingCells.forEach {
             guard let newPosition = $0.gripPositionRelativeTo(cell: selectedCell, grip) else {
                 return
@@ -115,8 +119,13 @@ class Collage {
         let shouldUpdate = permisionsToChangePosition.reduce (true, { $0 && $1 })
         
         if shouldUpdate {
-            setPositions(from: intermediateState)
-            delegate?.collageChanged(to: self)
+            newCollage.setPositions(from: intermediateState)
+
+            if newCollage.isFullsized() {
+                self.cells = newCollage.cells
+                delegate?.collageChanged(to: self)
+            }
+            
             return true
         } else {
             return false
@@ -224,6 +233,11 @@ extension Collage {
     }
 }
 
+extension Collage: NSCopying {
+    func copy(with zone: NSZone? = nil) -> Any {
+        return Collage(cells: cells)
+    }
+}
 
 extension CGRect {
     var area: CGFloat {
