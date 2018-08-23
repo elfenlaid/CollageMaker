@@ -21,6 +21,7 @@ class GripView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         layout()
     }
     

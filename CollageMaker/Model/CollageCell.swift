@@ -33,8 +33,12 @@ class CollageCell: NSObject {
         }
     }
     
-    private func calculateGripPositions(){
-        guard relativePosition.isFullsized == false else { return }
+    func calculateGripPositions(){
+        gripPositions.removeAll()
+        
+        guard relativePosition.isFullsized == false else {
+            return
+        }
         
         if !relativePosition.hasMaximumWidth {
             if relativePosition.minX > 0 { gripPositions.insert(.left) }
@@ -51,7 +55,7 @@ class CollageCell: NSObject {
         guard cell != self else {
             return gripPosition
         }
-    
+        
         if gripPosition.axis == .horizontal {
             return self.relativePosition.midY < gripPosition.centerPoint(in: cell).y ? .bottom : .top
         } else {
@@ -85,9 +89,23 @@ enum GripPosition {
     }
 }
 
+extension GripPosition {
+    func sideChangeValue(for position: RelativePosition) -> CGFloat {
+        switch self {
+        case .left:
+            return position.width * 100
+        case .right:
+            return -position.width * 100
+        case .top:
+            return position.height * 100
+        case .bottom:
+            return -position.height * 100
+        }
+    }
+}
 
 extension RelativePosition {
-
+    
     func absolutePosition(in rect: CGRect) -> CGRect {
         return CGRect(x: origin.x * rect.width,
                       y: origin.y * rect.height,
@@ -118,4 +136,43 @@ extension RelativePosition {
         return abs(width - 1.0) < .ulpOfOne
     }
     
+}
+
+extension CGRect {
+    var isLine: Bool {
+        return (width.isZero && height > 0) || (height.isZero && width > 0)
+    }
+    
+    var lineAxis: Axis? {
+        guard isLine else {
+            return nil
+        }
+        
+        return width.isZero ? .vertical : .horizontal
+    }
+    
+    func line(for gripPosition: GripPosition) -> CGRect {
+        switch gripPosition {
+        case .left: return zeroWidthFullHeightLeftPosition
+        case .right: return zeroWidthFullHeightRightPosition
+        case .top: return zeroHeightFullWidthTopPosition
+        case .bottom: return zeroHeightFullWidthBottomPosition
+        }
+    }
+
+    var zeroHeightFullWidthTopPosition: CGRect {
+        return CGRect(x: minX, y: minY, width: width, height: 0)
+    }
+
+    var zeroHeightFullWidthBottomPosition: CGRect {
+        return CGRect(x: minX, y: maxY, width: width, height: 0)
+    }
+
+    var zeroWidthFullHeightLeftPosition: CGRect {
+        return CGRect(x: minX, y: minY, width: 0, height: height)
+    }
+
+    var zeroWidthFullHeightRightPosition: CGRect {
+        return CGRect(x: maxX, y: minY, width: 0, height: height)
+    }
 }
