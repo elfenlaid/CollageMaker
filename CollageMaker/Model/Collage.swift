@@ -215,4 +215,19 @@ extension Collage {
         
         return mergingCells
     }
+    
+    private func isFullsized() -> Bool {
+        let collageArea = RelativePosition(x: 0, y: 0, width: 1, height: 1).area
+        let cellsArea = cells.map { $0.relativePosition.area }.reduce(0.0, { $0 + $1 })
+        
+        return collageArea == cellsArea
+    }
+}
+
+
+extension CGRect {
+    var area: CGFloat {
+        return width * height
+    }
+    
 }
