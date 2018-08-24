@@ -22,7 +22,7 @@ struct CollageCell: Equatable, Hashable {
         self.color = color
         self.image = image
         self.relativePosition = relativePosition
-   
+        
         calculateGripPositions()
     }
     
@@ -158,6 +158,10 @@ extension CGRect {
         return width.isZero ? .vertical : .horizontal
     }
     
+    var maxSizeValue: CGFloat {
+        return max(width, height)
+    }
+    
     func line(for gripPosition: GripPosition) -> CGRect {
         switch gripPosition {
         case .left: return zeroWidthFullHeightLeftPosition
@@ -166,19 +170,19 @@ extension CGRect {
         case .bottom: return zeroHeightFullWidthBottomPosition
         }
     }
-
+    
     var zeroHeightFullWidthTopPosition: CGRect {
         return CGRect(x: minX, y: minY, width: width, height: 0)
     }
-
+    
     var zeroHeightFullWidthBottomPosition: CGRect {
         return CGRect(x: minX, y: maxY, width: width, height: 0)
     }
-
+    
     var zeroWidthFullHeightLeftPosition: CGRect {
         return CGRect(x: minX, y: minY, width: 0, height: height)
     }
-
+    
     var zeroWidthFullHeightRightPosition: CGRect {
         return CGRect(x: maxX, y: minY, width: 0, height: height)
     }

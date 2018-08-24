@@ -73,7 +73,7 @@ struct Collage {
         }
         
         var intermediateState = State()
-   
+        
         changingCells.forEach {
             guard let newPosition = $0.gripPositionRelativeTo(cell: selectedCell, grip) else {
                 return
@@ -84,8 +84,11 @@ struct Collage {
         }
         
         var newCollage = self
-        newCollage.remove(cell: selectedCell)
-        newCollage.setPositions(from: intermediateState)
+        
+        if merging {
+            newCollage.remove(cell: selectedCell)
+            newCollage.setPositions(from: intermediateState)
+        }
         
         let permisionsToChangePosition = intermediateState.keys.map { isAllowed(position: intermediateState[$0] ?? RelativePosition.zero) }
         let shouldUpdate = merging ? newCollage.isFullsized : permisionsToChangePosition.reduce (true, { $0 && $1 })
@@ -197,25 +200,18 @@ extension Collage {
     }
     
     private func mergingCells(with gripPosition: GripPosition) -> [CollageCell] {
-        var mergingCells = [CollageCell]()
         
-        cells.forEach {
-            if $0 != selectedCell {
-                let intersection = $0.relativePosition.intersection(selectedCell.relativePosition)
-                
-                guard
-                    intersection.isLine,
-                    selectedCell.relativePosition.line(for: gripPosition).contains(intersection),
-                    let grip = $0.gripPositionRelativeTo(cell: selectedCell, gripPosition) else {
-                        return
-                }
-                
-                let line = $0.relativePosition.line(for: grip)
-                
-                if max(line.width, line.height) <= max(intersection.height, intersection.width) {
-                    mergingCells.append($0)
-                }
+        let mergingCells =  cells.filter({ $0 != selectedCell }).compactMap { (cell) -> CollageCell? in
+            let intersection = cell.relativePosition.intersection(selectedCell.relativePosition)
+            
+            guard
+                intersection.isLine,
+                selectedCell.relativePosition.line(for: gripPosition).contains(intersection),
+                let grip = cell.gripPositionRelativeTo(cell: selectedCell, gripPosition) else {
+                    return nil
             }
+       
+            return cell.relativePosition.line(for: grip).maxSizeValue <= intersection.maxSizeValue ? cell : nil
         }
         
         return mergingCells
