@@ -6,7 +6,12 @@ import UIKit
 
 typealias RelativePosition = CGRect
 
-class CollageCell: NSObject {
+struct CollageCell: Equatable, Hashable {
+    
+    var hashValue: Int {
+        return id.hashValue
+    }
+    
     
     let color: UIColor
     let id: UUID = UUID.init()
@@ -17,9 +22,7 @@ class CollageCell: NSObject {
         self.color = color
         self.image = image
         self.relativePosition = relativePosition
-        
-        super.init()
-        
+   
         calculateGripPositions()
     }
     
@@ -33,7 +36,11 @@ class CollageCell: NSObject {
         }
     }
     
-    func calculateGripPositions(){
+    mutating func changePosition(to: RelativePosition) {
+        relativePosition = to
+    }
+    
+    mutating func calculateGripPositions(){
         gripPositions.removeAll()
         
         guard relativePosition.isFullsized == false else {

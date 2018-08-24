@@ -38,6 +38,7 @@ class CollageSceneViewController: UIViewController {
         let someAnotherCell = CollageCell(color: .cyan, image: nil, relativePosition: RelativePosition(x: 0.5, y: 0.5, width: 0.5, height: 0.5))
         let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
         let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
+        
         let templateBar = TemplateBarCollectionViewController(templates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
         
         templateBar.delegate = self
@@ -115,7 +116,7 @@ class CollageSceneViewController: UIViewController {
     }()
     
     func split(by axis: Axis) {
-        collageViewController.collage?.splitSelectedCell(by: axis)
+        collageViewController.collage.splitSelectedCell(by: axis)
     }
     
     private let bannerView = UIView()
@@ -150,10 +151,10 @@ extension UIViewController {
 extension CollageSceneViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
-        case 0: collageViewController.collage?.mergeSelectedCell()
-        case 1: collageViewController.collage?.changeSelectedCellSize(grip: .right, value: -1)
-        case 2: collageViewController.collage?.splitSelectedCell(by: .horizontal)
-        case 3: collageViewController.collage?.splitSelectedCell(by: .vertical)
+        case 0: collageViewController.collage.mergeSelectedCell()
+        case 1: collageViewController.collage.changeSelectedCellSize(grip: .right, value: -1)
+        case 2: collageViewController.collage.splitSelectedCell(by: .horizontal)
+        case 3: collageViewController.collage.splitSelectedCell(by: .vertical)
         default: break
         }
     }
