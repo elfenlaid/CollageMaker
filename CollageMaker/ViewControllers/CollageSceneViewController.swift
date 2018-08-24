@@ -88,7 +88,7 @@ class CollageSceneViewController: UIViewController {
     }
     
     @objc private func resetCollage() {
-        collageViewController.collage?.reset()
+        collageViewController.collage.reset()
     }
     
     @objc private func shareCollage() {

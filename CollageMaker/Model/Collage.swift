@@ -229,12 +229,4 @@ extension CGRect {
     var area: CGFloat {
         return width * height
     }
-    
-}
-
-extension Collage: NSCopying {
-    func copy(with zone: NSZone? = nil) -> Any {
-        let copy = Collage(cells: cells)
-        return copy
-    }
 }
