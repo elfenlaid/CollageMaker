@@ -51,7 +51,7 @@ extension CollageViewController: CollageViewDelegate {
     func collageView(_ collageView: CollageView, tapped point: CGPoint) {
         let relativePoint = CGPoint(x: point.x / collageView.frame.width,
                                     y: point.y / collageView.frame.height)
-        
+
         guard let selectedCell = collage.cell(at: relativePoint) else {
             return
         }
