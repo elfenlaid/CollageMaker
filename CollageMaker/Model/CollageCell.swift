@@ -25,7 +25,7 @@ struct CollageCell: Equatable, Hashable {
         
         calculateGripPositions()
     }
-
+    
     func belongsToParallelLine(on axis: Axis, with point: CGPoint) -> Bool {
         if axis == .horizontal {
             return abs(point.y - relativePosition.minY) < .ulpOfOne || abs(point.y - relativePosition.maxY) < .ulpOfOne
@@ -47,15 +47,11 @@ struct CollageCell: Equatable, Hashable {
             return
         }
         
-        if !relativePosition.hasMaximumWidth {
-            if relativePosition.minX > 0 { gripPositions.insert(.left) }
-            if relativePosition.maxX < 1 { gripPositions.insert(.right) }
-        }
+        if abs(relativePosition.minX) > .ulpOfOne { gripPositions.insert(.left) }
+        if abs(relativePosition.maxX - 1) > .ulpOfOne { gripPositions.insert(.right) }
+        if abs(relativePosition.minY) > .ulpOfOne { gripPositions.insert(.top) }
+        if abs(relativePosition.maxY - 1) > .ulpOfOne { gripPositions.insert(.bottom) }
         
-        if !relativePosition.hasMaximumHeight {
-            if relativePosition.minY > 0 { gripPositions.insert(.top) }
-            if relativePosition.maxY < 1 { gripPositions.insert(.bottom) }
-        }
     }
     
     func gripPositionRelativeTo(cell: CollageCell, _ gripPosition: GripPosition) -> GripPosition {
@@ -134,20 +130,15 @@ extension RelativePosition {
     var isFullsized: Bool {
         return self == CGRect(x: 0, y: 0, width: 1, height: 1)
     }
-    
-    var hasMaximumHeight: Bool {
-        return abs(height - 1.0) < .ulpOfOne
-    }
-    
-    var hasMaximumWidth: Bool {
-        return abs(width - 1.0) < .ulpOfOne
-    }
-    
 }
 
 extension CGRect {
     var isLine: Bool {
         return (width.isZero && height > 0) || (height.isZero && width > 0)
+    }
+    
+    func isInBounds(_ bounds: CGRect) -> Bool {
+        return maxX <= bounds.maxX && maxY <= bounds.maxY
     }
     
     var lineAxis: Axis? {

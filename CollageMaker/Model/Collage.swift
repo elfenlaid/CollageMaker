@@ -207,21 +207,22 @@ extension Collage {
         
         return cells.filter({ $0 != selectedCell }).compactMap { (cell) -> CollageCell? in
             let intersection = cell.relativePosition.intersection(selectedCell.relativePosition)
-            
-            guard intersection.isLine, selectedCell.relativePosition.line(for: gripPosition).contains(intersection) else {
+            let grip = cell.gripPositionRelativeTo(cell: selectedCell, gripPosition)
+       
+            guard intersection.isLine, selectedCell.relativePosition.line(for: gripPosition).contains(intersection), cell.gripPositions.contains(grip) else {
                     return nil
             }
-            let grip = cell.gripPositionRelativeTo(cell: selectedCell, gripPosition)
             
-            return cell.relativePosition.line(for: grip).maxSizeValue <= intersection.maxSizeValue ? cell : nil
+            return abs(cell.relativePosition.line(for: grip).maxSizeValue - intersection.maxSizeValue) < .ulpOfOne ? cell : nil
         }
     }
     
     var isFullsized: Bool {
         let collageArea = RelativePosition(x: 0, y: 0, width: 1, height: 1).area
         let cellsArea = cells.map { $0.relativePosition.area }.reduce(0.0, { $0 + $1 })
-        
-        return abs(collageArea - cellsArea) < .ulpOfOne
+        let cellsInBounds = cells.map { $0.relativePosition.isInBounds(CGRect(x: 0, y: 0, width: 1, height: 1))}.reduce(true, {$0 && $1 })
+ 
+        return abs(collageArea - cellsArea) < .ulpOfOne && cellsInBounds
     }
 }
 
