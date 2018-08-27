@@ -209,11 +209,11 @@ extension Collage {
             let intersection = cell.relativePosition.intersection(selectedCell.relativePosition)
             let grip = cell.gripPositionRelativeTo(cell: selectedCell, gripPosition)
        
-            guard intersection.isLine, selectedCell.relativePosition.line(for: gripPosition).contains(intersection), cell.gripPositions.contains(grip) else {
+            guard cell.gripPositions.contains(grip), intersection.isLine, selectedCell.relativePosition.line(for: gripPosition).lineContains(intersection) else {
                     return nil
             }
             
-            return abs(cell.relativePosition.line(for: grip).maxSizeValue - intersection.maxSizeValue) < .ulpOfOne ? cell : nil
+            return abs(cell.relativePosition.line(for: grip).maxSizeValue - intersection.maxSizeValue).rounded2(toPlaces: 2) < .ulpOfOne ? cell : nil
         }
     }
     
@@ -229,5 +229,13 @@ extension Collage {
 extension CGRect {
     var area: CGFloat {
         return width * height
+    }
+}
+
+extension FloatingPoint {
+    public func rounded2(toPlaces places: Int) -> Self {
+        guard places >= 0 else { return self }
+        let divisor = Self(Int(pow(10.0, Double(places))))
+        return (self * divisor).rounded() / divisor
     }
 }

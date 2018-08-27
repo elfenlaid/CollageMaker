@@ -133,8 +133,26 @@ extension RelativePosition {
 }
 
 extension CGRect {
+    func lineContains(_ line2: CGRect) -> Bool {
+        guard self.isLine && line2.isLine, let axis = self.lineAxis, axis == line2.lineAxis else {
+            return false
+        }
+        
+        switch axis {
+        case .horizontal : return
+                self.midY.rounded2(toPlaces: 2) == line2.midY.rounded2(toPlaces: 2) &&
+                    self.maxY.rounded2(toPlaces: 2) >= line2.maxY.rounded2(toPlaces: 2) &&
+                    self.minY.rounded2(toPlaces: 2) <= line2.minY.rounded2(toPlaces: 2)
+            
+        case .vertical: return
+                self.midX.rounded2(toPlaces: 2) == line2.midX.rounded2(toPlaces: 2) &&
+                    self.maxX.rounded2(toPlaces: 2) >= line2.maxX.rounded2(toPlaces: 2) &&
+                    self.minX.rounded2(toPlaces: 2) <= line2.minX.rounded2(toPlaces: 2)
+        }
+    }
+    
     var isLine: Bool {
-        return (width.isZero && height > 0) || (height.isZero && width > 0)
+        return (width.rounded2(toPlaces: 2).isZero && height > 0) || (height.rounded2(toPlaces: 2).isZero && width > 0)
     }
     
     func isInBounds(_ bounds: CGRect) -> Bool {
