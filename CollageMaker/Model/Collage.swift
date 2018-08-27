@@ -75,11 +75,13 @@ struct Collage {
         var startState = State()
         var intermediateState = State()
         
+        let roundedValue = (value / 100).rounded2(toPlaces: 2)
+        
         cells.forEach { startState[$0] = $0.relativePosition }
         
         changingCells.forEach {
             let newPosition = $0.gripPositionRelativeTo(cell: selectedCell, grip)
-            let newCellSize = calculatePosition(of: $0, for: value / 100, with: newPosition)
+            let newCellSize = calculatePosition(of: $0, for: roundedValue, with: newPosition)
             
             intermediateState[$0] = newCellSize
         }
@@ -209,11 +211,13 @@ extension Collage {
             let intersection = cell.relativePosition.intersection(selectedCell.relativePosition)
             let grip = cell.gripPositionRelativeTo(cell: selectedCell, gripPosition)
        
-            guard cell.gripPositions.contains(grip), intersection.isLine, selectedCell.relativePosition.line(for: gripPosition).lineContains(intersection) else {
+            guard cell.gripPositions.contains(grip), intersection.isLine, selectedCell.relativePosition.line(for: gripPosition).contains(intersection) else {
                     return nil
             }
             
-            return abs(cell.relativePosition.line(for: grip).maxSizeValue - intersection.maxSizeValue).rounded2(toPlaces: 2) < .ulpOfOne ? cell : nil
+            let line = selectedCell.relativePosition.line(for: gripPosition)
+            
+            return line.maxSizeValue >= intersection.maxSizeValue ? cell : nil
         }
     }
     
@@ -222,7 +226,7 @@ extension Collage {
         let cellsArea = cells.map { $0.relativePosition.area }.reduce(0.0, { $0 + $1 })
         let cellsInBounds = cells.map { $0.relativePosition.isInBounds(CGRect(x: 0, y: 0, width: 1, height: 1))}.reduce(true, {$0 && $1 })
  
-        return abs(collageArea - cellsArea) < .ulpOfOne && cellsInBounds
+        return cellsInBounds && abs(collageArea - cellsArea) < .ulpOfOne
     }
 }
 
@@ -236,6 +240,7 @@ extension FloatingPoint {
     public func rounded2(toPlaces places: Int) -> Self {
         guard places >= 0 else { return self }
         let divisor = Self(Int(pow(10.0, Double(places))))
+  
         return (self * divisor).rounded() / divisor
     }
 }
