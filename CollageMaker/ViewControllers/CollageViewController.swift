@@ -34,10 +34,29 @@ class CollageViewController: UIViewController {
     
     
     @objc private func changeDimension(with recognizer: UIPanGestureRecognizer) {
-        let some = recognizer.translation(in: collageView)
+        let point = recognizer.location(in: view)
         
-        collage.changeSelectedCellSize(grip: GripPosition.top, value: some.y)
-        recognizer.setTranslation(.zero, in: collageView)
+        switch recognizer.state {
+        case .began:
+            startPoint = point
+            let frame = CGRect(x: startPoint.x - 20, y: startPoint.y - 20, width: 40, height: 40)
+            
+            selectedGrip = collageView.gripViews.first(where: {$0.frame.intersects(frame)})?.position
+        case .cancelled:
+            print("Cancelled")
+        case .changed:
+            guard let grip = selectedGrip else {
+                return
+            }
+            
+            let value = grip.axis == .horizontal ? point.y - startPoint.y : point.x - startPoint.x
+   
+            collage.changeSelectedCellSize(grip: grip, value: value)
+        case .ended: print("Ended")
+            startPoint = point
+        default: break
+        }
+        startPoint = point
     }
     
     var collage: Collage = Collage(cells: []) {
@@ -53,6 +72,8 @@ class CollageViewController: UIViewController {
     
     private lazy var collageView = CollageView(collage: Collage(cells: []))
     private var panGestureRecognizer = UIPanGestureRecognizer()
+    private var selectedGrip: GripPosition?
+    var startPoint = CGPoint.zero
 }
 
 

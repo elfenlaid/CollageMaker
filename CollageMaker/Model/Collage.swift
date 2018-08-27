@@ -75,13 +75,11 @@ struct Collage {
         var startState = State()
         var intermediateState = State()
         
-        let roundedValue = (value / 100).rounded2(toPlaces: 2)
-        
         cells.forEach { startState[$0] = $0.relativePosition }
         
         changingCells.forEach {
             let newPosition = $0.gripPositionRelativeTo(cell: selectedCell, grip)
-            let newCellSize = calculatePosition(of: $0, for: roundedValue, with: newPosition)
+            let newCellSize = calculatePosition(of: $0, for: value / 100, with: newPosition)
             
             intermediateState[$0] = newCellSize
         }
@@ -193,7 +191,7 @@ extension Collage {
         case .bottom:
             newValue.size.height += value
         }
-        
+  
         return newValue
     }
     

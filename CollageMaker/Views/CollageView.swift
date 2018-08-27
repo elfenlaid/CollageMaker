@@ -95,6 +95,6 @@ class CollageView: UIView {
     private var collage: Collage
     private(set) var gripViews: [GripView] = []
     private(set) var cellViews: [CollageCellView]
-    private var selectedCellView: CollageCellView?
+    private(set) var selectedCellView: CollageCellView?
     private var tapGestureRecognizer = UITapGestureRecognizer()
 }
