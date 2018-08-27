@@ -25,7 +25,7 @@ struct CollageCell: Equatable, Hashable {
         
         calculateGripPositions()
     }
-    
+
     func belongsToParallelLine(on axis: Axis, with point: CGPoint) -> Bool {
         if axis == .horizontal {
             return abs(point.y - relativePosition.minY) < .ulpOfOne || abs(point.y - relativePosition.maxY) < .ulpOfOne
@@ -58,7 +58,7 @@ struct CollageCell: Equatable, Hashable {
         }
     }
     
-    func gripPositionRelativeTo(cell: CollageCell, _ gripPosition: GripPosition) -> GripPosition? {
+    func gripPositionRelativeTo(cell: CollageCell, _ gripPosition: GripPosition) -> GripPosition {
         guard cell != self else {
             return gripPosition
         }

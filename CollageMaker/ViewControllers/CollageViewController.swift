@@ -15,7 +15,11 @@ class CollageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        panGestureRecognizer.addTarget(self, action: #selector(changeDimension(with:)))
+        
+        collageView.delegate = self
         view.addSubview(collageView)
+        view.addGestureRecognizer(panGestureRecognizer)
     }
     
     override func viewWillLayoutSubviews() {
@@ -28,21 +32,27 @@ class CollageViewController: UIViewController {
         self.collage = collage
     }
     
+    
+    @objc private func changeDimension(with recognizer: UIPanGestureRecognizer) {
+        let some = recognizer.translation(in: collageView)
+        
+        collage.changeSelectedCellSize(grip: GripPosition.top, value: some.y)
+        recognizer.setTranslation(.zero, in: collageView)
+    }
+    
     var collage: Collage = Collage(cells: []) {
         didSet {
             collage.delegate = self
             
-            collageView.removeFromSuperview()
-            collageView = CollageView(collage: collage)
-            collageView.delegate = self
+            collageView.setNeedsLayout()
+            collageView.layoutIfNeeded()
             
-            view.addSubview(collageView)
-            view.setNeedsLayout()
-            view.layoutIfNeeded()
+            collageView.updateView(with: collage)
         }
     }
     
     private lazy var collageView = CollageView(collage: Collage(cells: []))
+    private var panGestureRecognizer = UIPanGestureRecognizer()
 }
 
 
@@ -51,7 +61,7 @@ extension CollageViewController: CollageViewDelegate {
     func collageView(_ collageView: CollageView, tapped point: CGPoint) {
         let relativePoint = CGPoint(x: point.x / collageView.frame.width,
                                     y: point.y / collageView.frame.height)
-
+        
         guard let selectedCell = collage.cell(at: relativePoint) else {
             return
         }

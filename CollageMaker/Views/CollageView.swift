@@ -28,6 +28,23 @@ class CollageView: UIView {
         addGestureRecognizer(tapGestureRecognizer)
     }
     
+    func updateView(with collage: Collage) {
+        subviews.forEach { $0.removeFromSuperview() }
+        
+        self.collage = collage
+        self.cellViews = collage.cells.map(CollageCellView.init)
+        
+        cellViews.forEach { $0.frame = $0.collageCell.relativePosition.absolutePosition(in: bounds)
+            addSubview($0)
+        }
+        
+        if let cell = cellViews.first(where: {$0.collageCell.id  == collage.selectedCell.id}) {
+            setSelected(cellView: cell)
+        }
+
+        showGrips()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("Not implemented")
     }

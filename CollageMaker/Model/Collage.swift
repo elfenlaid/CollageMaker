@@ -58,7 +58,7 @@ struct Collage {
             if changeSelectedCellSize(grip: position, value: position.sideChangeValue(for: selectedCell.relativePosition), merging: true) { break }
         }
     }
-
+    
     mutating func reset() {
         cells.removeAll()
         setPositions(from: initialState)
@@ -72,14 +72,15 @@ struct Collage {
             return false
         }
         
+        var startState = State()
         var intermediateState = State()
         
+        cells.forEach { startState[$0] = $0.relativePosition }
+        
         changingCells.forEach {
-            guard let newPosition = $0.gripPositionRelativeTo(cell: selectedCell, grip) else {
-                return
-            }
-            
+            let newPosition = $0.gripPositionRelativeTo(cell: selectedCell, grip)
             let newCellSize = calculatePosition(of: $0, for: value / 100, with: newPosition)
+            
             intermediateState[$0] = newCellSize
         }
         
@@ -99,6 +100,9 @@ struct Collage {
                 setSelected(cell: cells.last ?? CollageCell(color: .white, relativePosition: .zero))
             } else {
                 setPositions(from: intermediateState)
+                if !isFullsized {
+                    setPositions(from: startState)
+                }
             }
             
             delegate?.collageChanged(to: self)
@@ -107,18 +111,18 @@ struct Collage {
             return false
         }
     }
-
+    
     private mutating func add(cell: CollageCell) {
         if !cells.contains(cell) {
             cells.append(cell)
         }
     }
-
+    
     private mutating func remove(cell: CollageCell) {
         recentlyDeleted = cell
         cells = cells.filter { $0.id != cell.id }
     }
-
+    
     private mutating func update(cell: CollageCell) {
         remove(cell: cell)
         add(cell: cell)
@@ -140,7 +144,7 @@ extension Collage {
     static func ==(lhs: Collage, rhs: Collage) -> Bool {
         return lhs.cells == rhs.cells
     }
-
+    
     func cell(at relativePoint: CGPoint) -> CollageCell? {
         return cells.first(where: { $0.relativePosition.contains(relativePoint) })
     }
@@ -201,27 +205,23 @@ extension Collage {
     
     private func mergingCells(with gripPosition: GripPosition) -> [CollageCell] {
         
-        let mergingCells =  cells.filter({ $0 != selectedCell }).compactMap { (cell) -> CollageCell? in
+        return cells.filter({ $0 != selectedCell }).compactMap { (cell) -> CollageCell? in
             let intersection = cell.relativePosition.intersection(selectedCell.relativePosition)
             
-            guard
-                intersection.isLine,
-                selectedCell.relativePosition.line(for: gripPosition).contains(intersection),
-                let grip = cell.gripPositionRelativeTo(cell: selectedCell, gripPosition) else {
+            guard intersection.isLine, selectedCell.relativePosition.line(for: gripPosition).contains(intersection) else {
                     return nil
             }
-       
+            let grip = cell.gripPositionRelativeTo(cell: selectedCell, gripPosition)
+            
             return cell.relativePosition.line(for: grip).maxSizeValue <= intersection.maxSizeValue ? cell : nil
         }
-        
-        return mergingCells
     }
     
     var isFullsized: Bool {
         let collageArea = RelativePosition(x: 0, y: 0, width: 1, height: 1).area
         let cellsArea = cells.map { $0.relativePosition.area }.reduce(0.0, { $0 + $1 })
         
-        return collageArea == cellsArea
+        return abs(collageArea - cellsArea) < .ulpOfOne
     }
 }
 
