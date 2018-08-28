@@ -14,7 +14,7 @@ class CollageRenderer {
     }
     
     private static func render(cell: CollageCell, in context: UIGraphicsRendererContext) {
-        let rect = cell.relativePosition.absolutePosition(in: context.format.bounds)
+        let rect = cell.relativeFrame.absolutePosition(in: context.format.bounds)
         
         if let image = cell.image {
             image.draw(in: rect)

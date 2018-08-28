@@ -4,7 +4,7 @@
 
 import UIKit
 
-typealias RelativePosition = CGRect
+typealias RelativeFrame = CGRect
 
 struct CollageCell: Equatable, Hashable {
     
@@ -16,41 +16,41 @@ struct CollageCell: Equatable, Hashable {
     let color: UIColor
     let id: UUID = UUID.init()
     let image: UIImage?
-    var relativePosition: RelativePosition
+    var relativeFrame: RelativeFrame
     
-    init(color: UIColor, image: UIImage? = nil, relativePosition: RelativePosition) {
+    init(color: UIColor, image: UIImage? = nil, relativePosition: RelativeFrame) {
         self.color = color
         self.image = image
-        self.relativePosition = relativePosition
+        self.relativeFrame = relativePosition
         
         calculateGripPositions()
     }
     
     func belongsToParallelLine(on axis: Axis, with point: CGPoint) -> Bool {
         if axis == .horizontal {
-            return abs(point.y - relativePosition.minY) < .ulpOfOne || abs(point.y - relativePosition.maxY) < .ulpOfOne
+            return abs(point.y - relativeFrame.minY) < .ulpOfOne || abs(point.y - relativeFrame.maxY) < .ulpOfOne
         } else if axis == .vertical {
-            return abs(point.x - relativePosition.minX) < .ulpOfOne || abs(point.x - relativePosition.maxX) < .ulpOfOne
+            return abs(point.x - relativeFrame.minX) < .ulpOfOne || abs(point.x - relativeFrame.maxX) < .ulpOfOne
         } else {
             return false
         }
     }
     
-    mutating func changePosition(to: RelativePosition) {
-        relativePosition = to
+    mutating func changeRelativeFrame(to: RelativeFrame) {
+        relativeFrame = to
     }
     
     mutating func calculateGripPositions(){
         gripPositions.removeAll()
         
-        guard relativePosition.isFullsized == false else {
+        guard relativeFrame.isFullsized == false else {
             return
         }
         
-        if abs(relativePosition.minX) > .ulpOfOne { gripPositions.insert(.left) }
-        if abs(relativePosition.maxX - 1) > .ulpOfOne { gripPositions.insert(.right) }
-        if abs(relativePosition.minY) > .ulpOfOne { gripPositions.insert(.top) }
-        if abs(relativePosition.maxY - 1) > .ulpOfOne { gripPositions.insert(.bottom) }
+        if abs(relativeFrame.minX) > .ulpOfOne { gripPositions.insert(.left) }
+        if abs(relativeFrame.maxX - 1) > .ulpOfOne { gripPositions.insert(.right) }
+        if abs(relativeFrame.minY) > .ulpOfOne { gripPositions.insert(.top) }
+        if abs(relativeFrame.maxY - 1) > .ulpOfOne { gripPositions.insert(.bottom) }
         
     }
     
@@ -60,9 +60,9 @@ struct CollageCell: Equatable, Hashable {
         }
         
         if gripPosition.axis == .horizontal {
-            return self.relativePosition.midY < gripPosition.centerPoint(in: cell).y ? .bottom : .top
+            return self.relativeFrame.midY < gripPosition.centerPoint(in: cell).y ? .bottom : .top
         } else {
-            return self.relativePosition.midX < gripPosition.centerPoint(in: cell).x ? .right : .left
+            return self.relativeFrame.midX < gripPosition.centerPoint(in: cell).x ? .right : .left
         }
     }
     
@@ -77,10 +77,10 @@ enum GripPosition {
     
     func centerPoint(in cell: CollageCell) -> CGPoint {
         switch self {
-        case .left: return CGPoint(x: cell.relativePosition.minX, y: cell.relativePosition.midY)
-        case .right: return CGPoint(x: cell.relativePosition.maxX, y: cell.relativePosition.midY)
-        case .top: return CGPoint(x: cell.relativePosition.midX, y: cell.relativePosition.minY)
-        case .bottom: return CGPoint(x: cell.relativePosition.midX, y: cell.relativePosition.maxY)
+        case .left: return CGPoint(x: cell.relativeFrame.minX, y: cell.relativeFrame.midY)
+        case .right: return CGPoint(x: cell.relativeFrame.maxX, y: cell.relativeFrame.midY)
+        case .top: return CGPoint(x: cell.relativeFrame.midX, y: cell.relativeFrame.minY)
+        case .bottom: return CGPoint(x: cell.relativeFrame.midX, y: cell.relativeFrame.maxY)
         }
     }
     
@@ -93,7 +93,7 @@ enum GripPosition {
 }
 
 extension GripPosition {
-    func sideChangeValue(for position: RelativePosition) -> CGFloat {
+    func sideChangeValue(for position: RelativeFrame) -> CGFloat {
         switch self {
         case .left:
             return position.width * 100
@@ -107,7 +107,7 @@ extension GripPosition {
     }
 }
 
-extension RelativePosition {
+extension RelativeFrame {
     
     func absolutePosition(in rect: CGRect) -> CGRect {
         return CGRect(x: origin.x * rect.width,
@@ -116,14 +116,14 @@ extension RelativePosition {
                       height: height * rect.height)
     }
     
-    func split(axis: Axis) -> (RelativePosition, RelativePosition) {
+    func split(axis: Axis) -> (RelativeFrame, RelativeFrame) {
         switch axis {
         case .horizontal:
-            return (RelativePosition(origin: origin, size: CGSize(width: size.width / 2, height: size.height)),
-                    RelativePosition(origin: CGPoint(x: origin.x + size.width / 2, y: origin.y), size: CGSize(width: size.width / 2, height: size.height)))
+            return (RelativeFrame(origin: origin, size: CGSize(width: size.width / 2, height: size.height)),
+                    RelativeFrame(origin: CGPoint(x: origin.x + size.width / 2, y: origin.y), size: CGSize(width: size.width / 2, height: size.height)))
         case .vertical:
-            return (RelativePosition(origin: origin, size: CGSize(width: size.width, height: size.height / 2)),
-                    RelativePosition(origin: CGPoint(x: origin.x, y: origin.y + size.height / 2), size: CGSize(width: size.width, height: size.height / 2)))
+            return (RelativeFrame(origin: origin, size: CGSize(width: size.width, height: size.height / 2)),
+                    RelativeFrame(origin: CGPoint(x: origin.x, y: origin.y + size.height / 2), size: CGSize(width: size.width, height: size.height / 2)))
         }
     }
     

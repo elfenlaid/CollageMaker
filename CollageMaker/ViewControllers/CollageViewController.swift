@@ -30,6 +30,11 @@ class CollageViewController: UIViewController {
     
     func set(collage: Collage) {
         self.collage = collage
+        self.collage.delegate = self
+        
+        DispatchQueue.main.async { [weak self, collage]  in
+            self?.collageView.setCollage(collage)
+        }
     }
     
     
@@ -42,38 +47,29 @@ class CollageViewController: UIViewController {
             let frame = CGRect(x: startPoint.x - 20, y: startPoint.y - 20, width: 40, height: 40)
             
             selectedGrip = collageView.gripViews.first(where: {$0.frame.intersects(frame)})?.position
-        case .cancelled:
-            print("Cancelled")
         case .changed:
             guard let grip = selectedGrip else {
                 return
             }
             
             let value = grip.axis == .horizontal ? point.y - startPoint.y : point.x - startPoint.x
-   
-            collage.changeSelectedCellSize(grip: grip, value: value)
-        case .ended: print("Ended")
-            startPoint = point
+            
+            DispatchQueue.global().async { [weak self] in
+                self?.collage.changeSelectedCellSize(grip: grip, value: value.rounded())
+                self?.startPoint = point
+            }
+            
+        case .ended: selectedGrip = nil
         default: break
         }
-        startPoint = point
+        
     }
     
-    var collage: Collage = Collage(cells: []) {
-        didSet {
-            collage.delegate = self
-            
-            collageView.setNeedsLayout()
-            collageView.layoutIfNeeded()
-            
-            collageView.updateView(with: collage)
-        }
-    }
-    
-    private lazy var collageView = CollageView(collage: Collage(cells: []))
-    private var panGestureRecognizer = UIPanGestureRecognizer()
+    lazy var collage: Collage = Collage(cells: [])
+    private var startPoint = CGPoint.zero
+    private let collageView = CollageView()
     private var selectedGrip: GripPosition?
-    var startPoint = CGPoint.zero
+    private var panGestureRecognizer = UIPanGestureRecognizer()
 }
 
 
@@ -92,17 +88,23 @@ extension CollageViewController: CollageViewDelegate {
 }
 
 extension CollageViewController: CollageDelegate {
+    func collage(_ collage: Collage, wantsToUpdate cells: [CollageCell]) {
+        DispatchQueue.main.async { [weak self] in
+            self?.collageView.updateFrames(for: cells)
+        }
+    }
     
     func collageChanged(to collage: Collage) {
         set(collage: collage)
     }
     
     func collage(_ collage: Collage, didChangeSelected cell: CollageCell) {
-        guard let selectedCellView = collageView.cellViews.first(where: { $0.collageCell.id ==  cell.id }) else {
+        guard let selectedCellView = collageView.cellViews.first(where: { $0.collageCell.id == cell.id }) else {
             return
         }
         
-        collageView.setSelected(cellView: selectedCellView)
+        DispatchQueue.main.async { [weak self] in
+            self?.collageView.select(cellView: selectedCellView)
+        }
     }
-    
 }

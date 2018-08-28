@@ -23,6 +23,10 @@ class CollageCellView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("Not implemented")
     }
+    
+    func changeFrame(to: CGRect) {
+        self.frame = to
+    }
 
     func set(image: UIImage) {
         imageView.image = image

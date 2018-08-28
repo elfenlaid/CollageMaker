@@ -25,7 +25,7 @@ class GripView: UIView {
         layout()
     }
     
-    private func layout() {
+    func layout() {
         let verticalSize = CGSize(width: 5, height: associatedCellView.frame.height / 3)
         let horizontalSize = CGSize(width: associatedCellView.frame.width / 3, height: 5)
         
