@@ -12,20 +12,42 @@ class CollageView: UIView {
     
     weak var delegate: CollageViewDelegate?
     
-    init(collage: Collage, width: CGFloat = 0) {
-        self.collage = collage
-        self.cellViews = collage.cells.map(CollageCellView.init)
-        
-        super.init(frame: CGRect(origin: .zero, size: CGSize(width: width, height: width)))
-        
-        cellViews.forEach { addSubview($0) }
-        
-        if let cell = cellViews.first(where: {$0.collageCell.id  == collage.selectedCell.id}) {
-            setSelected(cellView: cell)
-        }
+    init() {
+        super.init(frame: .zero)
         
         tapGestureRecognizer.addTarget(self, action: #selector(cellSelected(with:)))
         addGestureRecognizer(tapGestureRecognizer)
+    }
+ 
+    func changeFrames(from: Collage.State) {
+        let cells = from.map { $0.key }
+        
+        cells.forEach { cell in
+            guard let size = from[cell] else {
+                return
+            }
+            
+            UIView.animate(withDuration: 0.05) {
+                self.cellViews.first(where: { $0.collageCell.id == cell.id })?.frame = size.absolutePosition(in: self.bounds)
+                self.gripViews.forEach { $0.layout() }
+            }
+        }
+    }
+    
+    func setCollage(_ collage: Collage) {
+        subviews.forEach { $0.removeFromSuperview() }
+        
+        self.collage = collage
+        self.cellViews = collage.cells.map(CollageCellView.init)
+        
+        cellViews.forEach {
+            $0.frame = $0.collageCell.relativeFrame.absolutePosition(in: bounds)
+            addSubview($0)
+        }
+        
+        if let cell = cellViews.first(where: {$0.collageCell.id  == collage.selectedCell.id}) {
+            select(cellView: cell)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,14 +57,14 @@ class CollageView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        cellViews.forEach { $0.frame = $0.collageCell.relativePosition.absolutePosition(in: bounds) }
         showGrips()
     }
     
-    func setSelected(cellView: CollageCellView) {
-        selectedCellView?.layer.borderColor = UIColor.white.cgColor
+    func select(cellView: CollageCellView) {
+        selectedCellView?.layer.borderWidth = 0
         selectedCellView = cellView
-        selectedCellView?.layer.borderColor = UIColor.gray.cgColor
+        selectedCellView?.layer.borderWidth = 2
+        selectedCellView?.layer.borderColor = UIColor.collagePurple.cgColor
         
         showGrips()
     }
@@ -75,9 +97,9 @@ class CollageView: UIView {
         return selectedCellView?.collageCell.gripPositions
     }
     
-    private var collage: Collage
+    private var collage: Collage?
     private(set) var gripViews: [GripView] = []
-    private(set) var cellViews: [CollageCellView]
-    private var selectedCellView: CollageCellView?
+    private(set) var cellViews: [CollageCellView] = []
+    private(set) var selectedCellView: CollageCellView?
     private var tapGestureRecognizer = UITapGestureRecognizer()
 }

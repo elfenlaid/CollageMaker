@@ -12,9 +12,6 @@ class CollageCellView: UIView {
         super.init(frame: .zero)
         
         backgroundColor = collageCell.color
-        
-        layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 1
     
         addSubview(imageView)
         makeConstraints()
@@ -22,6 +19,10 @@ class CollageCellView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("Not implemented")
+    }
+    
+    func changeFrame(to: CGRect) {
+        self.frame = to
     }
 
     func set(image: UIImage) {
