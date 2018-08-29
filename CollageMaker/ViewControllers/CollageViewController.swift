@@ -66,6 +66,7 @@ class CollageViewController: UIViewController {
         case .changed:
             if let grip = selectedGripPosition {
                 let sizeChange = grip.axis == .horizontal ? translation.y / view.bounds.height : translation.x / view.bounds.width
+                
                 collage.changeSelectedCellSize(grip: grip, value: sizeChange)
             }
             
@@ -98,7 +99,7 @@ extension CollageViewController: CollageViewDelegate {
 }
 
 extension CollageViewController: CollageDelegate {
-    func collage(_ collage: Collage, changed state: Collage.State) {
+    func collage(_ collage: Collage, changed state: CollageState) {
          DispatchQueue.main.async { [weak self] in
             self?.collageView.changeFrames(from: state)
         }
