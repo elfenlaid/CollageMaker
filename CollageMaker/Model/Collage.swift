@@ -12,12 +12,11 @@ enum Axis {
 protocol CollageDelegate: AnyObject {
     func collage(_ collage: Collage, didChangeSelected cell: CollageCell)
     func collageChanged(to collage: Collage)
-    func collage(_ collage: Collage, changed state: Collage.State)
+    func collage(_ collage: Collage, changed state: CollageState)
 }
 
 struct Collage {
     
-    typealias State = [CollageCell: RelativeFrame]
     weak var delegate: CollageDelegate?
     
     init(cells: [CollageCell]) {
@@ -28,10 +27,10 @@ struct Collage {
             self.selectedCell = initialCell
         } else {
             self.cells = cells
-            self.selectedCell = cells.last ?? CollageCell(color: .white, relativeFrame: .zero)
+            self.selectedCell = cells.last ?? CollageCell.null
         }
         
-        cells.forEach { initialState[$0] = $0.relativeFrame }
+        cells.forEach { initialState.cellsRelativeFrames[$0] = $0.relativeFrame }
     }
     
     mutating func setSelected(cell: CollageCell) {
@@ -39,7 +38,8 @@ struct Collage {
             return
         }
         
-        selectedCell = cell
+        selectedCell = cells.first(where: { $0.id == cell.id }) ?? CollageCell.null
+        
         delegate?.collage(self, didChangeSelected: selectedCell)
     }
     
@@ -79,48 +79,36 @@ struct Collage {
             return false
         }
         
-        var startState = State()
-        var intermediateState = State()
+        var startState = CollageState(selectedCell: selectedCell)
+        var intermediateState = CollageState()
         
-        cells.forEach { startState[$0] = $0.relativeFrame }
+        cells.forEach { startState.cellsRelativeFrames[$0] = $0.relativeFrame }
         
         changingCells.forEach {
-            let newPosition = $0.gripPositionRelativeTo(cell: selectedCell, grip)
-            let newCellSize = calculatePosition(of: $0, for: value, with: newPosition)
+            let changeGrip = $0.gripPositionRelativeTo(cell: selectedCell, grip)
+            let newCellSize = calculatePosition(of: $0, for: value, with: changeGrip)
             
-            intermediateState[$0] = newCellSize
+            intermediateState.cellsRelativeFrames[$0] = newCellSize
         }
         
-        var newCollage = self
+        if merging { remove(cell: selectedCell) }
+        intermediateState.selectedCell = merging ? intermediateState.cells.last ?? CollageCell.null : selectedCell
         
-        if merging {
-            newCollage.remove(cell: selectedCell)
-            newCollage.setPositions(from: intermediateState)
-        }
+        setPositions(from: intermediateState)
         
-        let permisionsToChangePosition = intermediateState.keys.map { isAllowed(position: intermediateState[$0] ?? RelativeFrame.zero) }
-        let shouldUpdate = merging ? newCollage.isFullsized : permisionsToChangePosition.reduce (true, { $0 && $1 })
+        let permisionsToChangePosition = intermediateState.cells.map { isAllowed(position: intermediateState.cellsRelativeFrames[$0] ?? RelativeFrame.zero) }
+        let shouldUpdate = isFullsized && permisionsToChangePosition.reduce (true, { $0 && $1 })
         
-        if shouldUpdate {
-            if merging {
-                self.cells = newCollage.cells
-                setSelected(cell: cells.last ?? CollageCell(color: .white, relativeFrame: .zero))
-                delegate?.collageChanged(to: self)
-            } else {
-                setPositions(from: intermediateState)
-                
-                if !isFullsized {
-                    setPositions(from: startState)
-                    delegate?.collageChanged(to: self)
-                } else {
-                    delegate?.collage(self, changed: intermediateState)
-                }
-            }
+        guard shouldUpdate else {
+            setPositions(from: startState)
+            delegate?.collageChanged(to: self)
             
-            return true
-        } else {
             return false
         }
+        
+        merging ? delegate?.collageChanged(to: self) : delegate?.collage(self, changed: intermediateState)
+        
+        return true
     }
     
     private mutating func add(cell: CollageCell) {
@@ -141,7 +129,7 @@ struct Collage {
     
     var selectedCell: CollageCell
     private(set) var cells: [CollageCell]
-    private var initialState = State()
+    private var initialState = CollageState()
     private var recentlyDeleted: CollageCell?
 }
 
@@ -164,13 +152,12 @@ extension Collage {
         return lhs.cells == rhs.cells
     }
     
-    private mutating func setPositions(from state: State) {
+    private mutating func setPositions(from state: CollageState) {
         var newCells =  [CollageCell]()
-        let cells = state.map { $0.key }
         
-        cells.forEach {
+        state.cells.forEach {
             var cell = $0
-            guard let size = state[$0] else {
+            guard let size = state.cellsRelativeFrames[$0] else {
                 return
             }
             
@@ -179,8 +166,8 @@ extension Collage {
             newCells.append(cell)
         }
         
-        selectedCell = newCells.first(where: { $0.id == selectedCell.id}) ?? cells.last ?? CollageCell(color: .white, relativeFrame: .zero)
         newCells.forEach { update(cell: $0) }
+        selectedCell = cells.first(where: { $0.id == state.selectedCell.id }) ?? CollageCell.null
     }
     
     private func calculatePosition(of cell: CollageCell, for value: CGFloat, with gripPosition: GripPosition) -> RelativeFrame {

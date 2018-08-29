@@ -67,6 +67,12 @@ struct CollageCell: Equatable, Hashable {
     private(set) var gripPositions: Set<GripPosition> = []
 }
 
+extension CollageCell {
+    static var null: CollageCell {
+        return CollageCell(color: .black, relativeFrame: .zero)
+    }
+}
+
 enum GripPosition {
     case top
     case bottom

@@ -19,11 +19,9 @@ class CollageView: UIView {
         addGestureRecognizer(tapGestureRecognizer)
     }
  
-    func changeFrames(from: Collage.State) {
-        let cells = from.map { $0.key }
-        
-        cells.forEach { cell in
-            guard let size = from[cell] else {
+    func changeFrames(from: CollageState) {
+        from.cells.forEach { cell in
+            guard let size = from.cellsRelativeFrames[cell] else {
                 return
             }
             

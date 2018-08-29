@@ -3,3 +3,17 @@
 //
 
 import Foundation
+
+struct CollageState {
+    var cellsRelativeFrames: [CollageCell: RelativeFrame]
+    var selectedCell: CollageCell
+    
+    var cells: [CollageCell] {
+        return cellsRelativeFrames.map { $0.key }
+    }
+    
+    init(cellsRelativeFrames: [CollageCell: RelativeFrame] = [:], selectedCell: CollageCell = CollageCell.null) {
+        self.cellsRelativeFrames = cellsRelativeFrames
+        self.selectedCell = selectedCell
+    }
+}
