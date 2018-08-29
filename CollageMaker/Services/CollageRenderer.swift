@@ -26,5 +26,4 @@ class CollageRenderer {
         UIColor.white.setStroke()
         context.stroke(rect)
     }
-    
 }

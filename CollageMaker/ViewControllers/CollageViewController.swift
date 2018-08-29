@@ -37,36 +37,30 @@ class CollageViewController: UIViewController {
         }
     }
     
-    
     @objc private func changeDimension(with recognizer: UIPanGestureRecognizer) {
         let point = recognizer.location(in: view)
+        let translation = recognizer.translation(in: view)
+        recognizer.setTranslation(.zero, in: view)
         
         switch recognizer.state {
         case .began:
-            startPoint = point
-            let frame = CGRect(x: startPoint.x - 20, y: startPoint.y - 20, width: 40, height: 40)
+            let frame = CGRect(x: point.x - 20, y: point.y - 20, width: 40, height: 40)
+            selectedGrip = collageView.gripViews.first { $0.frame.intersects(frame) }?.position
             
-            selectedGrip = collageView.gripViews.first(where: {$0.frame.intersects(frame)})?.position
         case .changed:
-            guard let grip = selectedGrip else {
-                return
+            if let grip = selectedGrip {
+                let sizeChange = grip.axis == .horizontal ? translation.y / view.bounds.height : translation.x / view.bounds.width
+                collage.changeSelectedCellSize(grip: grip, value: sizeChange)
             }
             
-            let value = grip.axis == .horizontal ? point.y - startPoint.y : point.x - startPoint.x
+        case .ended:
+            selectedGrip = nil
             
-            DispatchQueue.global().async { [weak self] in
-                self?.collage.changeSelectedCellSize(grip: grip, value: value.rounded())
-                self?.startPoint = point
-            }
-            
-        case .ended: selectedGrip = nil
         default: break
         }
-        
     }
     
     lazy var collage: Collage = Collage(cells: [])
-    private var startPoint = CGPoint.zero
     private let collageView = CollageView()
     private var selectedGrip: GripPosition?
     private var panGestureRecognizer = UIPanGestureRecognizer()
@@ -88,12 +82,12 @@ extension CollageViewController: CollageViewDelegate {
 }
 
 extension CollageViewController: CollageDelegate {
-    func collage(_ collage: Collage, wantsToUpdate cells: [CollageCell]) {
-        DispatchQueue.main.async { [weak self] in
-            self?.collageView.updateFrames(for: cells)
+    func collage(_ collage: Collage, changed state: Collage.State) {
+         DispatchQueue.main.async { [weak self] in
+            self?.collageView.changeFrames(from: state)
         }
     }
-    
+  
     func collageChanged(to collage: Collage) {
         set(collage: collage)
     }

@@ -18,15 +18,18 @@ class CollageView: UIView {
         tapGestureRecognizer.addTarget(self, action: #selector(cellSelected(with:)))
         addGestureRecognizer(tapGestureRecognizer)
     }
-    
-    func updateFrames(for cells: [CollageCell]) {
-        cellViews.forEach { cellView in
-            guard let newFrame = cells.first(where: { $0.id == cellView.collageCell.id} )?.relativeFrame else {
+ 
+    func changeFrames(from: Collage.State) {
+        let cells = from.map { $0.key }
+        
+        cells.forEach { cell in
+            guard let size = from[cell] else {
                 return
             }
             
-            cellView.changeFrame(to: newFrame.absolutePosition(in: self.bounds))
-            gripViews.forEach { $0.layout()
+            UIView.animate(withDuration: 0.05) {
+                self.cellViews.first(where: { $0.collageCell.id == cell.id })?.frame = size.absolutePosition(in: self.bounds)
+                self.gripViews.forEach { $0.layout() }
             }
         }
     }
