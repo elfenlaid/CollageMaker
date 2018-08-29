@@ -12,9 +12,6 @@ class CollageCellView: UIView {
         super.init(frame: .zero)
         
         backgroundColor = collageCell.color
-        
-        layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 1
     
         addSubview(imageView)
         makeConstraints()

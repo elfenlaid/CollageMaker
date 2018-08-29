@@ -88,7 +88,7 @@ class CollageSceneViewController: UIViewController {
     }
     
     @objc private func resetCollage() {
-        collageViewController.collage.reset()
+        collageViewController.resetCollage()
     }
     
     @objc private func shareCollage() {
@@ -114,10 +114,6 @@ class CollageSceneViewController: UIViewController {
         
         return button
     }()
-    
-    func split(by axis: Axis) {
-        collageViewController.collage.splitSelectedCell(by: axis)
-    }
     
     private let bannerView = UIView()
     private let toolsBar = ToolsBar()
@@ -151,10 +147,10 @@ extension UIViewController {
 extension CollageSceneViewController: UITabBarDelegate {
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
-        case 0: collageViewController.collage.mergeSelectedCell()
-        case 1: collageViewController.collage.changeSelectedCellSize(grip: .right, value: -1)
-        case 2: collageViewController.collage.splitSelectedCell(by: .horizontal)
-        case 3: collageViewController.collage.splitSelectedCell(by: .vertical)
+        case 0: collageViewController.deleteSelectedCell()
+        case 1: collageViewController.addImageToSelectedCell()
+        case 2: collageViewController.splitSelectedCell(by: .vertical)
+        case 3: collageViewController.splitSelectedCell(by: .horizontal)
         default: break
         }
     }

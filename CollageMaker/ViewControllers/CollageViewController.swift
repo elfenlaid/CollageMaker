@@ -15,7 +15,7 @@ class CollageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        panGestureRecognizer.addTarget(self, action: #selector(changeDimension(with:)))
+        panGestureRecognizer.addTarget(self, action: #selector(changeSize(with:)))
         
         collageView.delegate = self
         view.addSubview(collageView)
@@ -37,7 +37,23 @@ class CollageViewController: UIViewController {
         }
     }
     
-    @objc private func changeDimension(with recognizer: UIPanGestureRecognizer) {
+    func resetCollage() {
+        collage.reset()
+    }
+    
+    func deleteSelectedCell() {
+        collage.mergeSelectedCell()
+    }
+    
+    func addImageToSelectedCell() {
+        
+    }
+    
+    func splitSelectedCell(by axis: Axis) {
+        collage.splitSelectedCell(by: axis)
+    }
+    
+    @objc private func changeSize(with recognizer: UIPanGestureRecognizer) {
         let point = recognizer.location(in: view)
         let translation = recognizer.translation(in: view)
         recognizer.setTranslation(.zero, in: view)
@@ -45,25 +61,25 @@ class CollageViewController: UIViewController {
         switch recognizer.state {
         case .began:
             let frame = CGRect(x: point.x - 20, y: point.y - 20, width: 40, height: 40)
-            selectedGrip = collageView.gripViews.first { $0.frame.intersects(frame) }?.position
+            selectedGripPosition = collageView.gripViews.first { $0.frame.intersects(frame) }?.position
             
         case .changed:
-            if let grip = selectedGrip {
+            if let grip = selectedGripPosition {
                 let sizeChange = grip.axis == .horizontal ? translation.y / view.bounds.height : translation.x / view.bounds.width
                 collage.changeSelectedCellSize(grip: grip, value: sizeChange)
             }
             
         case .ended:
-            selectedGrip = nil
+            selectedGripPosition = nil
             
         default: break
         }
     }
     
-    lazy var collage: Collage = Collage(cells: [])
     private let collageView = CollageView()
-    private var selectedGrip: GripPosition?
+    private var selectedGripPosition: GripPosition?
     private var panGestureRecognizer = UIPanGestureRecognizer()
+    private lazy var collage: Collage = Collage(cells: [])
 }
 
 

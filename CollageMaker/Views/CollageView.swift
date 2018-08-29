@@ -61,9 +61,10 @@ class CollageView: UIView {
     }
     
     func select(cellView: CollageCellView) {
-        selectedCellView?.layer.borderColor = UIColor.white.cgColor
+        selectedCellView?.layer.borderWidth = 0
         selectedCellView = cellView
-        selectedCellView?.layer.borderColor = UIColor.gray.cgColor
+        selectedCellView?.layer.borderWidth = 2
+        selectedCellView?.layer.borderColor = UIColor.collagePurple.cgColor
         
         showGrips()
     }
