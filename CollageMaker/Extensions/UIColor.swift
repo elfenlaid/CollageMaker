@@ -17,4 +17,12 @@ extension UIColor {
     static var collagePurple: UIColor {
         return UIColor(displayP3Red: 161.0 / 255.0, green: 142.0 / 255.0, blue: 243.0 / 255.0, alpha: 1)
     }
+    
+    static var collageGray: UIColor {
+        return UIColor(displayP3Red: 51.0 / 255.0, green: 51.0 / 255.0, blue: 51.0 / 255.0, alpha: 1)
+    }
+    
+    static var collageBorder: UIColor {
+        return UIColor(displayP3Red: 72.0 / 255.0, green: 72.0 / 255.0, blue: 72.0 / 255.0, alpha: 1)
+    }
 }

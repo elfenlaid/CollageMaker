@@ -23,7 +23,8 @@ class CollageRenderer {
             context.fill(rect)
         }
         
-        UIColor.white.setStroke()
+        
+        UIColor.collageBorder.setStroke()
         context.stroke(rect)
     }
 }
