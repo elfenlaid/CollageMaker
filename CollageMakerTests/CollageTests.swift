@@ -35,7 +35,7 @@ class CollageTests: XCTestCase {
         
         cellUnderTest.changeRelativeFrame(to: RelativeFrame(x: 0, y: 0, width: 100, height: 200))
         
-        XCTAssertTrue(cellUnderTest.isAllowed(position: cellUnderTest.relativeFrame))
+        XCTAssertTrue(cellUnderTest.isAllowed(relativeFrame: cellUnderTest.relativeFrame))
     }
     
     func testCollageIsAlwaysFullsized() {
