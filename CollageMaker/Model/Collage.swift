@@ -25,12 +25,13 @@ struct Collage {
             
             self.cells = [initialCell]
             self.selectedCell = initialCell
+            initialState = CollageState(cellsRelativeFrames: [initialCell: initialCell.relativeFrame], selectedCell: initialCell)
         } else {
             self.cells = cells
             self.selectedCell = cells.last ?? CollageCell.null
+            cells.forEach { initialState.cellsRelativeFrames[$0] = $0.relativeFrame }
+            initialState.selectedCell = selectedCell
         }
-        
-        cells.forEach { initialState.cellsRelativeFrames[$0] = $0.relativeFrame }
     }
     
     mutating func setSelected(cell: CollageCell) {
