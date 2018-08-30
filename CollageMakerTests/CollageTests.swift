@@ -33,9 +33,9 @@ class CollageTests: XCTestCase {
     func testCellSizeIsInBounds() {
         var cellUnderTest = collage.selectedCell
         
-        cellUnderTest.changeRelativeFrame(to: RelativeFrame(x: 0, y: 0, width: 100, height: 200))
+        cellUnderTest.changeRelativeFrame(to: RelativeFrame(x: -10, y: 0, width: 1, height: 1))
         
-        XCTAssertTrue(cellUnderTest.isAllowed(relativeFrame: cellUnderTest.relativeFrame))
+        XCTAssertTrue(cellUnderTest.isAllowed(cellUnderTest.relativeFrame))
     }
     
     func testCollageIsAlwaysFullsized() {
