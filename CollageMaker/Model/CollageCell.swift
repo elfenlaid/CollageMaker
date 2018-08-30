@@ -66,7 +66,11 @@ struct CollageCell: Equatable, Hashable {
     }
     
     func isAllowed(_ relativeFrame: RelativeFrame) -> Bool {
-        return min(relativeFrame.width, relativeFrame.height).isGreaterOrApproximatelyEqual(to: 0.2) && max(relativeFrame.width, relativeFrame.height).isLessOrApproximatelyEqual(to: 1.0) ? true : false
+        guard relativeFrame.isInBounds(.fullsized) else {
+            return false
+        }
+        
+        return min(relativeFrame.width, relativeFrame.height).isGreaterOrApproximatelyEqual(to: 0.2) ? true : false
     }
     
     private(set) var relativeFrame = RelativeFrame.zero

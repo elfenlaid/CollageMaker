@@ -143,10 +143,9 @@ extension Collage {
     var isFullsized: Bool {
         let collageArea = RelativeFrame.fullsized.area
         let cellsArea = cells.map { $0.relativeFrame.area }.reduce(0.0, { $0 + $1 })
-        let cellsInBounds = cells.map { $0.relativeFrame.isInBounds(RelativeFrame.fullsized) }.reduce(true, {$0 && $1 })
-        
+        let cellsInBounds = cells.map { $0.relativeFrame.isInBounds(.fullsized) }.reduce(true, {$0 && $1 })
+   
         return cellsInBounds && collageArea.isApproximatelyEqual(to: cellsArea)
-        
     }
     
     func cell(at relativePoint: CGPoint) -> CollageCell? {

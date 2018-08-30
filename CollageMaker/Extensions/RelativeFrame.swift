@@ -40,7 +40,10 @@ extension RelativeFrame {
     }
     
     func isInBounds(_ bounds: CGRect) -> Bool {
-        return maxY.isLessOrApproximatelyEqual(to: bounds.maxY) && maxX.isLessOrApproximatelyEqual(to: bounds.maxX)
+        return maxY.isLessOrApproximatelyEqual(to: bounds.maxY)
+            && maxX.isLessOrApproximatelyEqual(to: bounds.maxX)
+            && minX.isGreaterOrApproximatelyEqual(to: bounds.minX)
+            && minY.isGreaterOrApproximatelyEqual(to: bounds.minY)
     }
     
     func intersects(rect2: CGRect, on gripPosition: GripPosition) -> Bool {
