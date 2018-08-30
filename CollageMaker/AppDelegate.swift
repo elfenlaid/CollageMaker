@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //        Fabric.with([Crashlytics.self()])
         
-        var collage = Collage(cells: [])
+        var collage = Collage()
         
         collage.splitSelectedCell(by: .vertical)
         collage.splitSelectedCell(by: .horizontal)

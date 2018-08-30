@@ -48,12 +48,12 @@ struct Collage {
     }
     
     mutating func splitSelectedCell(by axis: Axis) {
-        let (firstPosition, secondPosition) = selectedCell.relativeFrame.split(axis: axis)
+        let (firstFrame, secondFrame) = selectedCell.relativeFrame.split(axis: axis)
         
-        let firstCell =  CollageCell(color: selectedCell.color, image: selectedCell.image, relativeFrame: firstPosition)
-        let secondCell = CollageCell(color: .random, image: nil, relativeFrame: secondPosition)
+        let firstCell =  CollageCell(color: selectedCell.color, image: selectedCell.image, relativeFrame: firstFrame)
+        let secondCell = CollageCell(color: .random, image: nil, relativeFrame: secondFrame)
         
-        if firstCell.isAllowed(position: firstPosition) && secondCell.isAllowed(position: secondPosition) {
+        if firstCell.isAllowed(firstFrame) && secondCell.isAllowed(secondFrame) {
             add(cell: firstCell)
             add(cell: secondCell)
             remove(cell: selectedCell)
@@ -100,7 +100,7 @@ struct Collage {
         
         setPositions(from: intermediateState)
         
-        let permisionsToChangePosition = intermediateState.cells.map { $0.isAllowed(position: intermediateState.cellsRelativeFrames[$0] ?? RelativeFrame.zero) }
+        let permisionsToChangePosition = intermediateState.cells.map { $0.isAllowed(intermediateState.cellsRelativeFrames[$0] ?? RelativeFrame.zero) }
         let shouldUpdate = isFullsized && permisionsToChangePosition.reduce (true, { $0 && $1 })
         
         guard shouldUpdate else {
@@ -145,7 +145,8 @@ extension Collage {
         let cellsArea = cells.map { $0.relativeFrame.area }.reduce(0.0, { $0 + $1 })
         let cellsInBounds = cells.map { $0.relativeFrame.isInBounds(RelativeFrame.fullsized) }.reduce(true, {$0 && $1 })
         
-        return cellsInBounds && abs(collageArea - cellsArea) < .allowableAccuracy
+        return cellsInBounds && collageArea.isApproximatelyEqual(to: cellsArea)
+        
     }
     
     func cell(at relativePoint: CGPoint) -> CollageCell? {
@@ -209,11 +210,5 @@ extension Collage {
         return cells.filter({ $0 != selectedCell }).compactMap { (cell) -> CollageCell? in
             return cell.relativeFrame.intersects(rect2: selectedCell.relativeFrame, on: gripPosition) ? cell : nil
         }
-    }
-}
-
-extension FloatingPoint {
-    static var allowableAccuracy: Self {
-        return Self.ulpOfOne * 10000
     }
 }

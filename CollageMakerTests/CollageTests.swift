@@ -30,12 +30,12 @@ class CollageTests: XCTestCase {
         XCTAssertEqual(collage.cells.count, 1)
     }
     
-    func testCellSizeCantBeLessThanTwentyPercent() {
+    func testCellSizeIsInBounds() {
         var cellUnderTest = collage.selectedCell
         
         cellUnderTest.changeRelativeFrame(to: RelativeFrame(x: 0, y: 0, width: 100, height: 200))
         
-        XCTAssertTrue(cellUnderTest.isAllowed(position: cellUnderTest.relativeFrame))
+        XCTAssertTrue(cellUnderTest.isAllowed(relativeFrame: cellUnderTest.relativeFrame))
     }
     
     func testCollageIsAlwaysFullsized() {
