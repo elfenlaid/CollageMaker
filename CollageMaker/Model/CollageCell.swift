@@ -70,9 +70,7 @@ struct CollageCell: Equatable, Hashable {
             return false
         }
         
-        return
-            min(relativeFrame.width, relativeFrame.height).isGreaterOrApproximatelyEqual(to: 0.2)
-            && max(relativeFrame.width, relativeFrame.height).isLessOrApproximatelyEqual(to: 1.0) ? true : false
+        return min(relativeFrame.width, relativeFrame.height).isGreaterOrApproximatelyEqual(to: 0.2) ? true : false
     }
     
     private(set) var relativeFrame = RelativeFrame.zero
