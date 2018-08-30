@@ -42,7 +42,7 @@ class CollageViewController: UIViewController {
     }
     
     func deleteSelectedCell() {
-        collage.mergeSelectedCell()
+        collage.deleteSelectedCell()
     }
     
     func addImageToSelectedCell() {

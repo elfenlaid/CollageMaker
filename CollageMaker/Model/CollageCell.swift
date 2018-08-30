@@ -15,12 +15,11 @@ struct CollageCell: Equatable, Hashable {
     let color: UIColor
     let id: UUID = UUID.init()
     let image: UIImage?
-    var relativeFrame: RelativeFrame
     
     init(color: UIColor, image: UIImage? = nil, relativeFrame: RelativeFrame) {
         self.color = color
         self.image = image
-        self.relativeFrame = relativeFrame
+        self.relativeFrame = isAllowed(position: relativeFrame) ? relativeFrame : RelativeFrame.zero
         
         calculateGripPositions()
     }
@@ -36,6 +35,10 @@ struct CollageCell: Equatable, Hashable {
     }
     
     mutating func changeRelativeFrame(to: RelativeFrame) {
+        guard isAllowed(position: to) else {
+            return
+        }
+        
         relativeFrame = to
     }
     
@@ -64,6 +67,11 @@ struct CollageCell: Equatable, Hashable {
         }
     }
     
+    func isAllowed(position: RelativeFrame) -> Bool {
+        return min(position.width, position.height) > 0.2  && max(position.width, position.height) <= 1 ? true : false
+    }
+    
+    private(set) var relativeFrame = RelativeFrame.zero
     private(set) var gripPositions: Set<GripPosition> = []
 }
 

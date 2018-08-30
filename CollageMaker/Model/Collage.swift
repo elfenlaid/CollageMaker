@@ -19,18 +19,21 @@ struct Collage {
     
     weak var delegate: CollageDelegate?
     
-    init(cells: [CollageCell]) {
-        if cells.isEmpty {
+    init(cells: [CollageCell] = []) {
+        self.cells = cells
+        self.selectedCell = cells.last ?? CollageCell.null
+        
+        cells.forEach { initialState.cellsRelativeFrames[$0] = $0.relativeFrame }
+        initialState.selectedCell = selectedCell
+        
+        guard isFullsized else {
             let initialCell = CollageCell(color: .random, image: nil, relativeFrame: RelativeFrame.fullsized)
             
             self.cells = [initialCell]
             self.selectedCell = initialCell
             initialState = CollageState(cellsRelativeFrames: [initialCell: initialCell.relativeFrame], selectedCell: initialCell)
-        } else {
-            self.cells = cells
-            self.selectedCell = cells.last ?? CollageCell.null
-            cells.forEach { initialState.cellsRelativeFrames[$0] = $0.relativeFrame }
-            initialState.selectedCell = selectedCell
+            
+            return
         }
     }
     
@@ -50,7 +53,7 @@ struct Collage {
         let firstCell =  CollageCell(color: selectedCell.color, image: selectedCell.image, relativeFrame: firstPosition)
         let secondCell = CollageCell(color: .random, image: nil, relativeFrame: secondPosition)
         
-        if isAllowed(position: firstPosition) && isAllowed(position: secondPosition) {
+        if firstCell.isAllowed(position: firstPosition) && secondCell.isAllowed(position: secondPosition) {
             add(cell: firstCell)
             add(cell: secondCell)
             remove(cell: selectedCell)
@@ -60,7 +63,7 @@ struct Collage {
         }
     }
     
-    mutating func mergeSelectedCell() {
+    mutating func deleteSelectedCell() {
         for position in selectedCell.gripPositions {
             if changeSelectedCellSize(grip: position, value: position.sideChangeValue(for: selectedCell.relativeFrame), merging: true) { break }
         }
@@ -97,7 +100,7 @@ struct Collage {
         
         setPositions(from: intermediateState)
         
-        let permisionsToChangePosition = intermediateState.cells.map { isAllowed(position: intermediateState.cellsRelativeFrames[$0] ?? RelativeFrame.zero) }
+        let permisionsToChangePosition = intermediateState.cells.map { $0.isAllowed(position: intermediateState.cellsRelativeFrames[$0] ?? RelativeFrame.zero) }
         let shouldUpdate = isFullsized && permisionsToChangePosition.reduce (true, { $0 && $1 })
         
         guard shouldUpdate else {
@@ -196,10 +199,6 @@ extension Collage {
     
     private func check(_ gripPosition: GripPosition, in cell: CollageCell) -> Bool {
         return cell.gripPositions.contains(gripPosition)
-    }
-    
-    private func isAllowed(position: RelativeFrame) -> Bool {
-        return min(position.width, position.height) > 0.2 ? true : false
     }
     
     private func affectedCells(with gripPosition: GripPosition) -> [CollageCell] {
