@@ -145,7 +145,8 @@ extension Collage {
         let cellsArea = cells.map { $0.relativeFrame.area }.reduce(0.0, { $0 + $1 })
         let cellsInBounds = cells.map { $0.relativeFrame.isInBounds(RelativeFrame.fullsized) }.reduce(true, {$0 && $1 })
         
-        return cellsInBounds && abs(collageArea - cellsArea) < .allowableAccuracy
+        return cellsInBounds && collageArea.isApproximatelyEqual(to: cellsArea)
+        
     }
     
     func cell(at relativePoint: CGPoint) -> CollageCell? {
@@ -209,11 +210,5 @@ extension Collage {
         return cells.filter({ $0 != selectedCell }).compactMap { (cell) -> CollageCell? in
             return cell.relativeFrame.intersects(rect2: selectedCell.relativeFrame, on: gripPosition) ? cell : nil
         }
-    }
-}
-
-extension FloatingPoint {
-    static var allowableAccuracy: Self {
-        return Self.ulpOfOne * 10000
     }
 }

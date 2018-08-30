@@ -40,30 +40,27 @@ extension RelativeFrame {
     }
     
     func isInBounds(_ bounds: CGRect) -> Bool {
-        return maxY < bounds.maxY || abs(maxY - bounds.maxY) < .allowableAccuracy
-            && maxX < bounds.maxX || abs(maxX - bounds.maxX) < .allowableAccuracy
+        return maxY.isLessOrApproximatelyEqual(to: bounds.maxY) && maxX.isLessOrApproximatelyEqual(to: bounds.maxX)
     }
     
     func intersects(rect2: CGRect, on gripPosition: GripPosition) -> Bool {
         switch  gripPosition.axis {
         case .vertical:
-            let isInHeightBounds = (self.minY > rect2.minY || abs(self.minY - rect2.minY) < .allowableAccuracy) &&
-                (self.maxY < rect2.maxY || abs(self.maxY - rect2.maxY) < .allowableAccuracy)
+            let isInHeightBounds = minY.isGreaterOrApproximatelyEqual(to: rect2.minY) && maxY.isLessOrApproximatelyEqual(to: rect2.maxY)
             
             if gripPosition == .left {
-                return isInHeightBounds && abs(self.maxX - rect2.minX) < .allowableAccuracy ? true : false
+                return isInHeightBounds && maxX.isApproximatelyEqual(to: rect2.minX) ? true : false
             } else {
-                return isInHeightBounds && abs(self.minX - rect2.maxX) < .allowableAccuracy ? true : false
+                return isInHeightBounds && minX.isApproximatelyEqual(to: rect2.maxX) ? true : false
             }
             
         case .horizontal:
-            let isInWidthBounds = (self.minX > rect2.minX || abs(self.minX - rect2.minX) < .allowableAccuracy) &&
-                (self.maxX < rect2.maxX || abs(self.maxX - rect2.maxX) < .allowableAccuracy)
+            let isInWidthBounds = minX.isGreaterOrApproximatelyEqual(to: rect2.minX) && maxX.isLessOrApproximatelyEqual(to: rect2.maxX)
             
             if gripPosition == .top {
-                return isInWidthBounds && abs(self.maxY - rect2.minY) < .allowableAccuracy ? true : false
+                return isInWidthBounds && maxY.isApproximatelyEqual(to: rect2.minY) ? true : false
             } else {
-                return isInWidthBounds && abs(self.minY - rect2.maxY) < .allowableAccuracy ? true : false
+                return isInWidthBounds && minY.isApproximatelyEqual(to: rect2.maxY) ? true : false
             }
         }
     }

@@ -26,11 +26,9 @@ struct CollageCell: Equatable, Hashable {
     
     func belongsToParallelLine(on axis: Axis, with point: CGPoint) -> Bool {
         if axis == .horizontal {
-            return abs(point.y - relativeFrame.minY) < .allowableAccuracy || abs(point.y - relativeFrame.maxY) < .allowableAccuracy
-        } else if axis == .vertical {
-            return abs(point.x - relativeFrame.minX) < .allowableAccuracy || abs(point.x - relativeFrame.maxX) < .allowableAccuracy
+            return point.y.isApproximatelyEqual(to: relativeFrame.minY) || point.y.isApproximatelyEqual(to: relativeFrame.maxY)
         } else {
-            return false
+            return point.x.isApproximatelyEqual(to: relativeFrame.minX) || point.x.isApproximatelyEqual(to: relativeFrame.maxX)
         }
     }
     
@@ -68,7 +66,7 @@ struct CollageCell: Equatable, Hashable {
     }
     
     func isAllowed(position: RelativeFrame) -> Bool {
-        return min(position.width, position.height) > 0.2  && max(position.width, position.height) <= 1 ? true : false
+        return min(position.width, position.height).isGreaterOrApproximatelyEqual(to: 0.2) && max(position.width, position.height).isLessOrApproximatelyEqual(to: 1.0) ? true : false
     }
     
     private(set) var relativeFrame = RelativeFrame.zero
