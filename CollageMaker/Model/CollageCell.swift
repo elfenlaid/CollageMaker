@@ -14,7 +14,7 @@ struct CollageCell: Equatable, Hashable {
     
     let color: UIColor
     let id: UUID = UUID.init()
-    let image: UIImage?
+    private(set) var image: UIImage?
     
     init(color: UIColor, image: UIImage? = nil, relativeFrame: RelativeFrame) {
         self.color = color
@@ -24,20 +24,16 @@ struct CollageCell: Equatable, Hashable {
         calculateGripPositions()
     }
     
-    func belongsToParallelLine(on axis: Axis, with point: CGPoint) -> Bool {
-        if axis == .horizontal {
-            return point.y.isApproximatelyEqual(to: relativeFrame.minY) || point.y.isApproximatelyEqual(to: relativeFrame.maxY)
-        } else {
-            return point.x.isApproximatelyEqual(to: relativeFrame.minX) || point.x.isApproximatelyEqual(to: relativeFrame.maxX)
-        }
-    }
-    
     mutating func changeRelativeFrame(to frame: RelativeFrame) {
         guard isAllowed(frame) else {
             return
         }
         
         relativeFrame = frame
+    }
+    
+    mutating func addImage(_ image: UIImage) {
+        self.image = image
     }
     
     mutating func calculateGripPositions(){
@@ -51,6 +47,14 @@ struct CollageCell: Equatable, Hashable {
         if relativeFrame.minY > .allowableAccuracy { gripPositions.insert(.top) }
         if abs(relativeFrame.maxX - 1) > .allowableAccuracy { gripPositions.insert(.right) }
         if abs(relativeFrame.maxY - 1) > .allowableAccuracy { gripPositions.insert(.bottom) }
+    }
+    
+    func belongsToParallelLine(on axis: Axis, with point: CGPoint) -> Bool {
+        if axis == .horizontal {
+            return point.y.isApproximatelyEqual(to: relativeFrame.minY) || point.y.isApproximatelyEqual(to: relativeFrame.maxY)
+        } else {
+            return point.x.isApproximatelyEqual(to: relativeFrame.minX) || point.x.isApproximatelyEqual(to: relativeFrame.maxX)
+        }
     }
     
     func gripPositionRelativeTo(cell: CollageCell, _ gripPosition: GripPosition) -> GripPosition {

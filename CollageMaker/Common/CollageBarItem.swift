@@ -34,6 +34,12 @@ class CollageBarItem: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func animate() {
+        UIView.animate(withDuration: 0.2,
+                       animations: { self.imageView.alpha = 0.2})
+        { _ in UIView.animate(withDuration: 0.5, animations: { self.imageView.alpha = 1}) }
+    }
+    
     private func setup() {
         imageView.image = normalStateImage
         imageView.contentMode = .scaleAspectFit
@@ -61,4 +67,18 @@ class CollageBarItem: UIView {
     
     private let titleLabel = UILabel()
     private let imageView = UIImageView()
+}
+
+extension CollageBarItem {
+    static var horizontal: CollageBarItem {
+        return CollageBarItem(title: "HORIZONTAL", image: UIImage(named: "horizontal.png")!)
+    }
+    
+    static var vertical: CollageBarItem {
+        return CollageBarItem(title: "VERTICAL", image: UIImage(named: "vertical.png")!)
+    }
+    
+    static var addImage: CollageBarItem {
+        return CollageBarItem(title: "ADD IMG", image: UIImage(named: "addimg.png")!)
+    }
 }

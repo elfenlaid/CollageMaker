@@ -43,7 +43,7 @@ class CollageSceneViewController: UIViewController {
         let templateBar = TemplateBarCollectionViewController(templates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
         
         templateBar.delegate = self
-        //        toolsBar.delegate = self
+        toolsBar.delegate = self
         
         addChild(collageViewController, to: collageViewContainer)
         addChild(templateBar, to: bannerView)
@@ -92,6 +92,12 @@ class CollageSceneViewController: UIViewController {
     
     @objc private func shareCollage() {
         
+    }
+    
+    func pickImage() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        self.present(imagePickerController, animated: true, completion: nil)
     }
     
     private let resetButton: UIButton = {
@@ -147,5 +153,31 @@ extension UIViewController {
 extension CollageSceneViewController {
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+extension CollageSceneViewController: CollageToolbarDelegate {
+    func collageToolbar(_ collageToolbar: CollageToolbar, itemTapped: CollageBarItem) {
+        switch itemTapped.title {
+        case "HORIZONTAL": collageViewController.splitSelectedCell(by: .horizontal)
+        case "VERTICAL": collageViewController.splitSelectedCell(by: .vertical)
+        case "ADD IMG": pickImage()
+        default: break
+        }
+    }
+}
+
+extension CollageSceneViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true, completion:{ print ("Did select")})
+        guard let image = info["UIImagePickerControllerOriginalImage"] as? UIImage else {
+            return
+        }
+        
+        collageViewController.addImageToSelectedCell(image)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion:{ print ("Canceled") })
     }
 }

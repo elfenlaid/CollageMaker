@@ -69,6 +69,13 @@ struct Collage {
         }
     }
     
+    mutating func addImageToSelectedCell(_ image: UIImage) {
+        selectedCell.addImage(image)
+        update(cell: selectedCell)
+        
+        delegate?.collageChanged(to: self)
+    }
+    
     mutating func reset() {
         cells.removeAll()
         setPositions(from: initialState)

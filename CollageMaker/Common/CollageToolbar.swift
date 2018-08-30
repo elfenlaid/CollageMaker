@@ -6,7 +6,7 @@ import UIKit
 import SnapKit
 
 protocol CollageToolbarDelegate: AnyObject {
-    
+    func collageToolbar(_ collageToolbar: CollageToolbar, itemTapped: CollageBarItem)
 }
 
 class CollageToolbar: UIView {
@@ -15,8 +15,11 @@ class CollageToolbar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+      
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(itemTapped(_:)))
         
         addSubview(buttonsStackView)
+        addGestureRecognizer(tapGestureRecognizer)
         
         setup()
     }
@@ -26,10 +29,9 @@ class CollageToolbar: UIView {
     }
     
     private func setup() {
-        
-        let horizontal = CollageBarItem(title: "HORIZONTAL", image: UIImage(named: "horizontal.png")!)
-        let vertical = CollageBarItem(title: "VERTICAL", image: UIImage(named: "vertical.png")!)
-        let addimg = CollageBarItem(title: "ADD IMG", image: UIImage(named: "addimg.png")!)
+        let horizontal = CollageBarItem.horizontal
+        let vertical =  CollageBarItem.vertical
+        let addimg = CollageBarItem.addImage
         
         buttonsStackView.addArrangedSubview(horizontal)
         buttonsStackView.addArrangedSubview(vertical)
@@ -40,8 +42,20 @@ class CollageToolbar: UIView {
         }
     }
     
-    @objc private func buttonTapped(_ button: CollageBarItem) {
+    @objc private func itemTapped(_ recoginzer: UITapGestureRecognizer) {
+        let point = recoginzer.location(in: self)
         
+        guard let item = itemForPoint(point) else {
+            return
+        }
+        
+        item.animate()
+        
+        delegate?.collageToolbar(self, itemTapped: item)
+    }
+    
+    private func itemForPoint(_ point: CGPoint) -> CollageBarItem? {
+        return buttonsStackView.arrangedSubviews.first(where: { $0.frame.contains(point) }) as? CollageBarItem
     }
     
     private lazy var buttonsStackView: UIStackView = {
@@ -53,4 +67,6 @@ class CollageToolbar: UIView {
         
         return stackView
     }()
+    
+    private lazy var tapGestureRecognizer = UITapGestureRecognizer()
 }

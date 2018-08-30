@@ -45,8 +45,8 @@ class CollageViewController: UIViewController {
         collage.deleteSelectedCell()
     }
     
-    func addImageToSelectedCell() {
-        
+    func addImageToSelectedCell(_ image: UIImage) {
+        collage.addImageToSelectedCell(image)
     }
     
     func splitSelectedCell(by axis: Axis) {

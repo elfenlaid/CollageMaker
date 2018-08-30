@@ -30,10 +30,10 @@ extension RelativeFrame {
     
     func split(axis: Axis) -> (RelativeFrame, RelativeFrame) {
         switch axis {
-        case .horizontal:
+        case .vertical:
             return (RelativeFrame(origin: origin, size: CGSize(width: size.width / 2, height: size.height)),
                     RelativeFrame(origin: CGPoint(x: origin.x + size.width / 2, y: origin.y), size: CGSize(width: size.width / 2, height: size.height)))
-        case .vertical:
+        case .horizontal:
             return (RelativeFrame(origin: origin, size: CGSize(width: size.width, height: size.height / 2)),
                     RelativeFrame(origin: CGPoint(x: origin.x, y: origin.y + size.height / 2), size: CGSize(width: size.width, height: size.height / 2)))
         }

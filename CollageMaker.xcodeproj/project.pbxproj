@@ -20,7 +20,6 @@
 		843A580F21144761002FE28D /* CollageMakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A580E21144761002FE28D /* CollageMakerTests.swift */; };
 		843A581A21144761002FE28D /* CollageMakerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A581921144761002FE28D /* CollageMakerUITests.swift */; };
 		843A5829211447DC002FE28D /* CollageSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A5828211447DC002FE28D /* CollageSceneViewController.swift */; };
-		844EBCE721145273009DBC74 /* ToolsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EBCE621145273009DBC74 /* ToolsBar.swift */; };
 		84868BAE2136E3F500E12152 /* CollageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84868BAD2136E3F500E12152 /* CollageState.swift */; };
 		84868BBE2137F33900E12152 /* CollageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84868BBD2137F33900E12152 /* CollageTests.swift */; };
 		84868BC02138208100E12152 /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84868BBF2138208100E12152 /* FloatingPoint.swift */; };
@@ -78,7 +77,6 @@
 		843A581921144761002FE28D /* CollageMakerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageMakerUITests.swift; sourceTree = "<group>"; };
 		843A581B21144761002FE28D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		843A5828211447DC002FE28D /* CollageSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageSceneViewController.swift; sourceTree = "<group>"; };
-		844EBCE621145273009DBC74 /* ToolsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsBar.swift; sourceTree = "<group>"; };
 		84868BAD2136E3F500E12152 /* CollageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageState.swift; sourceTree = "<group>"; };
 		84868BBD2137F33900E12152 /* CollageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageTests.swift; sourceTree = "<group>"; };
 		84868BBF2138208100E12152 /* FloatingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 		8417D1B6211DC03C00334661 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				844EBCE621145273009DBC74 /* ToolsBar.swift */,
 				84868BC12138323E00E12152 /* CollageToolbar.swift */,
 				84868BC32138358500E12152 /* CollageBarItem.swift */,
 			);
@@ -505,7 +502,6 @@
 				8417D1BA211DCABC00334661 /* CollageCellView.swift in Sources */,
 				843A5829211447DC002FE28D /* CollageSceneViewController.swift in Sources */,
 				849B68222121CA960091AD27 /* TemplateBarCollectionViewController.swift in Sources */,
-				844EBCE721145273009DBC74 /* ToolsBar.swift in Sources */,
 				849B68202121979C0091AD27 /* CollageViewController.swift in Sources */,
 				843A57FA21144760002FE28D /* AppDelegate.swift in Sources */,
 				84A91A5921188E5700108C3B /* CollageCell.swift in Sources */,
