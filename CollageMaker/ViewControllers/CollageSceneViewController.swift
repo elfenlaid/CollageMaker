@@ -22,16 +22,17 @@ class CollageSceneViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
         view.backgroundColor = .white
         view.addSubview(resetButton)
         view.addSubview(shareButton)
         view.addSubview(collageViewContainer)
         view.addSubview(bannerView)
         view.addSubview(toolsBar)
-
+        view.addSubview(navigationBar)
+        
         makeConstraints()
-  
+        
         let cellOne = CollageCell(color: .red, image: nil, relativeFrame: RelativeFrame(x: 0, y: 0, width: 0.5, height: 1))
         let cellTwo = CollageCell(color: .yellow, image: nil, relativeFrame: RelativeFrame(x: 0.5, y: 0, width: 0.5, height: 1))
         let someCell = CollageCell(color: .green, image: nil, relativeFrame: RelativeFrame(x: 0.5, y: 0, width: 0.5, height: 0.5))
@@ -39,7 +40,7 @@ class CollageSceneViewController: UIViewController {
         let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
         let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
         
-        let templateBar = TemplateBarCollectionViewController(templates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
+        let templateBar = TemplateBarCollectionViewController(templates: [oneMoreCollage, collage, oneMoreCollage,collage, oneMoreCollage, collage])
         
         templateBar.delegate = self
         toolsBar.delegate = self
@@ -47,28 +48,21 @@ class CollageSceneViewController: UIViewController {
         addChild(collageViewController, to: collageViewContainer)
         addChild(templateBar, to: bannerView)
     }
-  
+    
     
     private func makeConstraints() {
-        let offset: CGFloat = 20
-    
-        resetButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(offset)
-            make.left.equalToSuperview().offset(2 * offset)
-            make.height.equalTo(50)
-            make.width.equalTo(100)
-        }
-        
-        shareButton.snp.makeConstraints { make in
-            make.top.equalTo(resetButton)
-            make.right.equalToSuperview().offset(-2 * offset)
-            make.size.equalTo(resetButton)
+     
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalTo(collageViewContainer).dividedBy(6)
         }
         
         collageViewContainer.snp.makeConstraints { make in
-            make.top.equalTo(resetButton.snp.bottom).offset(offset)
-            make.left.equalTo(resetButton)
-            make.right.equalTo(shareButton)
+            make.top.equalTo(navigationBar.snp.bottom)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.height.equalTo(collageViewContainer.snp.width)
         }
         
@@ -76,14 +70,14 @@ class CollageSceneViewController: UIViewController {
             make.bottom.equalToSuperview()
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.height.equalTo(collageViewContainer).dividedBy(5)
+            make.height.equalTo(navigationBar)
         }
         
         bannerView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalTo(toolsBar.snp.top)
-            make.top.equalTo(collageViewContainer.snp.bottom).offset(offset)
+            make.top.equalTo(collageViewContainer.snp.bottom)
         }
     }
     
@@ -94,7 +88,13 @@ class CollageSceneViewController: UIViewController {
     @objc private func shareCollage() {
         
     }
- 
+    
+    func pickImage() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        self.present(imagePickerController, animated: true, completion: nil)
+    }
+    
     private let resetButton: UIButton = {
         let button = UIButton(type: .system)
         
@@ -116,7 +116,8 @@ class CollageSceneViewController: UIViewController {
     }()
     
     private let bannerView = UIView()
-    private let toolsBar = ToolsBar()
+    private let toolsBar = CollageToolbar.standart
+    private let navigationBar = CollageToolbar()
     private let collageViewContainer = UIView()
     private var collageViewController: CollageViewController
 }
@@ -144,15 +145,37 @@ extension UIViewController {
     }
 }
 
-extension CollageSceneViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        switch item.tag {
-        case 0: collageViewController.deleteSelectedCell()
-        case 1: collageViewController.addImageToSelectedCell()
-        case 2: collageViewController.splitSelectedCell(by: .vertical)
-        case 3: collageViewController.splitSelectedCell(by: .horizontal)
+extension CollageSceneViewController {
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+}
+
+extension CollageSceneViewController: CollageToolbarDelegate {
+    func collageToolbar(_ collageToolbar: CollageToolbar, itemTapped: CollageBarItem) {
+        switch itemTapped.title {
+        case "HORIZONTAL": collageViewController.splitSelectedCell(by: .horizontal)
+        case "VERTICAL": collageViewController.splitSelectedCell(by: .vertical)
+        case "ADD IMG": pickImage()
+        case "DELETE": collageViewController.deleteSelectedCell()
         default: break
         }
     }
+}
+
+extension CollageSceneViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true)
+        
+        guard let image = info["UIImagePickerControllerOriginalImage"] as? UIImage else {
+            return
+        }
+        
+        collageViewController.addImageToSelectedCell(image)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
 }

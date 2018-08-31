@@ -26,13 +26,13 @@ class TemplateBarCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         collectionView?.register(TemplateBarCollectionViewCell.self, forCellWithReuseIdentifier: TemplateBarCollectionViewCell.identifier)
-        collectionView?.backgroundColor = .white
+        collectionView?.backgroundColor = .collageGray
         
         guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
         
-        layout.minimumInteritemSpacing = 50
+        layout.minimumInteritemSpacing = 20
         layout.scrollDirection = .horizontal
     }
     
@@ -64,9 +64,8 @@ class TemplateBarCollectionViewController: UICollectionViewController {
 extension TemplateBarCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let minValue = min(collectionView.frame.width, collectionView.frame.height) / 2
         
-        return CGSize(width: minValue / 2, height: minValue / 2)
+        return CGSize(width: collectionView.frame.height - 40, height: collectionView.frame.height - 40)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -76,6 +75,6 @@ extension TemplateBarCollectionViewController: UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 50
+        return 20
     }
 }

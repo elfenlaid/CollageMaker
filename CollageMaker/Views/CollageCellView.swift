@@ -15,6 +15,10 @@ class CollageCellView: UIView {
     
         addSubview(imageView)
         makeConstraints()
+        
+        imageView.image = collageCell.image
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -25,10 +29,6 @@ class CollageCellView: UIView {
         self.frame = to
     }
 
-    func set(image: UIImage) {
-        imageView.image = image
-    }
-    
     private func makeConstraints() {
         imageView.snp.makeConstraints { make in
             make.margins.equalToSuperview()
@@ -36,5 +36,5 @@ class CollageCellView: UIView {
     }
     
     private let imageView = UIImageView()
-    private (set) var collageCell: CollageCell
+    private(set) var collageCell: CollageCell
 }

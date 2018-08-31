@@ -26,7 +26,7 @@ class CollageView: UIView {
             }
             
             UIView.animate(withDuration: 0.05) {
-                self.cellViews.first(where: { $0.collageCell.id == cell.id })?.frame = size.absolutePosition(in: self.bounds)
+                self.cellViews.first(where: { $0.collageCell.id == cell.id })?.changeFrame(to: size.absolutePosition(in: self.bounds))
                 self.gripViews.forEach { $0.layout() }
             }
         }
