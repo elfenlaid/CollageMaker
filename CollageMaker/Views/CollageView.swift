@@ -36,10 +36,9 @@ class CollageView: UIView {
         subviews.forEach { $0.removeFromSuperview() }
         
         self.collage = collage
-        self.cellViews = collage.cells.map(CollageCellView.init)
+        self.cellViews = collage.cells.map { CollageCellView(collageCell: $0, frame: $0.relativeFrame.absolutePosition(in: self.bounds)) }
         
         cellViews.forEach {
-            $0.frame = $0.collageCell.relativeFrame.absolutePosition(in: bounds)
             addSubview($0)
         }
         
