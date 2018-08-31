@@ -59,7 +59,7 @@ class PermissionsViewController: UIViewController {
         button.layer.shadowRadius = 5
         button.layer.shadowColor = UIColor.collagePurple.cgColor
         button.layer.shadowOpacity = 0.3
-        button.titleLabel?.font = .sfProHeavy
+        button.titleLabel?.font = R.font.sfProDisplayHeavy(size: 19)
         button.setTitle("Allow", for: .normal)
         button.setTitleColor(.white, for: .normal)
         
@@ -84,19 +84,5 @@ extension CAGradientLayer {
             self.startPoint = CGPoint(x: 0.5, y: 0)
             self.endPoint = CGPoint(x: 0.5, y: 1)
         }
-    }
-}
-
-extension UIFont {
-    static var sfProLight: UIFont {
-        return UIFont(name: "SFProText-Light", size: 19) ?? .systemFont(ofSize: 19)
-    }
-    
-    static var sfProHeavy: UIFont {
-        return UIFont(name: "SFProDisplay-Heavy", size: 19) ?? .systemFont(ofSize: 19)
-    }
-    
-    static var sfProBold: UIFont {
-        return UIFont(name: "SFProText-Bold", size: 19) ?? .systemFont(ofSize: 19)
     }
 }
