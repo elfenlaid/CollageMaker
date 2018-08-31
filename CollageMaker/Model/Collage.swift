@@ -13,6 +13,7 @@ protocol CollageDelegate: AnyObject {
     func collage(_ collage: Collage, didChangeSelected cell: CollageCell)
     func collageChanged(to collage: Collage)
     func collage(_ collage: Collage, changed state: CollageState)
+//    func collage(_ collage)
 }
 
 struct Collage {
