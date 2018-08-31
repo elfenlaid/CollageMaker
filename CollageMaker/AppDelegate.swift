@@ -25,7 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        window?.rootViewController = CollageSceneViewController(collage: collage)
+//        window?.rootViewController = CollageSceneViewController(collage: collage)
+        window?.rootViewController = PermissionsViewController()
         window?.makeKeyAndVisible()
         
         return true
