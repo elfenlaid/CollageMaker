@@ -40,7 +40,7 @@ class CollageSceneViewController: UIViewController {
         let oneMoreCollage = Collage(cells: [cellOne, cellTwo])
         let collage = Collage(cells: [cellOne, someCell, someAnotherCell])
         
-        let templateBar = TemplateBarCollectionViewController(templates: [oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage, oneMoreCollage, oneMoreCollage, collage])
+        let templateBar = TemplateBarCollectionViewController(templates: [oneMoreCollage, collage, oneMoreCollage,collage, oneMoreCollage, collage])
         
         templateBar.delegate = self
         toolsBar.delegate = self
@@ -51,12 +51,7 @@ class CollageSceneViewController: UIViewController {
     
     
     private func makeConstraints() {
-        //        shareButton.snp.makeConstraints { make in
-        //            make.top.equalTo(resetButton)
-        //            make.right.equalToSuperview().offset(-2 * offset)
-        //            make.size.equalTo(resetButton)
-        //        }
-        
+     
         navigationBar.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.equalToSuperview()
@@ -121,7 +116,7 @@ class CollageSceneViewController: UIViewController {
     }()
     
     private let bannerView = UIView()
-    private let toolsBar = CollageToolbar()
+    private let toolsBar = CollageToolbar.standart
     private let navigationBar = CollageToolbar()
     private let collageViewContainer = UIView()
     private var collageViewController: CollageViewController
@@ -162,14 +157,17 @@ extension CollageSceneViewController: CollageToolbarDelegate {
         case "HORIZONTAL": collageViewController.splitSelectedCell(by: .horizontal)
         case "VERTICAL": collageViewController.splitSelectedCell(by: .vertical)
         case "ADD IMG": pickImage()
+        case "DELETE": collageViewController.deleteSelectedCell()
         default: break
         }
     }
 }
 
 extension CollageSceneViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate{
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        picker.dismiss(animated: true, completion:{ print ("Did select")})
+        picker.dismiss(animated: true)
+        
         guard let image = info["UIImagePickerControllerOriginalImage"] as? UIImage else {
             return
         }
@@ -178,6 +176,6 @@ extension CollageSceneViewController: UIImagePickerControllerDelegate & UINaviga
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion:{ print ("Canceled") })
+        picker.dismiss(animated: true)
     }
 }

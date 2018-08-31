@@ -13,30 +13,32 @@ class CollageToolbar: UIView {
     
     weak var delegate: CollageToolbarDelegate?
     
+    convenience init(barItems: [CollageBarItem]) {
+        self.init(frame: .zero)
+        
+        barItems.forEach { addCollageBarItem($0) }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-      
+        
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(itemTapped(_:)))
         
         addSubview(buttonsStackView)
         addGestureRecognizer(tapGestureRecognizer)
         
-        setup()
+        makeConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("Not implemented")
     }
     
-    private func setup() {
-        let horizontal = CollageBarItem.horizontal
-        let vertical =  CollageBarItem.vertical
-        let addimg = CollageBarItem.addImage
-        
-        buttonsStackView.addArrangedSubview(horizontal)
-        buttonsStackView.addArrangedSubview(vertical)
-        buttonsStackView.addArrangedSubview(addimg)
-        
+    func addCollageBarItem(_ item: CollageBarItem) {
+        buttonsStackView.addArrangedSubview(item)
+    }
+    
+    private func makeConstraints() {
         buttonsStackView.snp.makeConstraints { make in
             make.margins.equalToSuperview()
         }
@@ -69,4 +71,15 @@ class CollageToolbar: UIView {
     }()
     
     private lazy var tapGestureRecognizer = UITapGestureRecognizer()
+}
+
+extension CollageToolbar {
+    static var standart: CollageToolbar {
+        let horizontal = CollageBarItem.horizontal
+        let vertical =  CollageBarItem.vertical
+        let addimg = CollageBarItem.addImage
+        let delete = CollageBarItem(title: "DELETE", image: UIImage(named: "addimg.png")!)
+        
+        return CollageToolbar(barItems: [horizontal, vertical, addimg, delete])
+    }
 }
