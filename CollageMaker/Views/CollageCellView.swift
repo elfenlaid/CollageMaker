@@ -15,7 +15,6 @@ class CollageCellView: UIView {
             setup()
             
             imageView = UIImageView(image: image)
-            imageView.contentMode = .scaleAspectFit
             
             scrollView.contentSize = image.size
             scrollView.addSubview(imageView)
