@@ -10,10 +10,10 @@ enum Axis {
 }
 
 protocol CollageDelegate: AnyObject {
-    func collage(_ collage: Collage, didChangeSelected cell: CollageCell)
     func collageChanged(to collage: Collage)
+    func collage(_ collage: Collage, didChangeSelected cell: CollageCell)
     func collage(_ collage: Collage, changed state: CollageState)
-    func collage(_ collage: Collage, changedImageIn cell: CollageCell)
+    func collage(_ collage: Collage, updated cell: CollageCell)
 }
 
 struct Collage {
@@ -74,7 +74,7 @@ struct Collage {
         selectedCell.addImage(image)
         update(cell: selectedCell)
         
-        delegate?.collage(self, changedImageIn: selectedCell)
+        delegate?.collage(self, updated: selectedCell)
     }
     
     mutating func reset() {
