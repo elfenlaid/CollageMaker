@@ -67,4 +67,10 @@ extension RelativeFrame {
             }
         }
     }
+    
+    func equallyIntersects(rect2: CGRect, on gripPosition: GripPosition) -> Bool {
+        let isEqual = gripPosition.axis == .vertical ? height.isApproximatelyEqual(to: rect2.height) : width.isApproximatelyEqual(to: rect2.width)
+        
+        return intersects(rect2: rect2, on: gripPosition) && isEqual
+    }
 }

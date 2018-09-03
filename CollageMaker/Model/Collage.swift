@@ -22,7 +22,7 @@ struct Collage {
     
     init(cells: [CollageCell] = []) {
         self.cells = cells
-        self.selectedCell = cells.last ?? CollageCell.null
+        self.selectedCell = cells.last ?? CollageCell.zeroFrame
         
         cells.forEach { initialState.cellsRelativeFrames[$0] = $0.relativeFrame }
         initialState.selectedCell = selectedCell
@@ -43,7 +43,7 @@ struct Collage {
             return
         }
         
-        selectedCell = cells.first(where: { $0.id == cell.id }) ?? CollageCell.null
+        selectedCell = cells.first(where: { $0.id == cell.id }) ?? CollageCell.zeroFrame
         
         delegate?.collage(self, didChangeSelected: selectedCell)
     }
@@ -85,7 +85,7 @@ struct Collage {
     
     @discardableResult
     mutating func changeSelectedCellSize(grip: GripPosition, value: CGFloat, merging: Bool = false) -> Bool {
-        let changingCells = merging ? mergingCells(with: grip) : affectedCells(with: grip)
+       let changingCells = affectedCells(with: grip, merging: merging)
         
         guard changingCells.count > 0, check(grip, in: selectedCell) else {
             return false
@@ -104,7 +104,7 @@ struct Collage {
         }
         
         if merging { remove(cell: selectedCell) }
-        intermediateState.selectedCell = merging ? intermediateState.cells.last ?? CollageCell.null : selectedCell
+        intermediateState.selectedCell = merging ? intermediateState.cells.last ?? CollageCell.zeroFrame : selectedCell
         
         setPositions(from: intermediateState)
         
@@ -152,7 +152,7 @@ extension Collage {
         let collageArea = RelativeFrame.fullsized.area
         let cellsArea = cells.map { $0.relativeFrame.area }.reduce(0.0, { $0 + $1 })
         let cellsInBounds = cells.map { $0.relativeFrame.isInBounds(.fullsized) }.reduce(true, {$0 && $1 })
-   
+        
         return cellsInBounds && collageArea.isApproximatelyEqual(to: cellsArea)
     }
     
@@ -179,7 +179,7 @@ extension Collage {
         }
         
         newCells.forEach { update(cell: $0) }
-        selectedCell = cells.first(where: { $0.id == state.selectedCell.id }) ?? CollageCell.null
+        selectedCell = cells.first(where: { $0.id == state.selectedCell.id }) ?? CollageCell.zeroFrame
     }
     
     private func calculatePosition(of cell: CollageCell, for value: CGFloat, with gripPosition: GripPosition) -> RelativeFrame {
@@ -209,13 +209,34 @@ extension Collage {
         return cell.gripPositions.contains(gripPosition)
     }
     
-    private func affectedCells(with gripPosition: GripPosition) -> [CollageCell] {
+    private func cellsLayingOnLine(with gripPosition: GripPosition) -> [CollageCell] {
         return cells.filter { $0.belongsToParallelLine(on: gripPosition.axis, with: gripPosition.centerPoint(in: selectedCell)) }
     }
     
-    private func mergingCells(with gripPosition: GripPosition) -> [CollageCell] {
+    private func cellIntersected(with gripPosition: GripPosition) -> [CollageCell] {
         return cells.filter({ $0 != selectedCell }).compactMap { (cell) -> CollageCell? in
             return cell.relativeFrame.intersects(rect2: selectedCell.relativeFrame, on: gripPosition) ? cell : nil
         }
+    }
+    
+    private func affectedCells(with grip: GripPosition, merging: Bool) -> [CollageCell] {
+        var changingCells: [CollageCell]
+        
+        if merging {
+            changingCells = cellIntersected(with: grip)
+        } else {
+            let intersectedCells = Set(cellIntersected(with: grip))
+            let layingOnLineCells = Set(cellsLayingOnLine(with: grip))
+            
+            changingCells = Array(layingOnLineCells.intersection(intersectedCells))
+            
+            if changingCells.count == 1, let firstCell = changingCells.first, firstCell.relativeFrame.equallyIntersects(rect2: selectedCell.relativeFrame, on: grip) {
+                changingCells.append(selectedCell)
+            } else {
+                changingCells = cellsLayingOnLine(with: grip)
+            }
+        }
+        
+        return changingCells
     }
 }
