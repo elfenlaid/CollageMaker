@@ -11,17 +11,7 @@ class CollageCellView: UIView {
         self.collageCell = collageCell
         super.init(frame: frame)
         
-        if let image = collageCell.image {
-            setup()
-            
-            imageView = UIImageView(image: image)
-            
-            scrollView.contentSize = image.size
-            scrollView.addSubview(imageView)
-            addSubview(scrollView)
-        } else {
-            backgroundColor = collageCell.color
-        }
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,18 +25,43 @@ class CollageCellView: UIView {
         scrollView.center = convert(center, from: superview ?? self)
         scrollView.bounds.size = self.bounds.size
         
-        setup()
+        updateView()
     }
     
     func changeFrame(to: CGRect) {
         self.frame = to
     }
     
-    private func setup() {
+    func updateCollageCell(_ collageCell: CollageCell) {
+        self.collageCell = collageCell
+        
+        setupView()
+    }
+    
+    private func setupView() {
+        if let image = collageCell.image {
+            imageView.image = nil
+            imageView.removeFromSuperview()
+            scrollView.removeFromSuperview()
+            
+            updateView()
+            
+            imageView = UIImageView(image: image)
+            
+            scrollView.contentSize = image.size
+            scrollView.addSubview(imageView)
+            addSubview(scrollView)
+            backgroundColor = .clear
+        } else {
+            backgroundColor = collageCell.color
+        }
+    }
+    
+    private func updateView() {
         guard let image = collageCell.image else {
             return
         }
-
+        
         let widthScale = scrollView.frame.width / image.size.width
         let heightScale = scrollView.frame.height / image.size.height
         let minScale = max(widthScale, heightScale)
@@ -54,7 +69,7 @@ class CollageCellView: UIView {
         scrollView.setup(maxZoomScale: minScale * 2, minZoomScale: minScale, delegate: self)
         scrollView.setZoomScale(minScale, animated: false)
     }
-
+    
     private lazy var imageView = UIImageView()
     private lazy var scrollView = UIScrollView()
     private(set) var collageCell: CollageCell
