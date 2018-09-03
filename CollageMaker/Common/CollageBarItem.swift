@@ -71,14 +71,24 @@ class CollageBarItem: UIView {
 
 extension CollageBarItem {
     static var horizontal: CollageBarItem {
-        return CollageBarItem(title: "HORIZONTAL", image: UIImage(named: "horizontal.png")!)
+        return CollageBarItem(title: "HORIZONTAL", image: R.image.horizontal() ?? .none)
     }
     
     static var vertical: CollageBarItem {
-        return CollageBarItem(title: "VERTICAL", image: UIImage(named: "vertical.png")!)
+        return CollageBarItem(title: "VERTICAL", image: R.image.vertical() ?? .none)
     }
     
     static var addImage: CollageBarItem {
-        return CollageBarItem(title: "ADD IMG", image: UIImage(named: "addimg.png")!)
+        return CollageBarItem(title: "ADD IMG", image: R.image.addimg() ?? .none)
+    }
+    
+    static var delete: CollageBarItem {
+        return CollageBarItem(title: "DELETE", image: R.image.addimg() ?? .none)
+    }
+}
+
+extension UIImage {
+    static var none: UIImage {
+        return UIImage()
     }
 }

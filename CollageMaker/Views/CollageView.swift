@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol CollageViewDelegate: AnyObject {
     func collageView(_ collageView: CollageView, tapped point: CGPoint)

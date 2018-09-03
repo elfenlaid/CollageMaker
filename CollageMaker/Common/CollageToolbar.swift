@@ -78,7 +78,7 @@ extension CollageToolbar {
         let horizontal = CollageBarItem.horizontal
         let vertical =  CollageBarItem.vertical
         let addimg = CollageBarItem.addImage
-        let delete = CollageBarItem(title: "DELETE", image: UIImage(named: "addimg.png")!)
+        let delete = CollageBarItem.delete
         
         return CollageToolbar(barItems: [horizontal, vertical, addimg, delete])
     }

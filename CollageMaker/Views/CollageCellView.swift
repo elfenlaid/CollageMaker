@@ -71,8 +71,8 @@ extension UIScrollView {
         maximumZoomScale = maxZoomScale
         minimumZoomScale = minZoomScale
         contentInsetAdjustmentBehavior = .never
-        bouncesZoom = false
-        bounces = false
+        showsVerticalScrollIndicator = false
+        showsHorizontalScrollIndicator = false
         
         self.delegate = delegate
         self.isScrollEnabled = isScrollEnabled
