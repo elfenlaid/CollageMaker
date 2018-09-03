@@ -18,6 +18,8 @@ class CollageViewController: UIViewController {
         panGestureRecognizer.addTarget(self, action: #selector(changeSize(with:)))
         
         collageView.delegate = self
+        collageView.frame = view.bounds
+        
         view.addSubview(collageView)
         view.addGestureRecognizer(panGestureRecognizer)
     }

@@ -38,7 +38,6 @@
 		84E06F1E213991D6007109BE /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84E06F1D213991D6007109BE /* SF-Pro-Text-Light.otf */; };
 		84E06F20213991F4007109BE /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84E06F1F213991F4007109BE /* SF-Pro-Text-Bold.otf */; };
 		84E06F222139920D007109BE /* SF-Pro-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84E06F212139920C007109BE /* SF-Pro-Display-Heavy.otf */; };
-		84E06F23213993B4007109BE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 843A580521144761002FE28D /* Info.plist */; };
 		84E2720A211DE8B0001CDCB9 /* CollageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E27209211DE8B0001CDCB9 /* CollageView.swift */; };
 		EED0F2386CA83A7547A76DEB /* Pods_CollageMakerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFBE0B5378D9DAC0C04B69BA /* Pods_CollageMakerTests.framework */; };
 /* End PBXBuildFile section */
@@ -418,7 +417,6 @@
 			files = (
 				84868BC821383ADA00E12152 /* vertical.png in Resources */,
 				84E06F20213991F4007109BE /* SF-Pro-Text-Bold.otf in Resources */,
-				84E06F23213993B4007109BE /* Info.plist in Resources */,
 				84868BCA21383ADA00E12152 /* addimg.png in Resources */,
 				84E06F222139920D007109BE /* SF-Pro-Display-Heavy.otf in Resources */,
 				84E06F1E213991D6007109BE /* SF-Pro-Text-Light.otf in Resources */,

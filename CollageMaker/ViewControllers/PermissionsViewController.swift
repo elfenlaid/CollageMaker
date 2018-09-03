@@ -51,6 +51,12 @@ class PermissionsViewController: UIViewController {
         }
     }
     
+    @objc private func showCollageScene() {
+        let controller = CollageSceneViewController()
+        
+        present(controller, animated: true, completion: nil)
+    }
+    
     private lazy var allowButton: UIButton = {
         let button = UIButton(type: .system)
         
@@ -62,6 +68,7 @@ class PermissionsViewController: UIViewController {
         button.titleLabel?.font = R.font.sfProDisplayHeavy(size: 19)
         button.setTitle("Allow", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(showCollageScene), for: .touchUpInside)
         
         return button
     }()

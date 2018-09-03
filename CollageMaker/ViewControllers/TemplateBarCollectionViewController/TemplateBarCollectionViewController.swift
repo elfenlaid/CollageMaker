@@ -68,12 +68,6 @@ extension TemplateBarCollectionViewController: UICollectionViewDelegateFlowLayou
         return CGSize(width: collectionView.frame.height - 40, height: collectionView.frame.height - 40)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let minValue = min(collectionView.frame.width, collectionView.frame.height)
-        
-        return UIEdgeInsets(top: minValue / 4, left: 40, bottom: minValue / 4, right: 40)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 20
     }
