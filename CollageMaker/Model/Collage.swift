@@ -13,7 +13,7 @@ protocol CollageDelegate: AnyObject {
     func collage(_ collage: Collage, didChangeSelected cell: CollageCell)
     func collageChanged(to collage: Collage)
     func collage(_ collage: Collage, changed state: CollageState)
-//    func collage(_ collage)
+    func collage(_ collage: Collage, changedImageIn cell: CollageCell)
 }
 
 struct Collage {
@@ -74,7 +74,7 @@ struct Collage {
         selectedCell.addImage(image)
         update(cell: selectedCell)
         
-        delegate?.collageChanged(to: self)
+        delegate?.collage(self, changedImageIn: selectedCell)
     }
     
     mutating func reset() {

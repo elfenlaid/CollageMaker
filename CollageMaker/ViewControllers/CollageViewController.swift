@@ -102,11 +102,17 @@ extension CollageViewController: CollageViewDelegate {
 
 extension CollageViewController: CollageDelegate {
     func collage(_ collage: Collage, changed state: CollageState) {
-         DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.collageView.changeFrames(from: state)
         }
     }
-  
+    
+    func collage(_ collage: Collage, changedImageIn cell: CollageCell) {
+        DispatchQueue.main.async { [weak self] in
+            self?.collageView.updateSelectedCellView(with: cell)
+        }
+    }
+    
     func collageChanged(to collage: Collage) {
         set(collage: collage)
     }
