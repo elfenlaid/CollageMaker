@@ -12,7 +12,7 @@ struct CollageState {
         return cellsRelativeFrames.map { $0.key }
     }
     
-    init(cellsRelativeFrames: [CollageCell: RelativeFrame] = [:], selectedCell: CollageCell = CollageCell.null) {
+    init(cellsRelativeFrames: [CollageCell: RelativeFrame] = [:], selectedCell: CollageCell = CollageCell.zeroFrame) {
         self.cellsRelativeFrames = cellsRelativeFrames
         self.selectedCell = selectedCell
     }

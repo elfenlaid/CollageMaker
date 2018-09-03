@@ -82,7 +82,7 @@ struct CollageCell: Equatable, Hashable {
 }
 
 extension CollageCell {
-    static var null: CollageCell {
+    static var zeroFrame: CollageCell {
         return CollageCell(color: .black, relativeFrame: .zero)
     }
 }
