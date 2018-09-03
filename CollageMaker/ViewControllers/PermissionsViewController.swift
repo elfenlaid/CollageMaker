@@ -15,6 +15,7 @@ class PermissionsViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
+        view.addSubview(greetingView)
         view.addSubview(allowButton)
         
         makeConstraints()
@@ -43,8 +44,15 @@ class PermissionsViewController: UIViewController {
     private func makeConstraints() {
         let offset = view.bounds.width / 7
         
-        allowButton.snp.makeConstraints { make in
+        greetingView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(offset * 3)
             make.left.equalToSuperview().offset(offset)
+            make.right.equalToSuperview().offset(-offset)
+            make.height.equalTo(view.bounds.height / 5)
+        }
+        
+        allowButton.snp.makeConstraints { make in
+            make.left.equalTo(greetingView)
             make.bottom.equalToSuperview().offset(-offset)
             make.height.equalTo(offset * 0.75)
             make.width.equalTo(offset * 2)
@@ -73,6 +81,7 @@ class PermissionsViewController: UIViewController {
         return button
     }()
     
+    private let greetingView = GreetingView()
     private let gradientLayer = CAGradientLayer()
 }
 
