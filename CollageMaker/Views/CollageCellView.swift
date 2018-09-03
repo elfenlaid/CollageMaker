@@ -40,6 +40,10 @@ class CollageCellView: UIView {
     
     private func setupView() {
         if let image = collageCell.image {
+            imageView.image = nil
+            imageView.removeFromSuperview()
+            scrollView.removeFromSuperview()
+            
             updateView()
             
             imageView = UIImageView(image: image)
