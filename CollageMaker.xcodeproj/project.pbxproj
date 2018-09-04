@@ -13,7 +13,6 @@
 		841469672126EEE400C2838A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841469662126EEE400C2838A /* UIColor.swift */; };
 		8417D1B8211DC1C500334661 /* CollageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8417D1B7211DC1C500334661 /* CollageRenderer.swift */; };
 		8417D1BA211DCABC00334661 /* CollageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8417D1B9211DCABC00334661 /* CollageCellView.swift */; };
-		841A2459213D4AC7006E994B /* GreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A2458213D4AC7006E994B /* GreetingView.swift */; };
 		841A245B213E831C006E994B /* AccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A245A213E831C006E994B /* AccessView.swift */; };
 		841A245D213E8DCC006E994B /* CollageNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A245C213E8DCC006E994B /* CollageNavigationController.swift */; };
 		841A245F213E935C006E994B /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A245E213E935C006E994B /* UIBarButtonItem.swift */; };
@@ -70,7 +69,6 @@
 		841469662126EEE400C2838A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		8417D1B7211DC1C500334661 /* CollageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageRenderer.swift; sourceTree = "<group>"; };
 		8417D1B9211DCABC00334661 /* CollageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageCellView.swift; sourceTree = "<group>"; };
-		841A2458213D4AC7006E994B /* GreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingView.swift; sourceTree = "<group>"; };
 		841A245A213E831C006E994B /* AccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessView.swift; sourceTree = "<group>"; };
 		841A245C213E8DCC006E994B /* CollageNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageNavigationController.swift; sourceTree = "<group>"; };
 		841A245E213E935C006E994B /* UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
@@ -290,7 +288,6 @@
 		84E2720B211DE8D7001CDCB9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				841A2458213D4AC7006E994B /* GreetingView.swift */,
 				841A245A213E831C006E994B /* AccessView.swift */,
 				8417D1B9211DCABC00334661 /* CollageCellView.swift */,
 				84E27209211DE8B0001CDCB9 /* CollageView.swift */,
@@ -554,7 +551,6 @@
 				84868BC42138358500E12152 /* CollageBarItem.swift in Sources */,
 				841469672126EEE400C2838A /* UIColor.swift in Sources */,
 				841A245B213E831C006E994B /* AccessView.swift in Sources */,
-				841A2459213D4AC7006E994B /* GreetingView.swift in Sources */,
 				84868BC22138323E00E12152 /* CollageToolbar.swift in Sources */,
 				84023CC421369CDA00FF2CC6 /* RelativeFrame.swift in Sources */,
 				84868BC02138208100E12152 /* FloatingPoint.swift in Sources */,

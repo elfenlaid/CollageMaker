@@ -11,7 +11,7 @@ class GripView: UIView {
         self.associatedCellView = cellView
         super.init(frame: .zero)
         
-        backgroundColor = .collagePurple
+        backgroundColor = .brightLavender
         layout()
     }
     

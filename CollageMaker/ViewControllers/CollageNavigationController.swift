@@ -10,6 +10,7 @@ class CollageNavigationController: UINavigationController {
         super.init(nibName: nil, bundle: nil)
         
         navigationBar.barTintColor = .white
+        navigationBar.tintColor = .black
         navigationBar.setValue(true, forKey: "hidesShadow")
         
         pushViewController(rootViewController, animated: true)
