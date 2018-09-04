@@ -15,10 +15,13 @@ class PermissionsViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        view.addSubview(greetingView)
+        view.addSubview(titleLabel)
         view.addSubview(allowButton)
+        view.addSubview(subtitleLabel)
+        view.addSubview(bottomStackView)
         
         makeConstraints()
+        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,7 +34,11 @@ class PermissionsViewController: UIViewController {
         view.backgroundColor = .white
         
         gradientLayer.axis(.horizontal)
-        gradientLayer.colors = [UIColor.collagePurple.cgColor, UIColor.collagePink.cgColor]
+        gradientLayer.colors = [UIColor.brightLavender.cgColor, UIColor.collagePink.cgColor]
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
     override func viewWillLayoutSubviews() {
@@ -41,28 +48,57 @@ class PermissionsViewController: UIViewController {
         gradientLayer.cornerRadius = allowButton.bounds.height / 2
     }
     
-    private func makeConstraints() {
-        let offset = view.bounds.width / 7
+    private func findLastWordRange(in string: String) -> NSRange? {
+        let words = string.split(separator: " ")
         
-        greetingView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(offset * 3)
-            make.left.equalToSuperview().offset(offset)
-            make.right.equalToSuperview().offset(-offset)
-            make.height.equalTo(view.bounds.height / 5)
+        guard let lastWord = words.last, let range = string.range(of: lastWord) else {
+            return nil
+        }
+        
+        return NSRange(location: range.lowerBound.encodedOffset, length: range.upperBound.encodedOffset - range.lowerBound.encodedOffset)
+    }
+    
+    private func setup() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem.collageCamera
+        navigationController?.navigationBar.frame.size.height = UIScreen.main.bounds.height / 10
+    }
+    
+    private func makeConstraints() {
+        let sideOffset = UIScreen.main.bounds.width * 0.15
+        let topOffset = UIScreen.main.bounds.height * 0.26
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(topOffset)
+            make.left.equalToSuperview().offset(sideOffset)
+            make.right.equalToSuperview().offset(-sideOffset)
+        }
+        
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(UIScreen.main.bounds.height * 0.02)
+            make.left.equalTo(titleLabel)
+            make.right.equalTo(titleLabel)
         }
         
         allowButton.snp.makeConstraints { make in
-            make.left.equalTo(greetingView)
-            make.bottom.equalToSuperview().offset(-offset)
-            make.height.equalTo(offset * 0.75)
-            make.width.equalTo(offset * 2)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.25)
+        }
+        
+        bottomStackView.snp.makeConstraints { make in
+            make.left.equalTo(titleLabel)
+            make.right.equalTo(titleLabel)
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(topOffset)
+            make.bottom.equalToSuperview().offset(-sideOffset)
         }
     }
     
     @objc private func showCollageScene() {
         let controller = CollageSceneViewController()
         
-        present(controller, animated: true, completion: nil)
+        if let navCon = navigationController {
+            navCon.pushViewController(controller, animated: true)
+        } else {
+            present(controller, animated: true, completion: nil)
+        }
     }
     
     private lazy var allowButton: UIButton = {
@@ -71,7 +107,7 @@ class PermissionsViewController: UIViewController {
         button.layer.addSublayer(gradientLayer)
         button.layer.shadowOffset = CGSize(width: 0, height: 10)
         button.layer.shadowRadius = 5
-        button.layer.shadowColor = UIColor.collagePurple.cgColor
+        button.layer.shadowColor = UIColor.brightLavender.cgColor
         button.layer.shadowOpacity = 0.3
         button.titleLabel?.font = R.font.sfProDisplayHeavy(size: 19)
         button.setTitle("Allow", for: .normal)
@@ -81,7 +117,89 @@ class PermissionsViewController: UIViewController {
         return button
     }()
     
-    private let greetingView = GreetingView()
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 0
+        label.font = R.font.sfProDisplayHeavy(size: 46)
+        label.textAlignment = .left
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 0.8
+        
+        
+        let attributes = [NSAttributedStringKey.paragraphStyle: paragraphStyle,
+                          NSAttributedStringKey.kern: CGFloat(-1.85),
+                          ] as [NSAttributedStringKey : Any]
+        
+        let attributedString = NSMutableAttributedString(string: "Start Your Masterpiece", attributes: attributes)
+        
+        if let range = findLastWordRange(in: attributedString.string) {
+            attributedString.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.brightLavender], range: range)
+        }
+        
+        label.attributedText = attributedString
+        label.sizeToFit()
+
+        return label
+    }()
+    
+    private let subtitleLabel: UILabel = {
+        let label = UILabel()
+        
+        let attributes = [ NSAttributedStringKey.kern: CGFloat(-1.0)]
+        let attributedString = NSMutableAttributedString(string: "The best photos are already here, make them speak", attributes: attributes)
+        
+        label.attributedText = attributedString
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.font = R.font.sfProTextLight(size: 15)
+        label.sizeToFit()
+        
+        return label
+    }()
+    
+    private let accessLabel: UILabel = {
+        let label = UILabel()
+        
+        let attributes = [ NSAttributedStringKey.kern: CGFloat(-1.0)]
+        let attributedString = NSMutableAttributedString(string: "Access to Photos", attributes: attributes)
+        
+        label.attributedText = attributedString
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.font = R.font.sfProDisplayHeavy(size: 25)
+        label.sizeToFit()
+        
+        return label
+    }()
+    
+    private let accessMessageLabel: UILabel = {
+        let label = UILabel()
+        
+        let attributes = [ NSAttributedStringKey.kern: CGFloat(-1.0)]
+        let attributedString = NSMutableAttributedString(string: "Collagist needs access to photos to turn them into masterpieces.", attributes: attributes)
+        
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.font = R.font.sfProTextLight(size: 15)
+        label.attributedText = attributedString
+        label.sizeToFit()
+        
+        return label
+    }()
+    
+    private lazy var bottomStackView: UIStackView = {
+       let stackView = UIStackView(arrangedSubviews: [accessLabel, accessMessageLabel, allowButton])
+        
+        stackView.axis = .vertical
+        stackView.distribution = .equalCentering
+        stackView.alignment = .leading
+        stackView.spacing = 5
+        
+        return stackView
+    }()
+    
     private let gradientLayer = CAGradientLayer()
 }
 

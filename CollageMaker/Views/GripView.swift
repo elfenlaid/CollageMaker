@@ -11,7 +11,12 @@ class GripView: UIView {
         self.associatedCellView = cellView
         super.init(frame: .zero)
         
-        backgroundColor = .collagePurple
+        backgroundColor = .brightLavender
+        
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowRadius = 1
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.5
         layout()
     }
     

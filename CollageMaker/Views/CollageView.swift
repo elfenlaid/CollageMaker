@@ -56,7 +56,7 @@ class CollageView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         showGrips()
     }
     
@@ -64,7 +64,7 @@ class CollageView: UIView {
         selectedCellView?.layer.borderWidth = 0
         selectedCellView = cellView
         selectedCellView?.layer.borderWidth = 2
-        selectedCellView?.layer.borderColor = UIColor.collagePurple.cgColor
+        selectedCellView?.layer.borderColor = UIColor.brightLavender.cgColor
         
         showGrips()
     }

@@ -28,7 +28,7 @@ struct Collage {
         initialState.selectedCell = selectedCell
         
         guard isFullsized else {
-            let initialCell = CollageCell(color: .random, image: nil, relativeFrame: RelativeFrame.fullsized)
+            let initialCell = CollageCell(color: .collagePink, image: R.image.addimg(), relativeFrame: RelativeFrame.fullsized)
             
             self.cells = [initialCell]
             self.selectedCell = initialCell

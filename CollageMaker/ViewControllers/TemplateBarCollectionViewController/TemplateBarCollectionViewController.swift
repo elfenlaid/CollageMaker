@@ -26,7 +26,8 @@ class TemplateBarCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         
         collectionView?.register(TemplateBarCollectionViewCell.self, forCellWithReuseIdentifier: TemplateBarCollectionViewCell.identifier)
-        collectionView?.backgroundColor = .collageGray
+        collectionView?.backgroundColor = .black
+        collectionView?.alpha = 0.8
         
         guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else {
             return
