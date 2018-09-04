@@ -14,6 +14,9 @@
 		8417D1B8211DC1C500334661 /* CollageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8417D1B7211DC1C500334661 /* CollageRenderer.swift */; };
 		8417D1BA211DCABC00334661 /* CollageCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8417D1B9211DCABC00334661 /* CollageCellView.swift */; };
 		841A2459213D4AC7006E994B /* GreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A2458213D4AC7006E994B /* GreetingView.swift */; };
+		841A245B213E831C006E994B /* AccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A245A213E831C006E994B /* AccessView.swift */; };
+		841A245D213E8DCC006E994B /* CollageNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A245C213E8DCC006E994B /* CollageNavigationController.swift */; };
+		841A245F213E935C006E994B /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841A245E213E935C006E994B /* UIBarButtonItem.swift */; };
 		843A57FA21144760002FE28D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A57F921144760002FE28D /* AppDelegate.swift */; };
 		843A580121144761002FE28D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 843A580021144761002FE28D /* Assets.xcassets */; };
 		843A580421144761002FE28D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843A580221144761002FE28D /* LaunchScreen.storyboard */; };
@@ -68,6 +71,9 @@
 		8417D1B7211DC1C500334661 /* CollageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageRenderer.swift; sourceTree = "<group>"; };
 		8417D1B9211DCABC00334661 /* CollageCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageCellView.swift; sourceTree = "<group>"; };
 		841A2458213D4AC7006E994B /* GreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingView.swift; sourceTree = "<group>"; };
+		841A245A213E831C006E994B /* AccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessView.swift; sourceTree = "<group>"; };
+		841A245C213E8DCC006E994B /* CollageNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageNavigationController.swift; sourceTree = "<group>"; };
+		841A245E213E935C006E994B /* UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
 		843A57F621144760002FE28D /* CollageMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollageMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843A57F921144760002FE28D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		843A580021144761002FE28D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -147,6 +153,7 @@
 		841469682126F08900C2838A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				841A245E213E935C006E994B /* UIBarButtonItem.swift */,
 				841469662126EEE400C2838A /* UIColor.swift */,
 				84023CC321369CDA00FF2CC6 /* RelativeFrame.swift */,
 				84868BBF2138208100E12152 /* FloatingPoint.swift */,
@@ -234,6 +241,7 @@
 		843A582A211447F8002FE28D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				841A245C213E8DCC006E994B /* CollageNavigationController.swift */,
 				84E06F1A21397ED7007109BE /* PermissionsViewController.swift */,
 				843A5828211447DC002FE28D /* CollageSceneViewController.swift */,
 				849B681F2121979C0091AD27 /* CollageViewController.swift */,
@@ -283,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				841A2458213D4AC7006E994B /* GreetingView.swift */,
+				841A245A213E831C006E994B /* AccessView.swift */,
 				8417D1B9211DCABC00334661 /* CollageCellView.swift */,
 				84E27209211DE8B0001CDCB9 /* CollageView.swift */,
 				84D389E52125CF5200FCDC67 /* GripView.swift */,
@@ -529,11 +538,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				841A245F213E935C006E994B /* UIBarButtonItem.swift in Sources */,
 				84868BAE2136E3F500E12152 /* CollageState.swift in Sources */,
 				848713222122E938003519F7 /* TemplateBarCollectionViewCell.swift in Sources */,
 				8417D1BA211DCABC00334661 /* CollageCellView.swift in Sources */,
 				843A5829211447DC002FE28D /* CollageSceneViewController.swift in Sources */,
 				849B68222121CA960091AD27 /* TemplateBarCollectionViewController.swift in Sources */,
+				841A245D213E8DCC006E994B /* CollageNavigationController.swift in Sources */,
 				84E06F1B21397ED7007109BE /* PermissionsViewController.swift in Sources */,
 				84C439F221399C4500C701AE /* R.generated.swift in Sources */,
 				849B68202121979C0091AD27 /* CollageViewController.swift in Sources */,
@@ -542,6 +553,7 @@
 				8417D1B8211DC1C500334661 /* CollageRenderer.swift in Sources */,
 				84868BC42138358500E12152 /* CollageBarItem.swift in Sources */,
 				841469672126EEE400C2838A /* UIColor.swift in Sources */,
+				841A245B213E831C006E994B /* AccessView.swift in Sources */,
 				841A2459213D4AC7006E994B /* GreetingView.swift in Sources */,
 				84868BC22138323E00E12152 /* CollageToolbar.swift in Sources */,
 				84023CC421369CDA00FF2CC6 /* RelativeFrame.swift in Sources */,

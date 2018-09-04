@@ -8,9 +8,7 @@ import SnapKit
 class CollageSceneViewController: UIViewController {
     
     init(collage: Collage = Collage(cells: [])) {
-        collageViewController = CollageViewController()
         collageViewController.set(collage: collage)
-        
         collageViewContainer.contentMode = .scaleAspectFit
         
         super.init(nibName: nil, bundle: nil)
@@ -29,8 +27,12 @@ class CollageSceneViewController: UIViewController {
         view.addSubview(collageViewContainer)
         view.addSubview(bannerView)
         view.addSubview(toolsBar)
-        view.addSubview(navigationBar)
         
+        let navBarHeight = UIScreen.main.bounds.height / 10
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem.collageCamera
+        navigationController?.navigationBar.frame.size.height = navBarHeight
+    
         makeConstraints()
         
         let cellOne = CollageCell(color: .red, image: nil, relativeFrame: RelativeFrame(x: 0, y: 0, width: 0.5, height: 1))
@@ -51,16 +53,10 @@ class CollageSceneViewController: UIViewController {
     
     
     private func makeConstraints() {
-     
-        navigationBar.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.height.equalTo(collageViewContainer).dividedBy(6)
-        }
-        
+        let topOffset =  navigationController?.navigationBar.frame.size.height ?? 0
+    
         collageViewContainer.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom)
+            make.top.equalToSuperview().offset(topOffset)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.height.equalTo(collageViewContainer.snp.width)
@@ -70,7 +66,7 @@ class CollageSceneViewController: UIViewController {
             make.bottom.equalToSuperview()
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.height.equalTo(navigationBar)
+            make.height.equalTo(collageViewContainer).dividedBy(6)
         }
         
         bannerView.snp.makeConstraints { make in
@@ -117,9 +113,8 @@ class CollageSceneViewController: UIViewController {
     
     private let bannerView = UIView()
     private let toolsBar = CollageToolbar.standart
-    private let navigationBar = CollageToolbar()
     private let collageViewContainer = UIView()
-    private var collageViewController: CollageViewController
+    private var collageViewController = CollageViewController()
 }
 
 extension CollageSceneViewController: TemplateBarCollectionViewControllerDelegate {
@@ -179,3 +174,4 @@ extension CollageSceneViewController: UIImagePickerControllerDelegate & UINaviga
         picker.dismiss(animated: true)
     }
 }
+

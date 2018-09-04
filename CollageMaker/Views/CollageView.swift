@@ -56,7 +56,7 @@ class CollageView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         showGrips()
     }
     

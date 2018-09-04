@@ -24,11 +24,9 @@ class GreetingView: UIView {
     }
     
     private func findLastWordRange(in string: String) -> NSRange? {
-        var word = ""
+        let words = string.split(separator: " ")
         
-        string.forEach { $0 == " " ? word = "" : word.append($0) }
-        
-        guard let range = string.range(of: word) else {
+        guard let lastWord = words.last, let range = string.range(of: lastWord) else {
             return nil
         }
         
@@ -75,5 +73,4 @@ class GreetingView: UIView {
         
         return stackView
     }()
-    
 }

@@ -19,6 +19,7 @@ class PermissionsViewController: UIViewController {
         view.addSubview(allowButton)
         
         makeConstraints()
+        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,6 +40,11 @@ class PermissionsViewController: UIViewController {
         
         gradientLayer.frame = allowButton.bounds
         gradientLayer.cornerRadius = allowButton.bounds.height / 2
+    }
+    
+    private func setup() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem.collageCamera
+        navigationController?.navigationBar.frame.size.height = UIScreen.main.bounds.height / 10
     }
     
     private func makeConstraints() {
@@ -62,7 +68,11 @@ class PermissionsViewController: UIViewController {
     @objc private func showCollageScene() {
         let controller = CollageSceneViewController()
         
-        present(controller, animated: true, completion: nil)
+        if let navCon = navigationController {
+            navCon.pushViewController(controller, animated: true)
+        } else {
+            present(controller, animated: true, completion: nil)
+        }
     }
     
     private lazy var allowButton: UIButton = {
