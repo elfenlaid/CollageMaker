@@ -53,10 +53,9 @@ class CollageSceneViewController: UIViewController {
     
     
     private func makeConstraints() {
-        let topOffset =  navigationController?.navigationBar.frame.size.height ?? 0
-    
+       
         collageViewContainer.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(topOffset)
+            make.top.equalTo(topLayoutGuide.snp.bottom)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.height.equalTo(collageViewContainer.snp.width)
@@ -75,6 +74,8 @@ class CollageSceneViewController: UIViewController {
             make.bottom.equalTo(toolsBar.snp.top)
             make.top.equalTo(collageViewContainer.snp.bottom)
         }
+        
+       
     }
     
     @objc private func resetCollage() {
