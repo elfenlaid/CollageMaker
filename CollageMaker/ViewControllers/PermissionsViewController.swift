@@ -4,13 +4,9 @@
 
 import UIKit
 import SnapKit
+import Photos
 
 class PermissionsViewController: UIViewController {
-    
-    enum State {
-        case firstLaunch
-        case denied
-    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -21,7 +17,6 @@ class PermissionsViewController: UIViewController {
         view.addSubview(bottomStackView)
         
         makeConstraints()
-        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,10 +26,7 @@ class PermissionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        
-        gradientLayer.axis(.horizontal)
-        gradientLayer.colors = [UIColor.brightLavender.cgColor, UIColor.collagePink.cgColor]
+        setup()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -59,7 +51,11 @@ class PermissionsViewController: UIViewController {
     }
     
     private func setup() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem.collageCamera
+        view.backgroundColor = .white
+        
+        gradientLayer.axis(.horizontal)
+        gradientLayer.colors = [UIColor.brightLavender.cgColor, UIColor.collagePink.cgColor]
+        
         navigationController?.navigationBar.frame.size.height = UIScreen.main.bounds.height / 10
     }
     
@@ -92,12 +88,46 @@ class PermissionsViewController: UIViewController {
     }
     
     @objc private func showCollageScene() {
-        let controller = CollageSceneViewController()
-        
-        if let navCon = navigationController {
-            navCon.pushViewController(controller, animated: true)
-        } else {
-            present(controller, animated: true, completion: nil)
+        PHPhotoLibrary.requestAuthorization { [weak self] in self?.handle($0) }
+    }
+    
+    private func handle(_ authorizationStatus: PHAuthorizationStatus) {
+        switch authorizationStatus {
+        case .authorized:
+            DispatchQueue.main.async { [weak self] in
+                let controller = CollageSceneViewController()
+                
+                if let navCon = self?.navigationController {
+                    navCon.pushViewController(controller, animated: true)
+                } else {
+                    self?.present(controller, animated: true, completion: nil)
+                }
+            }
+            
+        case .denied:
+            let alertViewController = UIAlertController(title: "Sorry", message: "To use this app you should grant access to photo library. Would you like to change your opinion and grant photo library access to CollagistApp?", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Sure", style: .default) { _ in
+                UIApplication.shared.openSettings() }
+            let secaction = UIAlertAction(title: "Nope", style: .destructive, handler: nil)
+            
+            alertViewController.addAction(action)
+            alertViewController.addAction(secaction)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.present(alertViewController, animated: true, completion: nil)
+            }
+            
+        case .restricted:
+            let alertViewController = UIAlertController(title: "Sorry", message: "You're not allowed to change photo library acces. Parental controls or institutional configuration profiles restricted your ability to grant photo library access to CollagistApp. ", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Got it", style: .default, handler: nil)
+            
+            alertViewController.addAction(action)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.present(alertViewController, animated: true, completion: nil)
+            }
+            
+        default: break
         }
     }
     
@@ -140,7 +170,7 @@ class PermissionsViewController: UIViewController {
         
         label.attributedText = attributedString
         label.sizeToFit()
-
+        
         return label
     }()
     
@@ -190,7 +220,7 @@ class PermissionsViewController: UIViewController {
     }()
     
     private lazy var bottomStackView: UIStackView = {
-       let stackView = UIStackView(arrangedSubviews: [accessLabel, accessMessageLabel, allowButton])
+        let stackView = UIStackView(arrangedSubviews: [accessLabel, accessMessageLabel, allowButton])
         
         stackView.axis = .vertical
         stackView.distribution = .equalCentering
@@ -218,5 +248,15 @@ extension CAGradientLayer {
             self.startPoint = CGPoint(x: 0.5, y: 0)
             self.endPoint = CGPoint(x: 0.5, y: 1)
         }
+    }
+}
+
+extension UIApplication {
+    func openSettings() {
+        guard let settingsURL = URL(string: UIApplicationOpenSettingsURLString) else {
+            return
+        }
+        
+        self.open(settingsURL, completionHandler: nil)
     }
 }

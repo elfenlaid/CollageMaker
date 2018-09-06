@@ -5,6 +5,7 @@
 import UIKit
 import Crashlytics
 import Fabric
+import Photos
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,29 +15,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        //        Fabric.with([Crashlytics.self()])
-        
-        var collage = Collage()
-        
-        collage.splitSelectedCell(by: .vertical)
-        collage.splitSelectedCell(by: .horizontal)
-        collage.splitSelectedCell(by: .horizontal)
-        collage.splitSelectedCell(by: .vertical)
-        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        let navigationController = CollageNavigationController(rootViewController: PermissionsViewController())
+        //        Fabric.with([Crashlytics.self()])
         
+        let collage = Collage()
+        let navigationController: CollageNavigationController
         
+        if checkAccesToPhotoLibrary() {
+            navigationController = CollageNavigationController(rootViewController: CollageSceneViewController(collage: collage))
+        } else {
+            navigationController = CollageNavigationController(rootViewController: PermissionsViewController())
+        }
         
-//        window?.rootViewController = CollageSceneViewController(collage: collage)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
-        
-        
-        
         return true
+    }
+    
+    private func checkAccesToPhotoLibrary() -> Bool {
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .notDetermined, .restricted, .denied: return false
+        case .authorized: return true
+        }
     }
 }
 
