@@ -5,19 +5,12 @@
 import UIKit
 
 class CollageNavigationController: UINavigationController {
-    
-    override init(rootViewController: UIViewController) {
-        super.init(nibName: nil, bundle: nil)
-        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
         navigationBar.barTintColor = .white
         navigationBar.tintColor = .black
         navigationBar.setValue(true, forKey: "hidesShadow")
-        
-        pushViewController(rootViewController, animated: true)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Not implemented")
     }
     
     override var prefersStatusBarHidden: Bool {

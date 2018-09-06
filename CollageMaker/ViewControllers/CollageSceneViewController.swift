@@ -8,11 +8,9 @@ import AVKit
 
 class CollageSceneViewController: UIViewController {
     
-    init(collage: Collage = Collage(cells: [])) {
-        collageViewController.set(collage: collage)
-        collageViewContainer.contentMode = .scaleAspectFit
-        
+    init(collage: Collage = Collage()) {
         super.init(nibName: nil, bundle: nil)
+        collageViewController.collage = collage
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,7 +53,12 @@ class CollageSceneViewController: UIViewController {
     
     private func makeConstraints() {
         collageViewContainer.snp.makeConstraints { make in
-            make.top.equalTo(topLayoutGuide.snp.bottom)
+            if #available(iOS 11, *) {
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            } else {
+                make.top.equalTo(topLayoutGuide.snp.bottom)
+            }
+
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.height.equalTo(collageViewContainer.snp.width)
@@ -159,13 +162,18 @@ class CollageSceneViewController: UIViewController {
     
     private let bannerView = UIView()
     private let toolsBar = CollageToolbar.standart
-    private let collageViewContainer = UIView()
+    private let collageViewContainer: UIView = {
+        let view = UIView()
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+
     private var collageViewController = CollageViewController()
 }
 
 extension CollageSceneViewController: TemplateBarCollectionViewControllerDelegate {
     func templateBarCollectionViewController(_ controller: TemplateBarCollectionViewController, didSelect collage: Collage) {
-        collageViewController.set(collage: collage)
+        collageViewController.collage = collage
     }
 }
 

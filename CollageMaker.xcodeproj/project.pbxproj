@@ -33,7 +33,6 @@
 		849B68222121CA960091AD27 /* TemplateBarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B68212121CA960091AD27 /* TemplateBarCollectionViewController.swift */; };
 		84A91A5921188E5700108C3B /* CollageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A91A5821188E5700108C3B /* CollageCell.swift */; };
 		84B160342114892600FF4713 /* Collage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B160332114892600FF4713 /* Collage.swift */; };
-		84C439F221399C4500C701AE /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C439F121399C4500C701AE /* R.generated.swift */; };
 		84D389E62125CF5200FCDC67 /* GripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D389E52125CF5200FCDC67 /* GripView.swift */; };
 		84E06F1B21397ED7007109BE /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E06F1A21397ED7007109BE /* PermissionsViewController.swift */; };
 		84E06F1E213991D6007109BE /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84E06F1D213991D6007109BE /* SF-Pro-Text-Light.otf */; };
@@ -41,6 +40,11 @@
 		84E06F222139920D007109BE /* SF-Pro-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84E06F212139920C007109BE /* SF-Pro-Display-Heavy.otf */; };
 		84E2720A211DE8B0001CDCB9 /* CollageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E27209211DE8B0001CDCB9 /* CollageView.swift */; };
 		EED0F2386CA83A7547A76DEB /* Pods_CollageMakerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFBE0B5378D9DAC0C04B69BA /* Pods_CollageMakerTests.framework */; };
+		F62618AD2141565800CD94AE /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C439F121399C4500C701AE /* R.generated.swift */; };
+		F62618AF2141570300CD94AE /* PhotoAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62618AE2141570300CD94AE /* PhotoAuthService.swift */; };
+		F62618B1214159AC00CD94AE /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62618B0214159AC00CD94AE /* Navigator.swift */; };
+		F62618B321415C6200CD94AE /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62618B221415C6200CD94AE /* GradientButton.swift */; };
+		F62618B521415D9C00CD94AE /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62618B421415D9C00CD94AE /* UIKit+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +110,10 @@
 		939134D3EA6086601A613E2E /* Pods-CollageMaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMaker/Pods-CollageMaker.debug.xcconfig"; sourceTree = "<group>"; };
 		9C221B83DC51077FE8EDC16F /* Pods-CollageMaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMaker.release.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMaker/Pods-CollageMaker.release.xcconfig"; sourceTree = "<group>"; };
 		E5C2B5278BB477A5EE048C5F /* Pods-CollageMakerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollageMakerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CollageMakerTests/Pods-CollageMakerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F62618AE2141570300CD94AE /* PhotoAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAuthService.swift; sourceTree = "<group>"; };
+		F62618B0214159AC00CD94AE /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		F62618B221415C6200CD94AE /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		F62618B421415D9C00CD94AE /* UIKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		FFBE0B5378D9DAC0C04B69BA /* Pods_CollageMakerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollageMakerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -157,6 +165,7 @@
 				841469662126EEE400C2838A /* UIColor.swift */,
 				84023CC321369CDA00FF2CC6 /* RelativeFrame.swift */,
 				84868BBF2138208100E12152 /* FloatingPoint.swift */,
+				F62618B421415D9C00CD94AE /* UIKit+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -254,6 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				8417D1B7211DC1C500334661 /* CollageRenderer.swift */,
+				F62618AE2141570300CD94AE /* PhotoAuthService.swift */,
+				F62618B0214159AC00CD94AE /* Navigator.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -295,6 +306,7 @@
 				84E27209211DE8B0001CDCB9 /* CollageView.swift */,
 				84D389E52125CF5200FCDC67 /* GripView.swift */,
 				841A2460213EE4EC006E994B /* BorderView.swift */,
+				F62618B221415C6200CD94AE /* GradientButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -493,7 +505,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"";
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT\"\n";
 		};
 		894662B59BC79C19B1B7C157 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -538,19 +550,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F62618AD2141565800CD94AE /* R.generated.swift in Sources */,
 				841A245F213E935C006E994B /* UIBarButtonItem.swift in Sources */,
 				84868BAE2136E3F500E12152 /* CollageState.swift in Sources */,
 				841A2461213EE4EC006E994B /* BorderView.swift in Sources */,
 				848713222122E938003519F7 /* TemplateBarCollectionViewCell.swift in Sources */,
 				8417D1BA211DCABC00334661 /* CollageCellView.swift in Sources */,
+				F62618B1214159AC00CD94AE /* Navigator.swift in Sources */,
 				843A5829211447DC002FE28D /* CollageSceneViewController.swift in Sources */,
 				849B68222121CA960091AD27 /* TemplateBarCollectionViewController.swift in Sources */,
 				841A245D213E8DCC006E994B /* CollageNavigationController.swift in Sources */,
 				84E06F1B21397ED7007109BE /* PermissionsViewController.swift in Sources */,
-				84C439F221399C4500C701AE /* R.generated.swift in Sources */,
 				849B68202121979C0091AD27 /* CollageViewController.swift in Sources */,
 				843A57FA21144760002FE28D /* AppDelegate.swift in Sources */,
 				84A91A5921188E5700108C3B /* CollageCell.swift in Sources */,
+				F62618B521415D9C00CD94AE /* UIKit+Extensions.swift in Sources */,
 				8417D1B8211DC1C500334661 /* CollageRenderer.swift in Sources */,
 				84868BC42138358500E12152 /* CollageBarItem.swift in Sources */,
 				841469672126EEE400C2838A /* UIColor.swift in Sources */,
@@ -560,6 +574,8 @@
 				84868BC02138208100E12152 /* FloatingPoint.swift in Sources */,
 				84E2720A211DE8B0001CDCB9 /* CollageView.swift in Sources */,
 				84D389E62125CF5200FCDC67 /* GripView.swift in Sources */,
+				F62618B321415C6200CD94AE /* GradientButton.swift in Sources */,
+				F62618AF2141570300CD94AE /* PhotoAuthService.swift in Sources */,
 				84B160342114892600FF4713 /* Collage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

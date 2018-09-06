@@ -68,6 +68,13 @@ class CollageView: UIView {
         
         showGrips()
     }
+
+    func fadeIn() {
+        alpha = 0.0
+        UIView.animate(withDuration: 0.5) {
+            self.alpha = 1.0
+        }
+    }
     
     private func showGrips() {
         gripViews.forEach { $0.removeFromSuperview() }

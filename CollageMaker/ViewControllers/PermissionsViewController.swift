@@ -6,38 +6,29 @@ import UIKit
 import SnapKit
 import Photos
 
+protocol PermissionsViewControllerDelegate: AnyObject {
+    func permissionViewControllerDidReceivePermission(_ controller: PermissionsViewController)
+}
+
 class PermissionsViewController: UIViewController {
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        
+
+    weak var delegate: PermissionsViewControllerDelegate?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .white
+
         view.addSubview(titleLabel)
         view.addSubview(allowButton)
         view.addSubview(subtitleLabel)
         view.addSubview(bottomStackView)
-        
+
         makeConstraints()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Not implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setup()
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        gradientLayer.frame = allowButton.bounds
-        gradientLayer.cornerRadius = allowButton.bounds.height / 2
     }
     
     private func findLastWordRange(in string: String) -> NSRange? {
@@ -48,15 +39,6 @@ class PermissionsViewController: UIViewController {
         }
         
         return NSRange(location: range.lowerBound.encodedOffset, length: range.upperBound.encodedOffset - range.lowerBound.encodedOffset)
-    }
-    
-    private func setup() {
-        view.backgroundColor = .white
-        
-        gradientLayer.axis(.horizontal)
-        gradientLayer.colors = [UIColor.brightLavender.cgColor, UIColor.collagePink.cgColor]
-        
-        navigationController?.navigationBar.frame.size.height = UIScreen.main.bounds.height / 10
     }
     
     private func makeConstraints() {
@@ -88,60 +70,28 @@ class PermissionsViewController: UIViewController {
     }
     
     @objc private func showCollageScene() {
-        PHPhotoLibrary.requestAuthorization { [weak self] in self?.handle($0) }
-    }
-    
-    private func handle(_ authorizationStatus: PHAuthorizationStatus) {
-        switch authorizationStatus {
-        case .authorized:
-            DispatchQueue.main.async { [weak self] in
-                let controller = CollageSceneViewController()
-                
-                if let navCon = self?.navigationController {
-                    navCon.pushViewController(controller, animated: true)
-                } else {
-                    self?.present(controller, animated: true, completion: nil)
-                }
-            }
-            
-        case .denied:
-            let alertViewController = UIAlertController(title: "Sorry", message: "To use this app you should grant access to photo library. Would you like to change your opinion and grant photo library access to CollagistApp?", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Sure", style: .default) { _ in
-                UIApplication.shared.openSettings() }
-            let secaction = UIAlertAction(title: "Nope", style: .destructive, handler: nil)
-            
-            alertViewController.addAction(action)
-            alertViewController.addAction(secaction)
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.present(alertViewController, animated: true, completion: nil)
-            }
-            
-        case .restricted:
-            let alertViewController = UIAlertController(title: "Sorry", message: "You're not allowed to change photo library acces. Parental controls or institutional configuration profiles restricted your ability to grant photo library access. ", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Got it", style: .default, handler: nil)
-            
-            alertViewController.addAction(action)
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.present(alertViewController, animated: true, completion: nil)
-            }
-            
-        default: break
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+            DispatchQueue.main.async { self?.handle(status) }
         }
     }
     
+    private func handle(_ authorizationStatus: PHAuthorizationStatus) {
+        if case .authorized = authorizationStatus {
+            delegate?.permissionViewControllerDidReceivePermission(self)
+            return
+        }
+
+        guard let alertController = Alerts.alert(for: authorizationStatus) else {
+            assert(false, "can't handle authorization status \(authorizationStatus)")
+        }
+
+        present(alertController, animated: true, completion: nil)
+    }
+    
     private lazy var allowButton: UIButton = {
-        let button = UIButton(type: .system)
-        
-        button.layer.addSublayer(gradientLayer)
-        button.layer.shadowOffset = CGSize(width: 0, height: 10)
-        button.layer.shadowRadius = 5
-        button.layer.shadowColor = UIColor.brightLavender.cgColor
-        button.layer.shadowOpacity = 0.3
-        button.titleLabel?.font = R.font.sfProDisplayHeavy(size: 19)
+        let button = GradientButton(type: .system)
+
         button.setTitle("Allow", for: .normal)
-        button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(showCollageScene), for: .touchUpInside)
         
         return button
@@ -229,34 +179,14 @@ class PermissionsViewController: UIViewController {
         
         return stackView
     }()
-    
-    private let gradientLayer = CAGradientLayer()
 }
 
-
-extension CAGradientLayer {
-    enum Axis {
-        case horizontal
-        case vertical
-    }
-    
-    func axis(_ axis: Axis) {
-        if axis == .horizontal {
-            self.startPoint = CGPoint(x: 0, y: 0.5)
-            self.endPoint = CGPoint(x: 1, y: 0.5)
-        } else {
-            self.startPoint = CGPoint(x: 0.5, y: 0)
-            self.endPoint = CGPoint(x: 0.5, y: 1)
+private extension Alerts {
+    static func alert(for status: PHAuthorizationStatus) -> UIAlertController? {
+        switch status {
+        case .denied: return Alerts.photoAccessDenied()
+        case .restricted: return Alerts.photoAccessRestricted()
+        case .authorized, .notDetermined: return nil
         }
-    }
-}
-
-extension UIApplication {
-    func openSettings() {
-        guard let settingsURL = URL(string: UIApplicationOpenSettingsURLString) else {
-            return
-        }
-        
-        self.open(settingsURL, completionHandler: nil)
     }
 }

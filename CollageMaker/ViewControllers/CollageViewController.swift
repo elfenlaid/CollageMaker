@@ -11,41 +11,37 @@ protocol CollageViewControllerDelegate: AnyObject {
 class CollageViewController: UIViewController {
     
     weak var delegate: CollageViewControllerDelegate?
+
+    var collage: Collage = Collage() {
+        didSet {
+            updateCollage()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        let panGestureRecognizer = UIPanGestureRecognizer()
         panGestureRecognizer.addTarget(self, action: #selector(changeSize(with:)))
         
         collageView.delegate = self
    
         view.addSubview(collageView)
         view.addGestureRecognizer(panGestureRecognizer)
+
+        updateCollage()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collageView.frame = view.bounds
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        collageView.fadeIn()
+    }
 
-        if collageView.frame.isEmpty {  
-            collageView.alpha = 0.0
-            collageView.frame = view.bounds
-            collageView.setCollage(collage)
-            
-            UIView.animate(withDuration: 0.5) {
-                self.collageView.alpha = 1.0
-            }
-        }
-    }
-    
-    func set(collage: Collage) {
-        self.collage = collage
-        self.collage.delegate = self
-        
-        DispatchQueue.main.async { [weak self, collage]  in
-            self?.collageView.setCollage(collage)
-        }
-    }
-    
     func resetCollage() {
         collage.reset()
     }
@@ -63,75 +59,83 @@ class CollageViewController: UIViewController {
     }
     
     @objc private func changeSize(with recognizer: UIPanGestureRecognizer) {
-        let point = recognizer.location(in: view)
-        let translation = recognizer.translation(in: view)
-        recognizer.setTranslation(.zero, in: view)
-        
         switch recognizer.state {
         case .began:
+            let point = recognizer.location(in: view)
             let frame = CGRect(x: point.x - 20, y: point.y - 20, width: 40, height: 40)
-            selectedGripPosition = collageView.gripViews.first { $0.frame.intersects(frame) }?.position
+            selectedGripPosition =
+                // FIXME: extract to method
+                collageView.gripViews.first { $0.frame.intersects(frame) }?.position
             
         case .changed:
-            if let grip = selectedGripPosition {
-                let sizeChange = grip.axis == .horizontal ? translation.y / view.bounds.height : translation.x / view.bounds.width
-                
-                collage.changeSelectedCellSize(grip: grip, value: sizeChange)
+            guard let grip = selectedGripPosition else {
+                return
             }
+
+            let translation = recognizer.translation(in: view).normalized(for: view.bounds.size)
+            recognizer.setTranslation(.zero, in: view)
+
+            let sizeChange = grip.axis == .horizontal ? translation.x : translation.y
+            collage.changeSelectedCellSize(grip: grip, value: sizeChange)
             
-        case .ended:
+        case .ended, .cancelled:
             selectedGripPosition = nil
             
         default: break
         }
     }
+
+    private func updateCollage() {
+        // FIXME: convert to class
+        // collage.delegate = self
+        if isViewLoaded {
+            collageView.setCollage(collage)
+        }
+    }
     
     private let collageView = CollageView()
     private var selectedGripPosition: GripPosition?
-    private var panGestureRecognizer = UIPanGestureRecognizer()
-    private lazy var collage: Collage = Collage(cells: [])
 }
 
 
 extension CollageViewController: CollageViewDelegate {
     
     func collageView(_ collageView: CollageView, tapped point: CGPoint) {
-        let relativePoint = CGPoint(x: point.x / collageView.frame.width,
-                                    y: point.y / collageView.frame.height)
-        
-        guard let selectedCell = collage.cell(at: relativePoint) else {
-            return
+        let relativePoint = point.normalized(for: collageView.frame.size)
+
+        collage.cell(at: relativePoint).flatMap {
+            collage.setSelected(cell: $0)
         }
-        
-        collage.setSelected(cell: selectedCell)
     }
 }
 
 extension CollageViewController: CollageDelegate {
     
     func collageChanged(to collage: Collage) {
-        set(collage: collage)
+        self.collage = collage
     }
     
     func collage(_ collage: Collage, changed state: CollageState) {
-        DispatchQueue.main.async { [weak self] in
-            self?.collageView.changeFrames(from: state)
-        }
+        collageView.changeFrames(from: state)
     }
     
     func collage(_ collage: Collage, updated cell: CollageCell) {
-        DispatchQueue.main.async { [weak self] in
-            self?.collageView.updateSelectedCellView(with: cell)
-        }
+        collageView.updateSelectedCellView(with: cell)
     }
 
     func collage(_ collage: Collage, didChangeSelected cell: CollageCell) {
-        guard let selectedCellView = collageView.cellViews.first(where: { $0.collageCell.id == cell.id }) else {
+        guard let selectedCellView =
+            // FIXME: extract to method
+            collageView.cellViews.first(where: { $0.collageCell.id == cell.id }) else {
             return
         }
         
-        DispatchQueue.main.async { [weak self] in
-            self?.collageView.select(cellView: selectedCellView)
-        }
+        collageView.select(cellView: selectedCellView)
+    }
+}
+
+extension CGPoint {
+    func normalized(for size: CGSize) -> CGPoint {
+        return CGPoint(x: x / size.width, y: y / size.height)
     }
 }
