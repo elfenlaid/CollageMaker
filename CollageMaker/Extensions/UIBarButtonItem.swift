@@ -6,8 +6,7 @@ import UIKit
 
 
 extension UIBarButtonItem {
-    static var collageCamera: UIBarButtonItem {
-        return UIBarButtonItem(image: R.image.camera_btn(), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+    static func collageCamera(action: Selector, target: Any?) -> UIBarButtonItem {
+        return UIBarButtonItem(image: R.image.camera_btn(), style: UIBarButtonItemStyle.plain, target: target, action: action)
     }
-    
 }

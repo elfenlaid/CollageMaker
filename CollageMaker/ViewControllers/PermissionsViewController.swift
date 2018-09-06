@@ -118,7 +118,7 @@ class PermissionsViewController: UIViewController {
             }
             
         case .restricted:
-            let alertViewController = UIAlertController(title: "Sorry", message: "You're not allowed to change photo library acces. Parental controls or institutional configuration profiles restricted your ability to grant photo library access to CollagistApp. ", preferredStyle: .alert)
+            let alertViewController = UIAlertController(title: "Sorry", message: "You're not allowed to change photo library acces. Parental controls or institutional configuration profiles restricted your ability to grant photo library access. ", preferredStyle: .alert)
             let action = UIAlertAction(title: "Got it", style: .default, handler: nil)
             
             alertViewController.addAction(action)

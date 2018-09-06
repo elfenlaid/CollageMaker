@@ -26,8 +26,7 @@ class CollageViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if collageView.frame.isEmpty {
-            
+        if collageView.frame.isEmpty {  
             collageView.alpha = 0.0
             collageView.frame = view.bounds
             collageView.setCollage(collage)

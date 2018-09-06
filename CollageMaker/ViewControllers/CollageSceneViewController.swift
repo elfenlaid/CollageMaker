@@ -4,6 +4,7 @@
 
 import UIKit
 import SnapKit
+import AVKit
 
 class CollageSceneViewController: UIViewController {
     
@@ -30,9 +31,10 @@ class CollageSceneViewController: UIViewController {
         
         let navBarHeight = UIScreen.main.bounds.height / 10
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem.collageCamera
+        navigationItem.leftBarButtonItem = UIBarButtonItem.collageCamera(action: #selector(tryToTakePhoto), target: self)
+        navigationItem.title = "Edit"
         navigationController?.navigationBar.frame.size.height = navBarHeight
-    
+        
         makeConstraints()
         
         let cellOne = CollageCell(color: .collagePink, image: nil, relativeFrame: RelativeFrame(x: 0, y: 0, width: 0.5, height: 1))
@@ -51,9 +53,7 @@ class CollageSceneViewController: UIViewController {
         addChild(templateBar, to: bannerView)
     }
     
-    
     private func makeConstraints() {
-       
         collageViewContainer.snp.makeConstraints { make in
             make.top.equalTo(topLayoutGuide.snp.bottom)
             make.left.equalToSuperview()
@@ -74,8 +74,6 @@ class CollageSceneViewController: UIViewController {
             make.bottom.equalTo(toolsBar.snp.top)
             make.top.equalTo(collageViewContainer.snp.bottom)
         }
-        
-       
     }
     
     @objc private func resetCollage() {
@@ -86,10 +84,57 @@ class CollageSceneViewController: UIViewController {
         
     }
     
-    func pickImage() {
+    func pickImage(camera: Bool = false) {
         let imagePickerController = UIImagePickerController()
+        
         imagePickerController.delegate = self
-        self.present(imagePickerController, animated: true, completion: nil)
+        imagePickerController.sourceType = camera && UIImagePickerController.isSourceTypeAvailable(.camera) ? .camera : .photoLibrary
+        
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    @objc private func tryToTakePhoto() {
+        handle(AVCaptureDevice.authorizationStatus(for: .video))
+    }
+    
+    private func handle(_ avAuthorizationStatus: AVAuthorizationStatus) {
+        switch avAuthorizationStatus {
+        case .authorized:
+            DispatchQueue.main.async { [weak self] in
+                self?.pickImage(camera: true)
+            }
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+                if granted {
+                    DispatchQueue.main.async {
+                        self?.pickImage(camera: true)
+                    }
+                }
+            }
+            
+        case .denied:
+            let alertViewController = UIAlertController(title: "Sorry", message: "To use camera you should grant access to it", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Allow", style: .default) { _ in
+                UIApplication.shared.openSettings() }
+            let secaction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            
+            alertViewController.addAction(action)
+            alertViewController.addAction(secaction)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.present(alertViewController, animated: true, completion: nil)
+            }
+            
+        case .restricted:
+            let alertViewController = UIAlertController(title: "Sorry", message: "You're not allowed to change camera acces. Parental controls or institutional configuration profiles restricted your ability to grant camera access.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Got it", style: .default, handler: nil)
+            
+            alertViewController.addAction(action)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.present(alertViewController, animated: true, completion: nil)
+            }
+        }
     }
     
     private let resetButton: UIButton = {
